@@ -1,6 +1,7 @@
 import { axios } from './index';
-
+var endpoint = "http://localhost:2222/api/authentication/";
 export default {
+    
     getRoles() {
         return axios.get('roles')
             .then(response => Promise.resolve(response.data))
@@ -26,7 +27,7 @@ export default {
     },
 
     authenticate(user) {
-        return axios.post('users/login', user)
+        return axios.post(endpoint+'token/generate', user)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },

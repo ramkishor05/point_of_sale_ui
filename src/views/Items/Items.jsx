@@ -29,13 +29,15 @@ class Items extends Component {
 
     // Check if the user is super admin.
     isSuperAdmin = () => {
-        return this.props.user.role.name === 'super_admin';
+        return true; //this.props.user.role.name === 'super_admin';
     };
 
     tableHead = () => {
         return this.isSuperAdmin()
-            ? ['No.','Name','Unit Price', 'Quantity', 'Date Added','Date Updated', '']
-            : ['No.','Name','Unit Price', 'Quantity', 'Date Added','Date Updated']
+            ? ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Quantity', 
+            'Create Date','Updated Date', '']
+            : ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Quantity', 
+            'Create Date','Updated Date', '']
     };
 
     showNotification(place) {

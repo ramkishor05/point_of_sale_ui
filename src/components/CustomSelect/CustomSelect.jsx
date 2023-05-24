@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { customInputStyle } from 'variables/styles';
 
-class CustomInput extends Component {
+class CustomSelect extends Component {
 	render() {
 		const { 
 			classes, formControlProps, labelText, id, labelProps, inputProps, error, success, 
@@ -57,7 +57,7 @@ class CustomInput extends Component {
 	}
 }
 
-CustomInput.propTypes = {
+CustomSelect.propTypes = {
     classes: PropTypes.object.isRequired,
     labelText: PropTypes.node,
     labelProps: PropTypes.object,
@@ -68,4 +68,4 @@ CustomInput.propTypes = {
     success: PropTypes.bool
 }
 
-export default withStyles(customInputStyle)(CustomInput);
+export default withStyles(customInputStyle)(CustomSelect);

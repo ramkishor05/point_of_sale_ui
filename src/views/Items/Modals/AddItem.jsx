@@ -1,44 +1,80 @@
 import React, { Component } from 'react';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
-import { RegularCard, ItemGrid, CustomInput } from 'components';
+import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
+
+const ids = {
+    id: '',
+        title: '',
+        name: '',
+        description: '',
+        unitPrice: 0,
+        purchasePrice: 0,
+        purchaseUnit: 1,
+        wholePrice: 0,
+        wholeUnit: 1,
+        retailPrice: 0,
+        retailUnit: 1
+};
+const units =[{'id' : 1, 'name':'KGS'}];
 
 class AddItem extends Component {
-    state = {
-        name: '',
-        unit_price: '',
-        whole_price: '',
-        quantity: ''
+    
+    state = {...ids};
+
+    _setItemTitle = event => {
+        this.setState({ title: event.target.value });
     };
 
     _setItemName = event => {
         this.setState({ name: event.target.value });
     };
 
+    _setItemDesc = event => {
+        this.setState({ description: event.target.value });
+    };
+
     _setUnitPrice = event => {
-        this.setState({ unit_price: event.target.value });
+        this.setState({ unitPrice: event.target.value });
+    };
+
+    _setPurchasePrice = event => {
+        this.setState({ purchasePrice: event.target.value });
+    };
+
+    _setPurchaseUnit = event => {
+        this.setState({ purchaseUnit: event.target.value });
     };
 
     _setWholePrice = event => {
-        this.setState({ whole_price: event.target.value });
-    }
+        this.setState({ wholePrice: event.target.value });
+    };
 
-    _setQuantity = event => {
-        this.setState({ quantity: event.target.value });
-    }
+    _setWholeUnit = event => {
+        this.setState({ wholeUnit: event.target.value });
+    };
+
+    _setRetailPrice = event => {
+        this.setState({ retailPrice: event.target.value });
+    };
+
+    _setRetailUnit = event => {
+        this.setState({ retailUnit: event.target.value });
+    };
+
 
     _addItem = () => {
-        const { name, unit_price, whole_price, quantity } = this.state;
+        const {name, unitPrice, retailPrice, purchasePrice, stockQuantity} = this.state;
 
-        if (name && Number(unit_price) && (Number(whole_price) || Number(whole_price) === 0) && Number(quantity)) {
-            this.props.addItem({name, unit_price, whole_price, quantity}, this.props.refresh, this._resetInput, this.props.successNotification, this.props.errorNotification);
+        if (name) {
+            this.props.addItem(this.state, this.props.refresh, this._resetInput, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
     };
 
     _resetInput = () => {
-        this.setState({ name: '', unit_price: '', whole_price: '', quantity: '' }, this.props.close);
+        this.setState(ids, this.props.close);
     };
 
     getModalStyle() {
@@ -71,7 +107,18 @@ class AddItem extends Component {
                                 content={
                                     <div>
                                         <Grid container>
-                                            <ItemGrid xs={12} sm={12} md={12}>
+                                            <ItemGrid xs={4} sm={4} md={4}>
+                                                <CustomInput
+                                                    autoFocus
+                                                    labelText="Item title"
+                                                    id="item-name"
+                                                    formControlProps={{ fullWidth: true }}
+                                                    type="text"
+                                                    onChange={ this._setItemName }
+                                                    defaultValue={ this.state.name }
+                                                />
+                                            </ItemGrid>
+                                            <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Item name"
@@ -82,41 +129,88 @@ class AddItem extends Component {
                                                     defaultValue={ this.state.name }
                                                 />
                                             </ItemGrid>
-                                        </Grid>
-                                        <Grid container>
-                                            <ItemGrid xs={12} sm={12} md={12}>
+                                            <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
-                                                    labelText="Unit price"
-                                                    id="unit-price"
+                                                    autoFocus
+                                                    labelText="Item Desc"
+                                                    id="item-name"
                                                     formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    onChange={ this._setUnitPrice }
-                                                    defaultValue={ this.state.unit_price }
+                                                    type="text"
+                                                    onChange={ this._setItemDesc }
+                                                    defaultValue={ this.state.description }
                                                 />
                                             </ItemGrid>
                                         </Grid>
                                         <Grid container>
-                                            <ItemGrid xs={12} sm={12} md={12}>
+                                            
+                                            <ItemGrid xs={4} sm={4} md={4}>
+                                            <div style={{display: 'flex'}}>
+                                                <CustomInput
+                                                    labelText="Purchase price"
+                                                    id="purchase-price"
+                                                    formControlProps={{ fullWidth: true }}
+                                                    type="text"
+                                                    onChange={ this._setPurchasePrice }
+                                                    defaultValue={ this.state.purchasePrice }
+                                                />
+                                                <CustomSelect
+                                                   labelText="Purchase Unit"
+                                                    id="purchase-unit"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setPurchaseUnit }
+                                                    defaultValue={ this.state.purchaseUnit }
+                                                    items= {units}
+                                                    value={ this.state.purchaseUnit }
+                                                ></CustomSelect>
+                                            </div>
+                                            </ItemGrid>
+                                            
+
+                                            <ItemGrid xs={4} sm={4} md={4}>
+                                               <div style={{display: 'flex'}}>
+                                                <CustomInput
+                                                    labelText="Retail price"
+                                                    id="retail-price"
+                                                    formControlProps={{ fullWidth:true , marginRight: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setRetailPrice }
+                                                    defaultValue={ this.state.retailPrice }
+                                                />
+                                            
+                                                <CustomSelect
+                                                   labelText="Retail Unit"
+                                                    id="retail-unit"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setRetailUnit }
+                                                    defaultValue={ this.state.retailUnit }
+                                                    items= {units}
+                                                    value={ this.state.retailUnit }
+                                                ></CustomSelect>
+                                              </div>
+                                            </ItemGrid>
+                                            <ItemGrid xs={4} sm={4} md={4}>
+                                            <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Whole price"
                                                     id="whole-price"
                                                     formControlProps={{ fullWidth: true }}
-                                                    type="number"
+                                                    type="text"
                                                     onChange={ this._setWholePrice }
-                                                    defaultValue={ this.state.whole_price }
+                                                    defaultValue={ this.state.wholePrice }
                                                 />
-                                            </ItemGrid>
-                                        </Grid>
-                                        <Grid container>
-                                            <ItemGrid xs={12} sm={12} md={12}>
-                                                <CustomInput
-                                                    labelText="Quantity"
-                                                    id="quantity"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    onChange={ this._setQuantity }
-                                                    defaultValue={ this.state.quantity }
-                                                />
+                                                <CustomSelect
+                                                   labelText="Whole Unit"
+                                                    id="whole-unit"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setWholeUnit }
+                                                    defaultValue={ this.state.wholeUnit }
+                                                    items= {units}
+                                                    value={ this.state.wholeUnit }
+                                                ></CustomSelect>
+                                                </div>
                                             </ItemGrid>
                                         </Grid>
                                     </div>
@@ -140,7 +234,7 @@ class AddItem extends Component {
 const styles = theme => ({
     paper: {
         position: 'absolute',
-        width: theme.spacing.unit * 60,
+        width: theme.spacing.unit * 90,
         backgroundColor: 'transparent',
         padding: theme.spacing.unit * 4,
     },

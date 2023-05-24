@@ -5,7 +5,7 @@ import { AddAlert } from 'material-ui-icons';
 
 import { RegularCard, Button, CustomInput, ItemGrid, Snackbar } from 'components';
 
-import { emailChanged, passwordChanged, login } from '../../actions';
+import { usernameChanged, passwordChanged, login } from '../../actions';
 
 class Authenticate extends Component {
     state = {
@@ -13,8 +13,9 @@ class Authenticate extends Component {
         tc: false,
     };
 
-    _onChangeEmail = event => {
-        this.props.emailChanged(event.target.value);
+    _onChangeUsername = event => {
+        console.log(event.target.value)
+        this.props.usernameChanged(event.target.value);
     };
 
     _onChangePassword = event => {
@@ -22,19 +23,20 @@ class Authenticate extends Component {
     };
 
     _onClick = () => {
-        const { email, password } = this.props;
+        const { username, password } = this.props;
 
-        if (!email || !password || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        console.log("onlick ", username, password)
+        if (!username || !password) {
             this.showNotification('tc')
             return;
         }
 
-        this.props.login({ email, password }, this._clearCredentials);
+        this.props.login({ username, password }, this._clearCredentials);
     };
 
     // Callback function to clear user's credentials after successful login.
     _clearCredentials = () => {
-        this.props.emailChanged('');
+        this.props.usernameChanged('');
         this.props.passwordChanged('');
     };
 
@@ -77,12 +79,13 @@ class Authenticate extends Component {
                                     <Grid container>
                                         <ItemGrid xs={12} sm={12} md={12}>
                                             <CustomInput
-                                                labelText="Email address"
-                                                id="email-address"
+                                                labelText="Username"
+                                                id="username"
+                                                
                                                 formControlProps={{ fullWidth: true }}
-                                                type="email"
-                                                onChange={this._onChangeEmail}
-                                                defaultValue={this.props.email}
+                                                type="text"
+                                                onChange={this._onChangeUsername}
+                                                defaultValue={this.props.username}
                                             />
                                         </ItemGrid>
                                     </Grid>
@@ -157,8 +160,8 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { email, password, login_error } = state.users;
-    return { email, password, login_error };
+    const { username, password, login_error } = state.users;
+    return { username, password, login_error };
 }
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged, login })(Authenticate);
+export default connect(mapStateToProps, { usernameChanged, passwordChanged, login })(Authenticate);

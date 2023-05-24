@@ -1,5 +1,5 @@
 import {
-    EMAIL_CHANGED, PASSWORD_CHANGED,
+     USERNAME_CHANGED, PASSWORD_CHANGED,
     LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS,
     SHOW_LOADER, REMOVE_LOADER, GET_USERS_SUCCESS,
     GET_ROLES_SUCCESS, GET_ROLES_FAIL,
@@ -8,7 +8,7 @@ import {
 } from './types';
 import User from '../services/User';
 
-export const emailChanged = payload => ({type: EMAIL_CHANGED, payload});
+export const usernameChanged = payload => ({type: USERNAME_CHANGED, payload});
 
 export const passwordChanged = payload => ({type: PASSWORD_CHANGED, payload});
 
@@ -42,16 +42,16 @@ export const addUser = (data, refresh, resetInput) => async dispatch => {
  * @param {Object} param0
  * @param {Function} _clearCredentials
  */
-export const login = ({ email, password }, _clearCredentials) => async dispatch => {
+export const login = ({ username, password }, _clearCredentials) => async dispatch => {
     try {
         dispatch({ type: SHOW_LOADER });
 
-        const user = await User.authenticate({ email, password });
+        const user = await User.authenticate({ username, password });
 
         if (user) {
             dispatch({ type: REMOVE_LOADER });
 
-            localStorage.setItem('api_token', user.api_token);
+            localStorage.setItem('api_token', user.token);
 
             if (localStorage.getItem('api_token')) {
                 dispatch({ type: LOGIN_SUCCESS, payload: user });

@@ -4,6 +4,7 @@ import {
     ITEM_TO_EDIT, ITEM_EDIT_SUCCESS, GET_FINISHING_ITEMS
 } from './types';
 import Item from '../services/Item';
+import ItemStock from '../services/ItemStock';
 
 // Action creator for getting all items --<
 export const getAllItems = () => async dispatch => {
@@ -76,6 +77,25 @@ export const editItem = (id, data, clearAndRefresh, successNotification, errorNo
     }
 };
 
+export const updateItem = (id, data, clearAndRefresh, successNotification, errorNotification) => async dispatch => {
+    dispatch({ type: SHOW_ITEM_LOADER });
+
+    try {
+        const item = await ItemStock.update(id, data);
+
+        if (item) {
+            dispatch({ type: ITEM_EDIT_SUCCESS });
+            dispatch({ type: REMOVE_ITEM_LOADER });
+            
+            successNotification && successNotification();
+
+            clearAndRefresh && clearAndRefresh();
+        }
+    } catch(error) {
+        dispatch({ type: REMOVE_ITEM_LOADER });
+        errorNotification && errorNotification();
+    }
+};
 
 export const getFinishingItems = minimum => async dispatch => {
     dispatch({ type: SHOW_ITEM_LOADER });

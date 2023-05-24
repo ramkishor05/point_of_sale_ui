@@ -11,7 +11,7 @@ import { tableStyle } from 'variables/styles';
 class SaleTable extends React.Component {
     // Check if the user is super admin.
     isSuperAdmin = () => {
-        return this.props.user.role.name === 'super_admin';
+        return true; //this.props.user.role.name === 'super_admin';
     };
 
     _renderDate(value) {
@@ -39,16 +39,16 @@ class SaleTable extends React.Component {
                         { prop.item.name }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.item.unit_price }
+                        { prop.item.mrp }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.unit_quantity }
+                        { prop.quantity }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.item.whole_price }
+                        { prop.item.price }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.whole_quantity }
+                        { prop.quantity }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                         { `GHS ${prop.amount}` }

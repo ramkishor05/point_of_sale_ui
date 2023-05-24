@@ -20,20 +20,20 @@ class AddSale extends Component {
         return () => {
             switch(type) {
                 case "unit_price":
-                    return Number(item.unit_price);
+                    return Number(item.mrp);
 
                 case "whole_price":
-                    return Number(item.whole_price);
+                    return Number(item.price);
 
                 case "unit_amount":
-                    return (Number(this.state.unit_quantity) * Number(item.unit_price)).toFixed(2);
+                    return (Number(this.state.unit_quantity) * Number(item.mrp)).toFixed(2);
                 
                 case "whole_amount":
-                    return (Number(this.state.whole_quantity) * Number(item.whole_price)).toFixed(2);
+                    return (Number(this.state.whole_quantity) * Number(item.price)).toFixed(2);
 
                 case "total_amount":
-                    let unit_price = Number(this.state.unit_quantity) * Number(item.unit_price);
-                    let whole_price = Number(this.state.whole_quantity) * Number(item.whole_price);
+                    let unit_price = Number(this.state.unit_quantity) * Number(item.mrp);
+                    let whole_price = Number(this.state.whole_quantity) * Number(item.price);
 
                     return (unit_price + whole_price).toFixed(2);
 

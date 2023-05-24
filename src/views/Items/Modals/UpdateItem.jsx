@@ -4,12 +4,16 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-import { editItem } from '../../../actions';
+import { updateItem } from '../../../actions';
 
 class UpdateItem extends Component {
     state = {
         id: '',
-        quantity_added: ''
+        name: '',
+        mrp: '',
+        price: '',
+        quantity_added: '',
+        quantity_remaining: ''
     };
 
     getModalStyle() {
@@ -31,10 +35,10 @@ class UpdateItem extends Component {
         const 
             id = this.props.edit_item.id,
             quantity_added = Number(this.state.quantity_added),
-            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.edit_item.quantity_remaining);
+            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.edit_item.quantity);
 
         if (id && quantity_added && quantity_remaining) {
-            this.props.editItem(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+            this.props.updateItem(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -82,7 +86,7 @@ class UpdateItem extends Component {
                                                     id="unit-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ edit_item.unit_price }
+                                                    defaultValue={ edit_item.mrp }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -94,7 +98,7 @@ class UpdateItem extends Component {
                                                     id="whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ edit_item.whole_price }
+                                                    defaultValue={ edit_item.price }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -159,4 +163,4 @@ const mapStateToProps = state => {
 
 const UpdateModalWrapped = withStyles(styles)(UpdateItem);
 
-export default connect(mapStateToProps, { editItem })(UpdateModalWrapped);
+export default connect(mapStateToProps, { updateItem })(UpdateModalWrapped);

@@ -4,6 +4,7 @@ import { withStyles, Table, TableHead, TableRow, TableBody, TableCell, Button } 
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 
+
 import { tableStyle } from 'variables/styles';
 
 import { renderToEdit } from '../../actions';
@@ -11,13 +12,13 @@ import { renderToEdit } from '../../actions';
 class ItemsTable extends Component {
     // Check if the user is super admin.
     isSuperAdmin = () => {
-        return this.props.user.role.name === 'super_admin';
+        return true;//this.props.user.role.name === 'super_admin';
     };
 
     _renderDate(value) {
         let date = Moment(value);
 
-        return date.isValid() ? date.format('ddd Do MMMM, YYYY hh:mm:ss:A') : value;
+        return date.isValid() ? date.format('DD/MM/YYYY') : value;
     }
 
     _renderEdit(prop) {
@@ -44,7 +45,7 @@ class ItemsTable extends Component {
                         { prop.name }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.unit_price }
+                        { prop.mrp }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                         {prop.quantity}
@@ -54,10 +55,10 @@ class ItemsTable extends Component {
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                         { this._renderDate(prop.updated_at) }
-                    </TableCell>
+                    </TableCell >
                     {
                         this.isSuperAdmin() && (
-                            <TableCell className={classes.tableCell}>
+                            <TableCell  className={classes.tableCell} >
                                 <Button style={ styles.updateButton } onClick={this._renderEdit.bind(this, prop)}>Edit</Button>
                                 <Button style={ styles.deleteButton } onClick={this._renderUpdate.bind(this, prop)} >Update</Button>
                             </TableCell>
@@ -122,12 +123,14 @@ ItemsTable.propTypes = {
 
 const styles = {
     updateButton: {
-        color: 'purple',
-        textTransform: 'lowercase'
+        color: 'white',
+        backgroundColor: 'purple',
+        margin: 5
     },
     deleteButton: {
-        color: 'red',
-        textTransform: 'lowercase'
+        color: 'white',
+        backgroundColor: 'red',
+        margin: 5
     }
 };
 

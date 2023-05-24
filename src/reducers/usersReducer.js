@@ -1,7 +1,7 @@
 import {
-    EMAIL_CHANGED, PASSWORD_CHANGED,
+    USERNAME_CHANGED, PASSWORD_CHANGED,
     GET_USERS_SUCCESS,
-    GET_ROLES_SUCCESS, GET_ROLES_FAIL,
+    GET_ROLES_SUCCESS, 
     LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS,
     USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,
     OPEN_ADD_USER_MODAL, OPEN_EDIT_USER_MODAL, OPEN_DELETE_USER_MODAL,
@@ -11,6 +11,7 @@ const INITIAL_STATE = {
     users: [],
     roles: [],
     email: '',
+    username: '',
     user: null,
     password: '',
     isLoggedIn: false,
@@ -22,9 +23,11 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
+    console.log("action=",action)
     switch(action.type) {
-        case EMAIL_CHANGED:
-            return { ...state, email: action.payload };
+        
+        case USERNAME_CHANGED:
+                return { ...state, username: action.payload };
 
         case PASSWORD_CHANGED:
             return { ...state, password: action.payload };
