@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Button } from 'material-ui';
+import { Grid, Button, IconButton, DeleteIcon } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
 import AddItemModal from './Modals/AddItem';
 import EditItemModal from './Modals/EditItem';
 import UpdateItemModal from './Modals/UpdateItem';
-
 import { RegularCard, ItemsTable, ItemGrid, Snackbar } from 'components';
 
 import Loader from '../../Loader';
@@ -34,10 +33,10 @@ class Items extends Component {
 
     tableHead = () => {
         return this.isSuperAdmin()
-            ? ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Quantity', 
-            'Create Date','Updated Date', '']
-            : ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Quantity', 
-            'Create Date','Updated Date', '']
+            ? ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            'Create Dt','Updated Dt', 'Actions']
+            : ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            'Created Dt','Updated Dt', 'Actions']
     };
 
     showNotification(place) {

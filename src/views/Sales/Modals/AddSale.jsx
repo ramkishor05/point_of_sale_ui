@@ -6,8 +6,8 @@ import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 class AddSale extends Component {
     state = {
         item_index: '',
-        unit_quantity: 0.00,
-        whole_quantity: 0.00,
+        retailQuantity: 0.00,
+        wholeQuantity: 0.00,
     }
 
     calculate = type => {
@@ -19,21 +19,21 @@ class AddSale extends Component {
 
         return () => {
             switch(type) {
-                case "unit_price":
-                    return Number(item.mrp);
+                case "retailPrice":
+                    return Number(item.retailPrice);
 
-                case "whole_price":
-                    return Number(item.price);
+                case "wholePrice":
+                    return Number(item.wholePrice);
 
-                case "unit_amount":
-                    return (Number(this.state.unit_quantity) * Number(item.mrp)).toFixed(2);
+                case "retailAmount":
+                    return (Number(this.state.retailQuantity) * Number(item.retailPrice)).toFixed(2);
                 
-                case "whole_amount":
-                    return (Number(this.state.whole_quantity) * Number(item.price)).toFixed(2);
+                case "wholeAmount":
+                    return (Number(this.state.wholeQuantity) * Number(item.wholePrice)).toFixed(2);
 
-                case "total_amount":
-                    let unit_price = Number(this.state.unit_quantity) * Number(item.mrp);
-                    let whole_price = Number(this.state.whole_quantity) * Number(item.price);
+                case "totalAmount":
+                    let unit_price = Number(this.state.retailQuantity) * Number(item.retailPrice);
+                    let whole_price = Number(this.state.wholeQuantity) * Number(item.wholePrice);
 
                     return (unit_price + whole_price).toFixed(2);
 
@@ -59,28 +59,28 @@ class AddSale extends Component {
 
     // Function for adding sales to database.
     _addSale = () => {
-        const { item_index, unit_quantity, whole_quantity } = this.state;
+        const { item_index, retailQuantity, wholeQuantity } = this.state;
         const { refreshSales, successNotification, errorNotification } = this.props;
 
         if (!item_index && item_index !== 0) {
             return;
         }
 
-        if (!Number(unit_quantity) && !Number(whole_quantity)) {
+        if (!Number(retailQuantity) && !Number(wholeQuantity)) {
             errorNotification && errorNotification();
             return;
         }
 
         let item_id = this.props.items[item_index].id;
 
-        this.props.addSale({ item_id, unit_quantity, whole_quantity }, refreshSales, this.clear, successNotification, errorNotification);
+        this.props.addSale({ item_id, retailQuantity, wholeQuantity }, refreshSales, this.clear, successNotification, errorNotification);
     };
 
     clear = () => {
         this.setState({
             item_index: '',
-            unit_quantity: 0.00,
-            whole_quantity: 0.00,
+            retailQuantity: 0.00,
+            wholeQuantity: 0.00,
         });
 
         this.props.close();
@@ -131,46 +131,46 @@ class AddSale extends Component {
                                         <Grid container>
                                             <ItemGrid xs={12} sm={4} md={4}>
                                                 <CustomInput
-                                                    disabled={this.disableInput("unit_price")}
-                                                    labelText="Unit quantity"
-                                                    id="unit-quantity"
+                                                    disabled={this.disableInput("retailPrice")}
+                                                    labelText="Retail quantity"
+                                                    id="retail-quantity"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    onChange={event => this.setState({ unit_quantity: event.target.value })}
-                                                    defaultValue={ this.state.unit_quantity }
+                                                    onChange={event => this.setState({ retailQuantity: event.target.value })}
+                                                    defaultValue={ this.state.retailQuantity }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={12} sm={4} md={4}>
                                                 <CustomInput
                                                     disabled
-                                                    labelText="Unit price"
-                                                    id="unit-price"
+                                                    labelText="Retail price"
+                                                    id="retail-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ this.calculate("unit_price")() }
+                                                    value={ this.calculate("retailPrice")() }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={12} sm={4} md={4}>
                                                 <CustomInput
                                                     disabled
-                                                    labelText="Unit amount"
-                                                    id="unit-amount"
+                                                    labelText="Retail amount"
+                                                    id="retail-amount"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ this.calculate("unit_amount")() }
+                                                    value={ this.calculate("retailAmount")() }
                                                 />
                                             </ItemGrid>
                                         </Grid>
                                         <Grid container>
                                             <ItemGrid xs={12} sm={4} md={4}>
                                                 <CustomInput
-                                                    disabled={this.disableInput("whole_price")}
+                                                    disabled={this.disableInput("wholePrice")}
                                                     labelText="Whole quantity"
                                                     id="whole-quantity"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    onChange={event => this.setState({ whole_quantity: event.target.value })}
-                                                    defaultValue={ this.state.whole_quantity }
+                                                    onChange={event => this.setState({ wholeQuantity: event.target.value })}
+                                                    defaultValue={ this.state.wholeQuantity }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={12} sm={4} md={4}>
@@ -180,7 +180,7 @@ class AddSale extends Component {
                                                     id="whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ this.calculate("whole_price")() }
+                                                    value={ this.calculate("wholePrice")() }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={12} sm={4} md={4}>
@@ -190,7 +190,7 @@ class AddSale extends Component {
                                                     id="whole-amount"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ this.calculate("whole_amount")() }
+                                                    value={ this.calculate("wholeAmount")() }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -202,7 +202,7 @@ class AddSale extends Component {
                                                     id="total-amount"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ this.calculate("total_amount")() }
+                                                    value={ this.calculate("totalAmount")() }
                                                 />
                                             </ItemGrid>
                                         </Grid>

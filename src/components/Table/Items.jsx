@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withStyles, Table, TableHead, TableRow, TableBody, TableCell, Button } from 'material-ui';
+import { withStyles, Table, TableHead, TableRow, TableBody, TableCell, Button, IconButton} from 'material-ui';
+import { DeleteOutlineOutlined, UpdateOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
+import { pink } from 'material-ui/colors';
 
-
+import logo_img from '../../assets/img/apple-icon.png';
 import { tableStyle } from 'variables/styles';
 
 import { renderToEdit } from '../../actions';
+import { Edit } from 'material-ui-icons';
 
 class ItemsTable extends Component {
     // Check if the user is super admin.
@@ -38,29 +41,42 @@ class ItemsTable extends Component {
         return tableData.map((prop, key) => {
             return (
                 <TableRow key={key}>
+                   <TableCell className={classes.tableCell}>
+                        <img src={logo_img} width={30} height= {30}></img>
+                    </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { ++number }
+                        { prop.idenNo }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                         { prop.name }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.mrp }
+                        { prop.retailPrice }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        {prop.quantity}
+                        { prop.purchasePrice }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { this._renderDate(prop.created_at) }
+                        {prop.stockQnt}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { this._renderDate(prop.updated_at) }
+                        { this._renderDate(prop.createdDt) }
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                        { this._renderDate(prop.updatedDt) }
                     </TableCell >
                     {
                         this.isSuperAdmin() && (
-                            <TableCell  className={classes.tableCell} >
-                                <Button style={ styles.updateButton } onClick={this._renderEdit.bind(this, prop)}>Edit</Button>
-                                <Button style={ styles.deleteButton } onClick={this._renderUpdate.bind(this, prop)} >Update</Button>
+                            <TableCell  >
+                                <IconButton 
+                                onClick={this._renderEdit.bind(this, prop)}>
+                                    <Edit></Edit>
+                                </IconButton>
+                                <IconButton
+                                onClick={this._renderUpdate.bind(this, prop)} >
+                                    <UpdateOutlined/>
+                                </IconButton>
+                                <IconButton sx={{ color: pink[500] }} ><DeleteOutlineOutlined /></IconButton>
                             </TableCell>
                         )
                     }
@@ -92,6 +108,7 @@ class ItemsTable extends Component {
                                     }
                                 </TableRow>
                             </TableHead>
+                            
                         )
                         : null
                     }
@@ -125,12 +142,12 @@ const styles = {
     updateButton: {
         color: 'white',
         backgroundColor: 'purple',
-        margin: 5
+        margin: 1
     },
     deleteButton: {
         color: 'white',
         backgroundColor: 'red',
-        margin: 5
+        margin: 1
     }
 };
 

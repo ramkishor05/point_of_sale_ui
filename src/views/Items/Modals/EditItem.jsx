@@ -12,13 +12,13 @@ class EditItem extends Component {
         title: '',
         name: '',
         description: '',
-        unitPrice: 0,
         purchasePrice: 0,
         purchaseUnit: 1,
         wholePrice: 0,
         wholeUnit: 1,
         retailPrice: 0,
-        retailUnit: 1
+        retailUnit: 1,
+        stockQnt: 0
     };
 
     getModalStyle() {
@@ -72,15 +72,18 @@ class EditItem extends Component {
         this.setState({ retailUnit: event.target.value });
     };
 
+    _setStockQnt = event => {
+        this.setState({ stockQnt: event.target.value });
+    };
+
     _editItem = () => {
         const 
             id = this.props.edit_item.id,
-            name = this.state.name || this.props.edit_item.name,
-            mrp = this.state.mrp || this.props.edit_item.mrp,
-            price = this.state.price || this.props.edit_item.price;
-
-        if (id && name && Number(mrp) && (Number(mrp) || Number(mrp) === 0)) {
-            this.props.editItem(id, {name, mrp, price}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+            name = this.props.edit_item.name,
+            retailPrice = this.props.edit_item.retailPrice;
+          
+        if (id && name && Number(retailPrice) && (Number(retailPrice) || Number(retailPrice) === 0)) {
+            this.props.editItem(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -215,6 +218,20 @@ class EditItem extends Component {
                                                 </div>
                                             </ItemGrid>
                                         </Grid>
+                                        <Grid container>.
+                                            <ItemGrid xs={4} sm={4} md={4}>
+                                            <CustomInput
+                                                    autoFocus
+                                                    labelText="Stock Qnt"
+                                                    id="item-stack-qnt"
+                                                    formControlProps={{ fullWidth: true }}
+                                                    type="text"
+                                                    onChange={ this._setStockQnt }
+                                                    defaultValue={ this.state.stockQnt }
+                                                />
+                                                
+                                            </ItemGrid>
+                                        </Grid>
                                     </div>
                                 }
                                 
@@ -236,9 +253,10 @@ class EditItem extends Component {
 const styles = theme => ({
     paper: {
         position: 'absolute',
-        width: theme.spacing.unit * 150,
+        width: theme.spacing.unit * 100,
         backgroundColor: 'transparent',
-        padding: theme.spacing.unit * 1,
+        padding: theme.spacing.unit * 4,
+        marginLeft: theme.spacing.unit *10
     },
 });
 

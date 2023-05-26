@@ -1,5 +1,5 @@
 import { axios } from './index';
-var endpoint = "http://localhost:2222/api/authentication/";
+var endpoint = "http://192.168.109.225:4444/api/authentication/";
 export default {
     
     getRoles() {

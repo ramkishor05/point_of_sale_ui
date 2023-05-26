@@ -1,6 +1,6 @@
 import { axios } from './index';
 
-const ITEM_URL="http://localhost:4444/inventory/"
+const ITEM_URL="http://192.168.109.225:4444/api/inventory/"
 export default {
     getAll() {
         return axios.get(ITEM_URL+'product/1')

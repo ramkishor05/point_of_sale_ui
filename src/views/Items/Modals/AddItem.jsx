@@ -8,7 +8,7 @@ const ids = {
         title: '',
         name: '',
         description: '',
-        unitPrice: 0,
+        stockQnt: 0,
         purchasePrice: 0,
         purchaseUnit: 1,
         wholePrice: 0,
@@ -62,6 +62,9 @@ class AddItem extends Component {
         this.setState({ retailUnit: event.target.value });
     };
 
+    _setStockQnt = event => {
+        this.setState({ stockQnt: event.target.value });
+    };
 
     _addItem = () => {
         const {name, unitPrice, retailPrice, purchasePrice, stockQuantity} = this.state;
@@ -213,6 +216,20 @@ class AddItem extends Component {
                                                 </div>
                                             </ItemGrid>
                                         </Grid>
+                                        <Grid container>.
+                                            <ItemGrid xs={4} sm={4} md={4}>
+                                            <CustomInput
+                                                    autoFocus
+                                                    labelText="Stock Qnt"
+                                                    id="item-stack-qnt"
+                                                    formControlProps={{ fullWidth: true }}
+                                                    type="text"
+                                                    onChange={ this._setStockQnt }
+                                                    defaultValue={ this.state.stockQnt }
+                                                />
+                                                
+                                            </ItemGrid>
+                                        </Grid>
                                     </div>
                                 }
                                 
@@ -234,9 +251,10 @@ class AddItem extends Component {
 const styles = theme => ({
     paper: {
         position: 'absolute',
-        width: theme.spacing.unit * 90,
+        width: theme.spacing.unit * 100,
         backgroundColor: 'transparent',
         padding: theme.spacing.unit * 4,
+        marginLeft: theme.spacing.unit *10
     },
 });
 
