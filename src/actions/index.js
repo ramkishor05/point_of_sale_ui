@@ -14,6 +14,8 @@ export * from './footballActions';
 
 export * from './creditTransferActions';
 
+export * from './globalCategoryActions';
+
 
 
 

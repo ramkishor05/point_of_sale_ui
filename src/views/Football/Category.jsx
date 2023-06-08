@@ -5,7 +5,7 @@ import { AddAlert } from 'material-ui-icons';
 
 import { getCategoryByDate, addCategory, editCategory } from '../../actions';
 
-import { CustomDatepicker, RegularCard, CategoryTable, ItemGrid, CustomInput, Snackbar } from 'components';
+import { CustomDatepicker, RegularCard, ItemsTable, ItemGrid, CustomInput, Snackbar } from 'components';
 
 import AddCategoryModal from './Modals/AddCategory';
 import EditCategoryModal from './Modals/EditCategory';
@@ -137,7 +137,7 @@ class Category extends Component {
                             </div>
                             }
                             content={
-                                <CategoryTable
+                                <ItemsTable
                                     tableHeaderColor="primary"
                                     tableHead={['No.', 'Match', 'Unit Charge', 'Number of People', 'Amount', 'Date Added', 'Date Updated', '']}
                                     tableData={this.props.Categorys}
