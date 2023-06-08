@@ -3,19 +3,19 @@ import { connect } from 'react-redux';
 import { Grid, Button } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import { getFootballByDate, addFootball, editFootball } from '../../actions';
+import { getCategoryByDate, addCategory, editCategory } from '../../actions';
 
-import { CustomDatepicker, RegularCard, FootballTable, ItemGrid, CustomInput, Snackbar } from 'components';
+import { CustomDatepicker, RegularCard, CategoryTable, ItemGrid, CustomInput, Snackbar } from 'components';
 
-import AddFootballModal from './Modals/AddFootball';
-import EditFootballModal from './Modals/EditFootball';
+import AddCategoryModal from './Modals/AddCategory';
+import EditCategoryModal from './Modals/EditCategory';
 
 
-class Football extends Component {
+class Category extends Component {
      state = {
         notificationGroup: 'add',
-        openAddFootballModal: false,
-        openEditFootballModal: false,
+        openAddCategoryModal: false,
+        openEditCategoryModal: false,
         from: '2018-05-21',
         to: '2018-05-21',
         tr: false,
@@ -23,29 +23,29 @@ class Football extends Component {
     };
 
     componentDidMount() {
-        this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getFootball);
+        this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getCategory);
     }
 
     from = event => {
-        this.setState({ from: event.target.value }, this._getFootball);
+        this.setState({ from: event.target.value }, this._getCategory);
     };
 
     to = event => {
-        this.setState({ to: event.target.value }, this._getFootball);
+        this.setState({ to: event.target.value }, this._getCategory);
     };
 
     total = () => {
         let total = 0;
 
-        for (let football of this.props.footballs) {
-            total += Number(football.amount);
+        for (let category of this.props.categorys) {
+            total += Number(category.amount);
         }
 
         return total.toFixed(2);
     };
 
-    _getFootball = () => {
-        this.props.getFootballByDate(this.state.from, this.state.to);
+    _getCategory = () => {
+        this.props.getCategoryByDate(this.state.from, this.state.to);
     };
 
     dateNow = () => {
@@ -79,15 +79,15 @@ class Football extends Component {
     notificationMessage = type => {
         if (type === 'success') {
             if (this.state.notificationGroup === 'add') {
-                return 'Football added successfully';
+                return 'Category added successfully';
             } else {
-                return 'Football edited successfully';
+                return 'Category edited successfully';
             }
         } else if (type === 'error') {
             if (this.state.notificationGroup === 'edit') {
-                return 'Error Football could not be edited';
+                return 'Error category could not be edited';
             } else {
-                return 'Error Football could not be added';
+                return 'Error category could not be added';
             }
         }
     };
@@ -99,12 +99,12 @@ class Football extends Component {
                     <ItemGrid xs={12} sm={12} md={12}>
                         <RegularCard
                             padIt
-                            cardTitle="Football"
-                            cardSubtitle="List of football match entries in the system"
+                            cardTitle="Category"
+                            cardSubtitle="List of category match entries in the system"
                             button={
                                 <Button 
                                     style={ styles.addTransactionButton } 
-                                    onClick={() => this.setState({ openAddFootballModal: true, notificationGroup: 'add' })}>ADD FOOTBALL</Button>
+                                    onClick={() => this.setState({ openAddCategoryModal: true, notificationGroup: 'add' })}>Add Category</Button>
                             }
                             total={
                                 <div>
@@ -137,31 +137,31 @@ class Football extends Component {
                             </div>
                             }
                             content={
-                                <FootballTable
+                                <CategoryTable
                                     tableHeaderColor="primary"
                                     tableHead={['No.', 'Match', 'Unit Charge', 'Number of People', 'Amount', 'Date Added', 'Date Updated', '']}
-                                    tableData={this.props.footballs}
-                                    editFootball={() => this.setState({ openEditFootballModal: true, notificationGroup: 'edit' })}
-                                    getFootballs={this._getFootball}
+                                    tableData={this.props.Categorys}
+                                    editCategory={() => this.setState({ openEditCategoryModal: true, notificationGroup: 'edit' })}
+                                    getCategorys={this._getCategory}
                                 />
                             }
                         />
                     </ItemGrid>
                     
-                    <AddFootballModal
-                        open={this.state.openAddFootballModal}
-                        close={() => this.setState({ openAddFootballModal: false })}
-                        addFootball={this.props.addFootball}
-                        refresh={this._getFootball}
+                    <AddCategoryModal
+                        open={this.state.openAddCategoryModal}
+                        close={() => this.setState({ openAddCategoryModal: false })}
+                        addCategory={this.props.addCategory}
+                        refresh={this._getCategory}
                         successNotification={() => this.showNotification('tr')}
                         errorNotification={() => this.showNotification('tc')}
                     />
 
-                    <EditFootballModal
-                        open={this.state.openEditFootballModal}
-                        close={() => this.setState({ openEditFootballModal: false })}
-                        editFootball={this.props.editFootball}
-                        refresh={this._getFootball}
+                    <EditCategoryModal
+                        open={this.state.openEditCategoryModal}
+                        close={() => this.setState({ openEditCategoryModal: false })}
+                        editCategory={this.props.editCategory}
+                        refresh={this._getCategory}
                         successNotification={() => this.showNotification('tr')}
                         errorNotification={() => this.showNotification('tc')}
                     />
@@ -221,10 +221,10 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { footballs, openAddFootballModal } = state.footballs;
-    return { footballs, openAddFootballModal };
+    const { categorys, openAddCategoryModal } = state.categorys;
+    return { categorys, openAddCategoryModal };
 };
 
 export default connect(mapStateToProps, {
-    getFootballByDate, addFootball, editFootball
-})(Football);
+    getCategoryByDate, addCategory, editCategory
+})(Category);

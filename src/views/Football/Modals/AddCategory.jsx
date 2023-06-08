@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-class EditFootball extends Component {
+class AddCategory extends Component {
     state = {
-        id: '',
         name: '',
         unit_charge: '',
         number_of_people: ''
     };
 
-    componentWillReceiveProps(nextprops) {
-        this.setState({
-            id: nextprops.football_to_edit.id,
-            name: nextprops.football_to_edit.name,
-            unit_charge: nextprops.football_to_edit.unit_charge,
-            number_of_people: nextprops.football_to_edit.number_of_people
-        });
-    }
-
-    _setName = event => {
+    _setMatchName = event => {
         this.setState({ name: event.target.value });
     };
 
@@ -31,23 +20,25 @@ class EditFootball extends Component {
 
     _setNumberOfPeople = event => {
         this.setState({ number_of_people: event.target.value });
-    }
+    };
 
-    _editFootball = () => {
-        const { id, name, unit_charge, number_of_people } = this.state;
-        console.log('this is the state ', this.state)
-        return;
+    _addFootball = () => {
+        const { name, unit_charge, number_of_people } = this.state;
 
-        if (id && name && unit_charge && number_of_people) {
-            this.props.editFootball(id, {name, unit_charge, number_of_people}, this.props.refresh, this.props.close, this.props.successNotification, this.props.errorNotification);
+        if (name && Number(unit_charge) && Number(number_of_people)) {
+            this.props.addFootball({name, unit_charge, number_of_people}, this.props.refresh, this.clear, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
     };
 
-    _clear = () => {
-        this.props.close();
+    clear = () => {
         this.setState({ name: '', unit_charge: '', number_of_people: '' });
+        this.props.close();
+    };
+
+    amount = () => {
+        return (Number(this.state.unit_charge) * Number(this.state.number_of_people)).toFixed(2);
     }
 
     getModalStyle() {
@@ -57,17 +48,17 @@ class EditFootball extends Component {
         return {
             top: `${top}%`,
             left: `${left}%`,
-            transform: `translate(-${top}%, -${left}%)`
+            transform: `translate(-${top}%, -${left}%)`,
         };
     }
     
     render() {
-        const { classes, open, close, football_to_edit } = this.props;
+        const { classes, open, close } = this.props;
 
         return (
             <Modal
-                aria-labelledby="Edit Football"
-                aria-describedby="Modal for editing football"
+                aria-labelledby="Add Football"
+                aria-describedby="Modal for adding football"
                 open={open}
                 onClose={close}
             >
@@ -75,50 +66,47 @@ class EditFootball extends Component {
                     <Grid container>
                         <ItemGrid xs={12} sm={12} md={12}>
                             <RegularCard
-                                cardTitle="EDIT FOOTBALL"
-                                cardSubtitle="Edit the form below to edit football"
+                                cardTitle="ADD FOOTBALL"
+                                cardSubtitle="Fill the form below to add football to the system"
                                 content={
                                     <div>
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
                                                     autoFocus
-                                                    labelText="Name"
-                                                    id="name"
+                                                    labelText="Match name"
+                                                    id="match-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setName }
-                                                    defaultValue={ football_to_edit.name }
+                                                    onChange={ this._setMatchName }
+                                                    defaultValue={ this.state.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
-
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
-                                                    labelText="Unit Charge"
+                                                    labelText="Unit charge"
                                                     id="unit-charge"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
                                                     onChange={ this._setUnitCharge }
-                                                    defaultValue={ football_to_edit.unit_charge }
+                                                    defaultValue={ this.state.unit_charge }
                                                 />
                                             </ItemGrid>
                                         </Grid>
-
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
-                                                    labelText="Number of people"
+                                                    labelText="Number of People"
                                                     id="number-of-people"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
                                                     onChange={ this._setNumberOfPeople }
-                                                    defaultValue={ football_to_edit.number_of_people }
+                                                    defaultValue={ this.state.number_of_people }
                                                 />
                                             </ItemGrid>
                                         </Grid>
-
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
@@ -127,7 +115,7 @@ class EditFootball extends Component {
                                                     id="amount"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ (Number(this.state.unit_charge) * Number(this.state.number_of_people)).toFixed(2) }
+                                                    value={ this.amount() }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -138,7 +126,7 @@ class EditFootball extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._editFootball}>Edit</Button>
+                                        onClick={this._addFootball}>Add</Button>
                                 }
                             />
                         </ItemGrid>
@@ -158,15 +146,9 @@ const styles = theme => ({
     },
 });
 
-const EditModalWrapped = withStyles(styles)(EditFootball);
+const AddModalWrapped = withStyles(styles)(AddCategory);
 
-const mapStateToProps = state => {
-    const { football_to_edit } = state.footballs;
-
-    return { football_to_edit };
-};
-
-export default connect(mapStateToProps)(EditModalWrapped);
+export default AddModalWrapped;
 
 
 
