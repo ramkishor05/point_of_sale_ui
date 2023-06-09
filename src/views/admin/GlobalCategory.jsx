@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Grid, Button, IconButton, DeleteIcon } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import AddItemModal from './Modals/AddGlobalCategory';
+import AddGlobalCategory from './Modals/AddGlobalCategory';
 import EditItemModal from './Modals/EditGlobalCategory';
 import UpdateItemModal from './Modals/UpdateGlobalCategory';
 import { RegularCard, ItemsTable, ItemGrid, Snackbar } from 'components';
 
 import Loader from '../../Loader';
 
-import { getAllItems, addItem } from '../../actions';
+import { getAllItems, addGlobalCategory } from '../../actions';
 
 class GlobalCategory extends Component {
     state = {
@@ -135,10 +135,10 @@ class GlobalCategory extends Component {
                     </ItemGrid>
                 </Grid>
 
-                <AddItemModal
+                <AddGlobalCategory
                     open={this.state.showAddItemModal}
                     close={() => this.setState({ showAddItemModal: false })}
-                    addItem={this.props.addItem}
+                    addGlobalCategory={this.props.addGlobalCategory}
                     refresh={this.props.getAllItems}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
@@ -180,4 +180,4 @@ const styles = {
     },
 };
 
-export default connect(mapStateToProps, { getAllItems, addItem })(GlobalCategory);
+export default connect(mapStateToProps, { getAllItems, addGlobalCategory })(GlobalCategory);

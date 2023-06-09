@@ -1,9 +1,9 @@
 import { axios } from './index';
 
-const ITEM_URL="http://localhost:3333/api/cust/"
+const GLOBAL_CATEGORY_URL="http://localhost:3333/api/global/category"
 export default {
     getAll() {
-        return axios.get(ITEM_URL+'product/1')
+        return axios.get(GLOBAL_CATEGORY_URL+'product/1')
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
@@ -13,7 +13,7 @@ export default {
                     .catch(error => Promise.reject(error.response.data));
     },
     add(item) {
-        return axios.post(ITEM_URL+'product/1', item)
+        return axios.post(GLOBAL_CATEGORY_URL+'', item)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
