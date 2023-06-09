@@ -20,6 +20,7 @@ class Category extends Component {
         to: '2018-05-21',
         tr: false,
         tc: false,
+        categorys : []
     };
 
     componentDidMount() {
@@ -140,7 +141,7 @@ class Category extends Component {
                                 <ItemsTable
                                     tableHeaderColor="primary"
                                     tableHead={['No.', 'Match', 'Unit Charge', 'Number of People', 'Amount', 'Date Added', 'Date Updated', '']}
-                                    tableData={this.props.Categorys}
+                                    tableData={this.props.categorys}
                                     editCategory={() => this.setState({ openEditCategoryModal: true, notificationGroup: 'edit' })}
                                     getCategorys={this._getCategory}
                                 />
