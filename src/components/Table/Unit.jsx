@@ -6,7 +6,7 @@ import Moment from 'moment';
 
 import { tableStyle } from 'variables/styles';
 
-import { renderJackpotToEdit, deleteJackpot } from '../../actions';
+import { renderUnitToEdit, deleteUnit } from '../../actions';
 
 class CustomTable extends React.Component {
     // Check if the user is super admin.
@@ -21,13 +21,13 @@ class CustomTable extends React.Component {
     }
 
     _renderToEdit = prop => {
-        this.props.renderJackpotToEdit(prop);
-        this.props.editJackpot();
+        this.props.renderUnitToEdit(prop);
+        this.props.editUnit();
     }
 
-    deleteJackpot = id => {
-        if (window.confirm("Are you sure you want to delete this Jackpot transaction?")) {
-            this.props.deleteJackpot(id, this.props.getJackpots);
+    deleteUnit = id => {
+        if (window.confirm("Are you sure you want to delete this Unit transaction?")) {
+            this.props.deleteUnit(id, this.props.getUnits);
         }
     };
 
@@ -57,7 +57,7 @@ class CustomTable extends React.Component {
                         this.isSuperAdmin() && (
                             <TableCell className={classes.tableCell}>
                                 <Button style={ styles.updateButton } onClick={() => this._renderToEdit(prop)}>Edit</Button>
-                                <Button style={ styles.deleteButton } onClick={() => this.deleteJackpot(prop.id)} >Delete</Button>
+                                <Button style={ styles.deleteButton } onClick={() => this.deleteUnit(prop.id)} >Delete</Button>
                             </TableCell>
                         )
                     }
@@ -134,4 +134,4 @@ const mapStateToProps = state => {
     return { user };
 };
 
-export default connect(mapStateToProps, { renderJackpotToEdit, deleteJackpot })(wrappedTable);
+export default connect(mapStateToProps, { renderUnitToEdit, deleteUnit })(wrappedTable);

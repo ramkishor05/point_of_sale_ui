@@ -5,7 +5,7 @@ import items from './itemReducer';
 import sales from './saleReducer';
 import loader from './loaderReducer';
 import mobileMoneys from './mobileMoneyReducer';
-import jackpots from './jackpotReducer';
+import units from './custUnitReducer';
 import footballs from './footballReducer';
 import creditTransfers from './creditTransferReducer';
 
@@ -15,7 +15,7 @@ export default combineReducers({
     sales,
     loader,
     mobileMoneys,
-    jackpots,
+    units,
     footballs,
     creditTransfers,
 });

@@ -4,13 +4,13 @@ import { Grid, Button, IconButton, DeleteIcon } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
 import AddGlobalCategory from './Modals/AddGlobalCategory';
-import EditItemModal from './Modals/EditGlobalCategory';
-import UpdateItemModal from './Modals/UpdateGlobalCategory';
+import EditGlobalCategory from './Modals/EditGlobalCategory';
+import UpdateGlobalCategory from './Modals/UpdateGlobalCategory';
 import { RegularCard, ItemsTable, ItemGrid, Snackbar } from 'components';
 
 import Loader from '../../Loader';
 
-import { getAllItems, addGlobalCategory } from '../../actions';
+import { getGlobalCategoryList, addGlobalCategory } from '../../actions';
 
 class GlobalCategory extends Component {
     state = {
@@ -23,7 +23,7 @@ class GlobalCategory extends Component {
     };
 
     componentDidMount() {
-        this.props.getAllItems();
+        this.props.getGlobalCategoryList();
     }
 
     // Check if the user is super admin.
@@ -33,10 +33,10 @@ class GlobalCategory extends Component {
 
     tableHead = () => {
         return this.isSuperAdmin()
-            ? ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            ? ['Logo','Iden No.','Category Name', 'Category Desc', 
             'Create Dt','Updated Dt', 'Actions']
-            : ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
-            'Created Dt','Updated Dt', 'Actions']
+            : ['Logo','Iden No.','Category Name', 'Category Desc', 
+            'Create Dt','Updated Dt', 'Actions']
     };
 
     showNotification(place) {
@@ -139,23 +139,23 @@ class GlobalCategory extends Component {
                     open={this.state.showAddItemModal}
                     close={() => this.setState({ showAddItemModal: false })}
                     addGlobalCategory={this.props.addGlobalCategory}
-                    refresh={this.props.getAllItems}
+                    refresh={this.props.getGlobalCategoryList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
 
-                <EditItemModal
+                <EditGlobalCategory
                     open={this.state.showEditItemModal}
                     close={() => this.setState({ showEditItemModal: false })}
-                    refresh={this.props.getAllItems}
+                    refresh={this.props.getGlobalCategoryList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
 
-                <UpdateItemModal
+                <UpdateGlobalCategory
                     open={this.state.showUpdateItemModal}
                     close={() => this.setState({ showUpdateItemModal: false })}
-                    refresh={this.props.getAllItems}
+                    refresh={this.props.getGlobalCategoryList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -168,9 +168,9 @@ class GlobalCategory extends Component {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { items, show_item_loader } = state.items;
+    const { categoryList, show_item_loader } = state.categoryList;
 
-    return { user, items, show_item_loader };
+    return { user, categoryList, show_item_loader };
 };
 
 const styles = {
@@ -180,4 +180,4 @@ const styles = {
     },
 };
 
-export default connect(mapStateToProps, { getAllItems, addGlobalCategory })(GlobalCategory);
+export default connect(mapStateToProps, { getGlobalCategoryList, addGlobalCategory })(GlobalCategory);

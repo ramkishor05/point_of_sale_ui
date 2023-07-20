@@ -1,38 +1,51 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-class EditJackpot extends Component {
+class AddUnit extends Component {
     state = {
         name: '',
-        amount: '',
+        typeId: '',
+        dispayName: '',
+        shortDesc: '',
+        longDesc: ''
     };
 
     _setName = event => {
         this.setState({ name: event.target.value });
     };
 
-    _setAmount = event => {
-        this.setState({ amount: event.target.value });
+    _setTypeId = event => {
+        this.setState({ typeId: event.target.value });
     };
 
-    _clear = () => {
-        this.setState({ name: '', amount: '' });
-        this.props.close();
+    _setDispayName = event => {
+        this.setState({ dispayName: event.target.value });
+    };
+    
+    _setShortDesc = event => {
+        this.setState({ shortDesc: event.target.value });
     };
 
-    _editJackpot = () => {        
-        let id = this.props.jackpot_to_edit.id,
-            name = this.state.name || this.props.jackpot_to_edit.name,
-            amount = this.state.amount || this.props.jackpot_to_edit.amount;
+    _setLongDesc = event => {
+        this.setState({ longDesc: event.target.value });
+    };
 
-        if (name && Number(amount)) {
-            this.props.editJackpot(id, { name, amount }, this.props.refresh, this._clear, this.props.successNotification, this.props.errorNotification);
+    _addUnit = () => {
+        const { name, dispayName } = this.state;
+        const { refresh, successNotification, errorNotification } = this.props;
+
+        if (name && dispayName) {
+            this.props.addUnit(this.state, refresh, this.clear, successNotification, errorNotification);
         } else {
-            this.props.errorNotification();
+            errorNotification();
         }
+    };
+
+    clear = () => {
+        this.setState({ name: '', dispayName: '' });
+        this.props.close();
     };
 
     getModalStyle() {
@@ -47,12 +60,12 @@ class EditJackpot extends Component {
     }
     
     render() {
-        const { classes, open, close, jackpot_to_edit } = this.props;
+        const { classes, open, close } = this.props;
 
         return (
             <Modal
-                aria-labelledby="Edit Jackpot"
-                aria-describedby="Modal for editing jackpot"
+                aria-labelledby="Add Unit"
+                aria-describedby="Modal for adding Unit"
                 open={open}
                 onClose={close}
             >
@@ -60,8 +73,8 @@ class EditJackpot extends Component {
                     <Grid container>
                         <ItemGrid xs={12} sm={12} md={12}>
                             <RegularCard
-                                cardTitle="EDIT JACKPOT"
-                                cardSubtitle="Fill the form below to edit jackpot in the system"
+                                cardTitle="ADD Unit"
+                                cardSubtitle="Fill the form below to add Unit to the system"
                                 content={
                                     <div>
                                         <Grid container>
@@ -73,19 +86,19 @@ class EditJackpot extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ jackpot_to_edit.name }
+                                                    defaultValue={ this.state.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
-                                                    labelText="Amount"
-                                                    id="amount"
+                                                    labelText="DispayName"
+                                                    id="dispayName"
                                                     formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    onChange={ this._setAmount }
-                                                    defaultValue={ jackpot_to_edit.amount }
+                                                    type="text"
+                                                    onChange={ this._setDispayName }
+                                                    defaultValue={ this.state.dispayName }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -96,7 +109,7 @@ class EditJackpot extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._editJackpot}>Edit</Button>
+                                        onClick={this._addUnit}>Add</Button>
                                 }
                             />
                         </ItemGrid>
@@ -116,14 +129,9 @@ const styles = theme => ({
     },
 });
 
-const EditModalWrapped = withStyles(styles)(EditJackpot);
+const AddModalWrapped = withStyles(styles)(AddUnit);
 
-const mapStateToProps = state => {
-    const { jackpot_to_edit } = state.jackpots;
-    return { jackpot_to_edit };
-}
-
-export default connect(mapStateToProps)(EditModalWrapped);
+export default AddModalWrapped;
 
 
 

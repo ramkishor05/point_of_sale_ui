@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-class AddJackpot extends Component {
+class EditUnit extends Component {
     state = {
         name: '',
         amount: '',
@@ -17,20 +18,19 @@ class AddJackpot extends Component {
         this.setState({ amount: event.target.value });
     };
 
-    _addJackpot = () => {
-        const { name, amount } = this.state;
-        const { refresh, successNotification, errorNotification } = this.props;
-
-        if (name && Number(amount)) {
-            this.props.addJackpot({ name, amount }, refresh, this.clear, successNotification, errorNotification);
-        } else {
-            errorNotification();
-        }
-    };
-
-    clear = () => {
+    _clear = () => {
         this.setState({ name: '', amount: '' });
         this.props.close();
+    };
+
+    _editUnit = () => {        
+        let id = this.props.unit_to_edit.id,
+            name = this.state.name || this.props.unit_to_edit.name
+        if (name ) {
+            this.props.editUnit(id, this.state, this.props.refresh, this._clear, this.props.successNotification, this.props.errorNotification);
+        } else {
+            this.props.errorNotification();
+        }
     };
 
     getModalStyle() {
@@ -45,12 +45,12 @@ class AddJackpot extends Component {
     }
     
     render() {
-        const { classes, open, close } = this.props;
+        const { classes, open, close, unit_to_edit } = this.props;
 
         return (
             <Modal
-                aria-labelledby="Add Jackpot"
-                aria-describedby="Modal for adding jackpot"
+                aria-labelledby="Edit Unit"
+                aria-describedby="Modal for editing Unit"
                 open={open}
                 onClose={close}
             >
@@ -58,8 +58,8 @@ class AddJackpot extends Component {
                     <Grid container>
                         <ItemGrid xs={12} sm={12} md={12}>
                             <RegularCard
-                                cardTitle="ADD JACKPOT"
-                                cardSubtitle="Fill the form below to add jackpot to the system"
+                                cardTitle="EDIT Unit"
+                                cardSubtitle="Fill the form below to edit Unit in the system"
                                 content={
                                     <div>
                                         <Grid container>
@@ -71,7 +71,7 @@ class AddJackpot extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ this.state.name }
+                                                    defaultValue={ unit_to_edit.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -83,7 +83,7 @@ class AddJackpot extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
                                                     onChange={ this._setAmount }
-                                                    defaultValue={ this.state.amount }
+                                                    defaultValue={ unit_to_edit.amount }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -94,7 +94,7 @@ class AddJackpot extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._addJackpot}>Add</Button>
+                                        onClick={this._editUnit}>Edit</Button>
                                 }
                             />
                         </ItemGrid>
@@ -114,9 +114,14 @@ const styles = theme => ({
     },
 });
 
-const AddModalWrapped = withStyles(styles)(AddJackpot);
+const EditModalWrapped = withStyles(styles)(EditUnit);
 
-export default AddModalWrapped;
+const mapStateToProps = state => {
+    const { unit_to_edit } = state.units;
+    return { unit_to_edit };
+}
+
+export default connect(mapStateToProps)(EditModalWrapped);
 
 
 

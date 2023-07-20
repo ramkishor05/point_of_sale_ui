@@ -3,49 +3,49 @@ import { connect } from 'react-redux';
 import { Grid, Button } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import { getJackpotByDate, addJackpot, editJackpot } from '../../actions';
+import { getAllUnits, addUnit, editUnit } from '../../actions';
 
-import { CustomDatepicker, RegularCard, JackpotTable, ItemGrid, CustomInput, Snackbar } from 'components';
+import { CustomDatepicker, RegularCard, UnitTable, ItemGrid, CustomInput, Snackbar } from 'components';
 
-import AddJackpotModal from './Modals/AddJackpot';
-import EditJackpotModal from './Modals/EditJackpot';
+import AddUnitModal from './Modals/AddUnit';
+import EditUnitModal from './Modals/EditUnit';
 
 
-class Jackpot extends Component {
+class Unit extends Component {
     state = {
         notificationGroup: 'add',
         from: '2018-05-21',
         to: '2018-05-21',
-        showAddJackpotModal: false,
-        showEditJackpotModal: false,
+        showAddUnitModal: false,
+        showEditUnitModal: false,
         tr: false,
         tc: false,
     };
 
     componentDidMount() {
-        this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getJackpots);
+        this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getUnits);
     }
 
     from = event => {
-        this.setState({ from: event.target.value }, this._getJackpots);
+        this.setState({ from: event.target.value }, this._getUnits);
     };
 
     to = event => {
-        this.setState({ to: event.target.value }, this._getJackpots);
+        this.setState({ to: event.target.value }, this._getUnits);
     };
 
     total = () => {
         let total = 0;
 
-        for (let jackpot of this.props.jackpots) {
-            total += Number(jackpot.amount);
+        for (let Unit of this.props.units) {
+            total += 1;
         }
 
         return total.toFixed(2);
     };
 
-    _getJackpots = () => {
-        this.props.getJackpotByDate(this.state.from, this.state.to);
+    _getUnits = () => {
+        this.props.getAllUnits();
     };
 
     dateNow = () => {
@@ -79,15 +79,15 @@ class Jackpot extends Component {
     notificationMessage = type => {
         if (type === 'success') {
             if (this.state.notificationGroup === 'add') {
-                return 'Jackpot added successfully';
+                return 'Unit added successfully';
             } else {
-                return 'Jackpot edited successfully';
+                return 'Unit edited successfully';
             }
         } else if (type === 'error') {
             if (this.state.notificationGroup === 'edit') {
-                return 'Error Jackpot could not be edited';
+                return 'Error Unit could not be edited';
             } else {
-                return 'Error Jackpot could not be added';
+                return 'Error Unit could not be added';
             }
         }
     };
@@ -110,12 +110,12 @@ class Jackpot extends Component {
                     <ItemGrid xs={12} sm={12} md={12}>
                         <RegularCard
                             padIt
-                            cardTitle="Jackpot"
-                            cardSubtitle="List of jackpot entries in the system"
+                            cardTitle="Unit"
+                            cardSubtitle="List of Unit entries in the system"
                             button={
                                 <Button 
                                     style={ styles.addTransactionButton } 
-                                    onClick={() => this.setState({ showAddJackpotModal: true, notificationGroup: 'add' })}>ADD JACKPOT</Button>
+                                    onClick={() => this.setState({ showAddUnitModal: true, notificationGroup: 'add' })}>ADD Unit</Button>
                             }
                             total={
                                 <div>
@@ -148,33 +148,33 @@ class Jackpot extends Component {
                                 </div>
                             }
                             content={
-                                <JackpotTable
+                                <UnitTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
-                                    tableData={this.props.jackpots}
-                                    editJackpot={() => this.setState({ showEditJackpotModal: true, notificationGroup: 'edit' })}
-                                    deleteJackpot={() => this.setState({ notificationGroup: 'delete' })}
-                                    getJackpots={this._getJackpots}
+                                    tableData={this.props.units}
+                                    editUnit={() => this.setState({ showEditUnitModal: true, notificationGroup: 'edit' })}
+                                    deleteUnit={() => this.setState({ notificationGroup: 'delete' })}
+                                    getUnits={this._getUnits}
                                 />
                             }
                         />
                     </ItemGrid>
                 </Grid>
 
-                <AddJackpotModal
-                    open={this.state.showAddJackpotModal}
-                    close={() => this.setState({ showAddJackpotModal: false })}
-                    addJackpot={this.props.addJackpot}
-                    refresh={this._getJackpots}
+                <AddUnitModal
+                    open={this.state.showAddUnitModal}
+                    close={() => this.setState({ showAddUnitModal: false })}
+                    addUnit={this.props.addUnit}
+                    refresh={this._getUnits}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
 
-                <EditJackpotModal
-                    open={this.state.showEditJackpotModal}
-                    close={() => this.setState({ showEditJackpotModal: false })}
-                    editJackpot={this.props.editJackpot}
-                    refresh={this._getJackpots}
+                <EditUnitModal
+                    open={this.state.showEditUnitModal}
+                    close={() => this.setState({ showEditUnitModal: false })}
+                    editUnit={this.props.editUnit}
+                    refresh={this._getUnits}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -234,9 +234,9 @@ const styles = {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { jackpots } = state.jackpots;
+    const { units } = state.units;
 
-    return { user, jackpots };
+    return { user, units };
 };
 
-export default connect(mapStateToProps, { getJackpotByDate, addJackpot, editJackpot })(Jackpot);
+export default connect(mapStateToProps, { getAllUnits, addUnit, editUnit })(Unit);

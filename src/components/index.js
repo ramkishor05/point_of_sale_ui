@@ -73,7 +73,7 @@ import Table from './Table/Table.jsx';
 import ItemsTable from './Table/Items.jsx';
 import SalesTable from './Table/Sales.jsx';
 import MobileMoneyTable from './Table/MobileMoney.jsx';
-import JackpotTable from './Table/Jackpot.jsx';
+import UnitTable from './Table/Unit.jsx';
 import FootballTable from './Table/Football.jsx';
 import CreditTransferTable from './Table/CreditTransfer.jsx';
 import UserProfileTable from './Table/UserProfile';
@@ -123,7 +123,7 @@ export {
     //Snackbar
     Snackbar, SnackbarContent,
     // Table
-    Table, ItemsTable, SalesTable, MobileMoneyTable, JackpotTable, FootballTable, CreditTransferTable, UserProfileTable, 
+    Table, ItemsTable, SalesTable, MobileMoneyTable, UnitTable, FootballTable, CreditTransferTable, UserProfileTable, 
     RecordsTable, FinishingItemsTable,
     // Tasks
     Tasks,

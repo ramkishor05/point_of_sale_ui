@@ -1,32 +1,37 @@
 import { axios } from './index';
 
+const UNIT_URL="http://localhost:3333/api/global/unit";
+const headers = {
+    'Content-Type': 'application/json',
+    'custAppId': 1
+  };
 export default {
     getAll() {
-        return axios.get('jackpots')
+        return axios.get(UNIT_URL,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
     getByDate(from, to) {
-        return axios.get('jackpots/filter', { params: {from, to} })
+        return axios.get(UNIT_URL+'/filter', { params: {from, to} })
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
-    add(jackpot) {
-        return axios.post('jackpots', jackpot)
+    add(unit) {
+        return axios.post(UNIT_URL, unit)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
-    update(id, jackpot) {
-        return axios.put(`jackpots/${id}`, jackpot)
+    update(id, unit) {
+        return axios.put(UNIT_URL+`/${id}`, unit)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
     delete(id) {
-        return axios.delete(`jackpots/${id}`)
+        return axios.delete(UNIT_URL+`/${id}`)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     }

@@ -7,7 +7,7 @@ import {
    EDIT_GLOBAL_CATEGERY_SUCCESS,
    RENDER_GLOBAL_CATEGERY_TO_EDIT
 } from './types';
-import Item from '../services/Item';
+import GlobalCategoryService from '../services/GlobalCategoryService';
 import ItemStock from '../services/ItemStock';
 
 // Action creator for getting all items --<
@@ -15,10 +15,10 @@ export const getGlobalCategoryList = () => async dispatch => {
     dispatch({ type: SHOW_GLOBAL_CATEGERY_LOADER });
 
     try {
-        const items = await Item.getAll();
+        const globalCategoryList = await GlobalCategoryService.getAll();
 
-        if (items) {
-            dispatch({ type: GET_ALL_GLOBAL_CATEGERY_SUCCESS, payload: items });
+        if (globalCategoryList) {
+            dispatch({ type: GET_ALL_GLOBAL_CATEGERY_SUCCESS, payload: globalCategoryList });
             dispatch({ type: REMOVE_GLOBAL_CATEGERY_LOADER });
         }
     } catch(error) {
@@ -33,9 +33,9 @@ export const addGlobalCategory = (data, refreshItemsList, clear, successNotifica
     dispatch({ type: SHOW_GLOBAL_CATEGERY_LOADER });
 
     try {
-        const item = await Item.add(data);
+        const globalCategory = await GlobalCategoryService.add(data);
 
-        if (item) {
+        if (globalCategory) {
             dispatch({ type: ADD_GLOBAL_CATEGERY_SUCCESS });
             dispatch({ type: REMOVE_GLOBAL_CATEGERY_LOADER });
         }
@@ -66,9 +66,9 @@ export const editGlobalCategory = (id, data, clearAndRefresh, successNotificatio
     dispatch({ type: SHOW_GLOBAL_CATEGERY_LOADER });
 
     try {
-        const item = await Item.update(id, data);
+        const globalCategory = await GlobalCategoryService.update(id, data);
 
-        if (item) {
+        if (globalCategory) {
             dispatch({ type: EDIT_GLOBAL_CATEGERY_SUCCESS });
             dispatch({ type: REMOVE_GLOBAL_CATEGERY_LOADER });
             
@@ -86,9 +86,9 @@ export const updateGlobalCategory = (id, data, clearAndRefresh, successNotificat
     dispatch({ type: SHOW_GLOBAL_CATEGERY_LOADER });
 
     try {
-        const item = await ItemStock.update(id, data);
+        const globalCategory = await GlobalCategoryService.update(id, data);
 
-        if (item) {
+        if (globalCategory) {
             dispatch({ type: EDIT_GLOBAL_CATEGERY_SUCCESS });
             dispatch({ type: REMOVE_GLOBAL_CATEGERY_LOADER });
             

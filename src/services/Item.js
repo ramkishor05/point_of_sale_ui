@@ -1,9 +1,13 @@
 import { axios } from './index';
 
-const ITEM_URL="http://localhost:3333/api/cust/"
+const ITEM_URL="http://localhost:3333/api/cust/product";
+const headers = {
+    'Content-Type': 'application/json',
+    'custAppId': 1
+  };
 export default {
     getAll() {
-        return axios.get(ITEM_URL+'product/1')
+        return axios.get(ITEM_URL,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
@@ -13,18 +17,19 @@ export default {
                     .catch(error => Promise.reject(error.response.data));
     },
     add(item) {
-        return axios.post(ITEM_URL+'product/1', item)
+        
+        return axios.post(ITEM_URL,{headers: headers}, item)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
     update(id, item) {
         item['id']=id;
-        return axios.put(ITEM_URL+`product/1`, item)
+        return axios.put(ITEM_URL, item,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
     delete(id) {
-        return axios.delete(ITEM_URL+`product/${id}`)
+        return axios.delete(ITEM_URL+`/${id}`)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     }

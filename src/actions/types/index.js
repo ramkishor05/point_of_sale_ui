@@ -8,7 +8,7 @@ export * from './loaderActionTypes';
 
 export * from './mobileMoneyActionTypes';
 
-export * from './jackpotActionTypes';
+export * from './custUnitActionTypes';
 
 export * from './footballActionTypes';
 

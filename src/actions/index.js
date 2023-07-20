@@ -8,7 +8,7 @@ export * from './saleActions';
 
 export * from './mobileMoneyActions';
 
-export * from './jackpotActions';
+export * from './custUnitActions';
 
 export * from './footballActions';
 

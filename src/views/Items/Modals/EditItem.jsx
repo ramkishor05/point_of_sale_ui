@@ -77,12 +77,14 @@ class EditItem extends Component {
     };
 
     _editItem = () => {
+        this.state.id=this.props.edit_item.id;
         const 
-            id = this.props.edit_item.id,
-            name = this.props.edit_item.name,
+            id = this.state.id,
+            name = this.state.name,
             retailPrice = this.props.edit_item.retailPrice;
-          
-        if (id && name && Number(retailPrice) && (Number(retailPrice) || Number(retailPrice) === 0)) {
+          console.log('this.props.edit_item=', this.props.edit_item)
+          console.log('this.state=', this.state)
+        if (id && name) {
             this.props.editItem(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
@@ -119,8 +121,8 @@ class EditItem extends Component {
                                                     id="item-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setItemName }
-                                                    defaultValue={ edit_item.name }
+                                                    onChange={ this._setItemTitle }
+                                                    defaultValue={ edit_item.title }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
