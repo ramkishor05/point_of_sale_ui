@@ -2,9 +2,7 @@ export const GET_ALL_GLOBAL_CATEGERY_SUCCESS = 'get_all_global_category_success'
 export const GET_ALL_GLOBAL_CATEGERY_FAIL = 'get_all_global_category_fail';
 
 export const GET_GLOBAL_CATEGERY_TODAY_SUCCESS = 'get_global_category_today_success';
-
 export const GET_GLOBAL_CATEGERY_YESTERDAY_SUCCESS = 'get_global_category_yesterday_success';
-
 export const GET_GLOBAL_CATEGERY_LONG_SUCCESS = 'get_global_category_long_success';
 
 export const ADD_GLOBAL_CATEGERY_SUCCESS = 'add_global_category_success';

@@ -2,11 +2,11 @@
 // // // Cards
 // #############################
 
-import ChartCard from './Cards/ChartCard.jsx';
-import ProfileCard from './Cards/ProfileCard.jsx';
-import RegularCard from './Cards/RegularCard.jsx';
-import StatsCard from './Cards/StatsCard.jsx';
-import TasksCard from './Cards/TasksCard.jsx';
+import ChartCard from './CustomButtons/Cards/ChartCard.jsx';
+import ProfileCard from './CustomButtons/Cards/ProfileCard.jsx';
+import RegularCard from './CustomButtons/Cards/RegularCard.jsx';
+import StatsCard from './CustomButtons/Cards/StatsCard.jsx';
+import TasksCard from './CustomButtons/Cards/TasksCard.jsx';
 
 // ##############################
 // // // CustomButtons
@@ -70,13 +70,14 @@ import SnackbarContent from './Snackbar/SnackbarContent.jsx';
 // #############################
 
 import Table from './Table/Table.jsx';
-import ItemsTable from './Table/Items.jsx';
+import ItemsTable from './Table/ItemsTable.jsx';
 import SalesTable from './Table/Sales.jsx';
 import MobileMoneyTable from './Table/MobileMoney.jsx';
-import UnitTable from './Table/Unit.jsx';
-import FootballTable from './Table/Football.jsx';
+import GlobalUnitTable from './Table/GlobalUnitTable.jsx';
+import GlobalCountFreqTable from './Table/GlobalCountFreqTable.jsx';
+import GlobalCategoryTable from './Table/GlobalCategoryTable.jsx';
 import CreditTransferTable from './Table/CreditTransfer.jsx';
-import UserProfileTable from './Table/UserProfile';
+import UserProfileTable from './Table/UserProfileTable.jsx';
 import RecordsTable from './Table/Records';
 import FinishingItemsTable from './Table/FinishingItems';
 
@@ -123,7 +124,7 @@ export {
     //Snackbar
     Snackbar, SnackbarContent,
     // Table
-    Table, ItemsTable, SalesTable, MobileMoneyTable, UnitTable, FootballTable, CreditTransferTable, UserProfileTable, 
+    Table, ItemsTable, SalesTable, MobileMoneyTable, GlobalUnitTable, GlobalCategoryTable,GlobalCountFreqTable, CreditTransferTable, UserProfileTable, 
     RecordsTable, FinishingItemsTable,
     // Tasks
     Tasks,

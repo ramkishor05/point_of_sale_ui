@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const WIFI = `192.168.8.107`;
+const WIFI = `192.168.29.222`;
 
 // Setup the baseURL or api endpoint
 export const axios = Axios.create({

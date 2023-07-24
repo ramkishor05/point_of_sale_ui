@@ -15,3 +15,5 @@ export * from './footballActionTypes';
 export * from './creditTransferActionTypes';
 
 export * from './getGlobalCategoryActionTypes';
+
+export * from './getGlobalCountFreqActionTypes';

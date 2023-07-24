@@ -1,43 +1,41 @@
-import { axios } from './index';
+import { axios } from '../index';
+
 const hostname = `192.168.29.222`;
 
-var endpoint = `http://${hostname}:2222/api/authentication/`;
+const UNIT_URL=`http://${hostname}:3333/api/global/unit`;
 
+const headers = {
+    'Content-Type': 'application/json',
+    'custAppId': 1
+  };
 export default {
-    
-    getRoles() {
-        return axios.get('roles')
-            .then(response => Promise.resolve(response.data))
-            .catch(error => Promise.reject(error.response.data));
-    },
-
-    getUsers() {
-        return axios.get('users')
+    getAll() {
+        return axios.get(UNIT_URL,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
-    update(id, data) {
-        return axios.put(`users/${id}`, data)
+    getByDate(from, to) {
+        return axios.get(UNIT_URL+'/filter', { params: {from, to} })
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
-    register(user) {
-        return axios.post('users/register', user)
+    add(unit) {
+        return axios.post(UNIT_URL, unit)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
-    authenticate(user) {
-        return axios.post(endpoint+'token/generate', user)
+    update(id, unit) {
+        return axios.put(UNIT_URL+`/${id}`, unit)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
     delete(id) {
-        return axios.delete(`users/${id}`)
+        return axios.delete(UNIT_URL+`/${id}`)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
-    },
+    }
 };

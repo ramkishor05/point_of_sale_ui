@@ -1,43 +1,33 @@
-import { axios } from './index';
-const hostname = `192.168.29.222`;
-
-var endpoint = `http://${hostname}:2222/api/authentication/`;
+import { axios } from '../index';
 
 export default {
-    
-    getRoles() {
-        return axios.get('roles')
-            .then(response => Promise.resolve(response.data))
-            .catch(error => Promise.reject(error.response.data));
+    getAll() {
+        return axios.get('footballs')
+                    .then(response => Promise.resolve(response.data))
+                    .catch(error => Promise.reject(error.response.data));
     },
 
-    getUsers() {
-        return axios.get('users')
+    getByDate(from, to) {
+        return axios.get('footballs/filter', { params: { from, to } })
+                    .then(response => Promise.resolve(response.data))
+                    .catch(error => Promise.reject(error.response.data));
+    },
+
+    add(data) {
+        return axios.post('footballs', data)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
     update(id, data) {
-        return axios.put(`users/${id}`, data)
-                    .then(response => Promise.resolve(response.data))
-                    .catch(error => Promise.reject(error.response.data));
-    },
-
-    register(user) {
-        return axios.post('users/register', user)
-                    .then(response => Promise.resolve(response.data))
-                    .catch(error => Promise.reject(error.response.data));
-    },
-
-    authenticate(user) {
-        return axios.post(endpoint+'token/generate', user)
+        return axios.put(`footballs/${id}`, data)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
     delete(id) {
-        return axios.delete(`users/${id}`)
+        return axios.delete(`footballs/${id}`)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
-    },
+    }
 };
