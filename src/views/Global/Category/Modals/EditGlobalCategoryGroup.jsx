@@ -4,15 +4,14 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
-import { editGlobalCategory } from '../../../../actions';
-
-class EditGlobalCategory extends Component {
+import { editGlobalCategoryGroup } from '../../../../actions';
+const units =[{'id' : 1, 'name':'KGS'}];
+class EditGlobalCategoryGroup extends Component {
     state = {
         id: '',
         name: '',
         desc: '',
-        typeId: '',
-        glbCategoryGroupId: 0
+        typeId: ''
     };
 
     getModalStyle() {
@@ -38,18 +37,14 @@ class EditGlobalCategory extends Component {
         this.setState({ typeId: event.target.value });
     };
 
-    _setCategoryGroupId = event => {
-        this.setState({ glbCategoryGroupId: event.target.value });
-    };
-
-    _editGlobalCategory = () => {
+    _editGlobalCategoryGroup = () => {
         const 
-            id = this.props.globalCategory_to_edit.id,
-            name = this.props.globalCategory_to_edit.name,
-            desc = this.props.globalCategory_to_edit.desc;
+            id = this.props.GlobalCategoryGroup_to_edit.id,
+            name = this.props.GlobalCategoryGroup_to_edit.name,
+            desc = this.props.GlobalCategoryGroup_to_edit.desc;
           
         if (id && name && desc) {
-            this.props.editGlobalCategory(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+            this.props.editGlobalCategoryGroup(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -61,11 +56,11 @@ class EditGlobalCategory extends Component {
     }
     
     render() {
-        const { classes, open, close, globalCategory_to_edit } = this.props;
+        const { classes, open, close, GlobalCategoryGroup_to_edit } = this.props;
         return (
             <Modal
-                aria-labelledby="Edit category"
-                aria-describedby="Modal for editing category"
+                aria-labelledby="Edit category group"
+                aria-describedby="Modal for editing category group"
                 open={open}
                 onClose={close}
             >
@@ -73,54 +68,43 @@ class EditGlobalCategory extends Component {
                     <Grid container>
                         <ItemGrid xs={12} sm={12} md={12}>
                             <RegularCard
-                                cardTitle="EDIT category"
-                                cardSubtitle="Edit the form below to edit the selected category"
+                                cardTitle="EDIT category group"
+                                cardSubtitle="Edit the form below to edit the selected category group"
                                 content={
                                     <div>
                                         <Grid container>
-                                           <ItemGrid xs={4} sm={4} md={4}>
-                                                <CustomInput
-                                                    autoFocus
-                                                    labelText="Group"
-                                                    id="category-group-id"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="text"
-                                                    onChange={ this._setCategoryGroupId }
-                                                    value={ globalCategory_to_edit.glbCategoryGroupId }
-                                                    defaultValue={ globalCategory_to_edit.glbCategoryGroupId }
-                                                />
-                                            </ItemGrid>
+                                           
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Name"
-                                                    id="category-name"
+                                                    id="category-group-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ globalCategory_to_edit.name }
+                                                    defaultValue={ GlobalCategoryGroup_to_edit.name }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
-                                                    labelText="Discription"
-                                                    id="category-desc"
+                                                    labelText="Item name"
+                                                    id="category-group-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setDesc }
-                                                    defaultValue={ globalCategory_to_edit.desc }
+                                                    defaultValue={ GlobalCategoryGroup_to_edit.desc }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Type Id"
-                                                    id="category-type-id"
+                                                    id="category-group-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setTypeId }
-                                                    defaultValue={ globalCategory_to_edit.typeId }
+                                                    defaultValue={ GlobalCategoryGroup_to_edit.desc }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -132,7 +116,7 @@ class EditGlobalCategory extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._editGlobalCategory}>Edit</Button>
+                                        onClick={this._editGlobalCategoryGroup}>Edit</Button>
                                 }
                             />
                         </ItemGrid>
@@ -154,10 +138,10 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { globalCategory_to_edit } = state.globalCategoryList;
-    return { globalCategory_to_edit };
+    const { GlobalCategoryGroup_to_edit } = state.GlobalCategoryGroupList;
+    return { GlobalCategoryGroup_to_edit };
 };
 
-const EditModalWrapped = withStyles(styles)(EditGlobalCategory);
+const EditModalWrapped = withStyles(styles)(EditGlobalCategoryGroup);
 
-export default connect(mapStateToProps, { editGlobalCategory })(EditModalWrapped);
+export default connect(mapStateToProps, { editGlobalCategoryGroup })(EditModalWrapped);

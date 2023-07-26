@@ -6,10 +6,11 @@ import GlobalCountFreq from "views/Global/CountFreq/GlobalCountFreq.jsx";
 import {
     Dashboard, Person, LocalDrink, LibraryBooks, BubbleChart, Notifications, PhoneIphone
 } from 'material-ui-icons';
+import GlobalCategoryGroup from "../views/Global/Category/GlobalCategoryGroup";
 
 const appRoutes = 
  [
-    { path: "/globalcategorygroup", sidebarName: "Global Category Group", navbarName: "globalCategoryList", icon: LibraryBooks, component: GlobalCategory },
+    { path: "/globalcategorygroup", sidebarName: "Global Category Group", navbarName: "globalCategoryList", icon: LibraryBooks, component: GlobalCategoryGroup },
     { path: "/globalcategory", sidebarName: "Global Category", navbarName: "globalCategoryGroupList", icon: PhoneIphone, component: GlobalCategory },
     { path: "/globalunitgroup", sidebarName: "Global Unit Groups", navbarName: "GlobalUnitGroups", icon: BubbleChart, component: GlobalUnit },
     { path: "/globalunit", sidebarName: "Global Units", navbarName: "GlobalUnits", icon: BubbleChart, component: GlobalUnit },
