@@ -6,12 +6,12 @@ import Moment from 'moment';
 
 import { tableStyle } from 'variables/styles';
 
-import { renderGlobalUnitToEdit, deleteGlobalUnit } from '../../actions';
+import { deleteGlobalCategoryGroup, renderGlobalCategoryGroupToEdit } from '../../actions';
 
-class GlobalUnitTable extends React.Component {
+class GlobalCategoryGroupTable extends React.Component {
     // Check if the user is super admin.
     isSuperAdmin = () => {
-        return true;//this.props.user.role.name === 'super_admin';
+        return  true;//this.props.user.role.name === 'super_admin';
     };
 
     _renderDate(value) {
@@ -20,14 +20,15 @@ class GlobalUnitTable extends React.Component {
         return date.isValid() ? date.format('ddd Do MMMM, YYYY hh:mm:ss:A') : value;
     }
 
-    _renderToGlobalEdit = prop => {
-        this.props.renderGlobalUnitToEdit(prop);
-        this.props.editGlobalUnit();
-    }
+    _renderToEdit = prop => {
+        this.props.renderGlobalCategoryGroupToEdit(prop);
+        this.props.editGlobalCategoryGroup();
+    };
 
-    deleteGlobalUnit = id => {
-        if (window.confirm("Are you sure you want to delete this Unit transaction?")) {
-            this.props.deleteGlobalUnit(id, this.props.getGlobalUnits);
+    deleteGlobalCategory = prop => {
+        if (window.confirm("Are you sure you want to delete this GlobalCategory transaction?")) {
+            this.props.deleteGlobalCategoryGroup(prop.id, this.props.getGlobalCategoryGroupList);
+            this.props.renderGlobalCategoryGroupToEdit(prop);
         }
     };
 
@@ -42,25 +43,22 @@ class GlobalUnitTable extends React.Component {
                         { prop.id }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
+                        { prop.logo }
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
                         { prop.name }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.displayName }
+                        { prop.desc }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.shortDesc }
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { prop.longDesc }
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { prop.group? prop.group.name : ''}
+                        { prop.typeId }
                     </TableCell>
                     {
                         this.isSuperAdmin() && (
                             <TableCell className={classes.tableCell}>
-                                <Button style={ styles.updateButton } onClick={() => this._renderToGlobalEdit(prop)}>Edit</Button>
-                                <Button style={ styles.deleteButton } onClick={() => this.deleteGlobalUnit(prop.id)} >Delete</Button>
+                                <Button style={ styles.updateButton } onClick={() => this._renderToEdit(prop)}>Edit</Button>
+                                <Button style={ styles.deleteButton } onClick={() => this.deleteGlobalCategoryGroup(prop)} >Delete</Button>
                             </TableCell>
                         )
                     }
@@ -71,36 +69,36 @@ class GlobalUnitTable extends React.Component {
 
     render() {
         const { classes, tableHead, tableData, tableHeaderColor } = this.props;
-        
         return (
             <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
                     {
-                        tableHead !== undefined && (
-                            <TableHead className={classes[tableHeaderColor+"TableHeader"]}>
-                                <TableRow>
-                                    {
-                                        tableHead.map((prop, key) => {
-                                            return (
-                                                <TableCell
-                                                    className={classes.tableCell + " " + classes.tableHeadCell}
-                                                    key={key}>
-                                                    {prop}
-                                                </TableCell>
-                                            );
-                                        })
-                                    }
-                                </TableRow>
-                            </TableHead>
-                        )
+                        tableHead !== undefined 
+                            ? (
+                                <TableHead className={classes[tableHeaderColor+"TableHeader"]}>
+                                    <TableRow>
+                                        {
+                                            tableHead.map((prop, key) => {
+                                                return (
+                                                    <TableCell
+                                                        className={classes.tableCell + " " + classes.tableHeadCell}
+                                                        key={key}>
+                                                        {prop}
+                                                    </TableCell>
+                                                );
+                                            })
+                                        }
+                                    </TableRow>
+                                </TableHead>
+                            )
+                            : null
                     }
 
                     {
-                        tableData && (
+                        tableData &&
                             <TableBody>
                                 { this._renderTableData() }
                             </TableBody>
-                        )
                     }
                 </Table>
             </div>
@@ -108,15 +106,15 @@ class GlobalUnitTable extends React.Component {
     }
 }
 
-GlobalUnitTable.defaultProps = {
+GlobalCategoryGroupTable.defaultProps = {
     tableHeaderColor: 'gray'
 }
 
-GlobalUnitTable.propTypes = {
+GlobalCategoryGroupTable.propTypes = {
     classes: PropTypes.object.isRequired,
     tableHeaderColor: PropTypes.oneOf(['warning','primary','danger','success','info','rose','gray']),
     tableHead: PropTypes.arrayOf(PropTypes.string),
-    tableData: PropTypes.arrayOf(PropTypes.object)
+    tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const styles = {
@@ -130,11 +128,11 @@ const styles = {
     }
 };
 
-const wrappedTable = withStyles(tableStyle)(GlobalUnitTable);
+const wrappedTable = withStyles(tableStyle)(GlobalCategoryGroupTable);
 
 const mapStateToProps = state => {
     const { user } = state.users;
     return { user };
 };
 
-export default connect(mapStateToProps, { renderGlobalUnitToEdit, deleteGlobalUnit })(wrappedTable);
+export default connect(mapStateToProps, { deleteGlobalCategoryGroup, renderGlobalCategoryGroupToEdit })(wrappedTable);

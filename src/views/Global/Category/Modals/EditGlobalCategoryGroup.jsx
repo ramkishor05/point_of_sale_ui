@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
-import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
+import { RegularCard, ItemGrid, CustomInput} from 'components';
 
 import { editGlobalCategoryGroup } from '../../../../actions';
-const units =[{'id' : 1, 'name':'KGS'}];
+
 class EditGlobalCategoryGroup extends Component {
     state = {
         id: '',
@@ -39,9 +39,9 @@ class EditGlobalCategoryGroup extends Component {
 
     _editGlobalCategoryGroup = () => {
         const 
-            id = this.props.GlobalCategoryGroup_to_edit.id,
-            name = this.props.GlobalCategoryGroup_to_edit.name,
-            desc = this.props.GlobalCategoryGroup_to_edit.desc;
+            id = this.props.globalCategoryGroup_to_edit.id,
+            name = this.props.globalCategoryGroup_to_edit.name,
+            desc = this.props.globalCategoryGroup_to_edit.desc;
           
         if (id && name && desc) {
             this.props.editGlobalCategoryGroup(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
@@ -56,7 +56,7 @@ class EditGlobalCategoryGroup extends Component {
     }
     
     render() {
-        const { classes, open, close, GlobalCategoryGroup_to_edit } = this.props;
+        const { classes, open, close, globalCategoryGroup_to_edit } = this.props;
         return (
             <Modal
                 aria-labelledby="Edit category group"
@@ -82,7 +82,7 @@ class EditGlobalCategoryGroup extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ GlobalCategoryGroup_to_edit.name }
+                                                    defaultValue={ globalCategoryGroup_to_edit.name }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
@@ -93,7 +93,7 @@ class EditGlobalCategoryGroup extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setDesc }
-                                                    defaultValue={ GlobalCategoryGroup_to_edit.desc }
+                                                    defaultValue={ globalCategoryGroup_to_edit.desc }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
@@ -104,7 +104,7 @@ class EditGlobalCategoryGroup extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setTypeId }
-                                                    defaultValue={ GlobalCategoryGroup_to_edit.desc }
+                                                    defaultValue={ globalCategoryGroup_to_edit.desc }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -138,8 +138,8 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { GlobalCategoryGroup_to_edit } = state.GlobalCategoryGroupList;
-    return { GlobalCategoryGroup_to_edit };
+    const { globalCategoryGroup_to_edit } = state.globalCategoryGroupList;
+    return { globalCategoryGroup_to_edit };
 };
 
 const EditModalWrapped = withStyles(styles)(EditGlobalCategoryGroup);

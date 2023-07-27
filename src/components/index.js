@@ -73,8 +73,10 @@ import Table from './Table/Table.jsx';
 import ItemsTable from './Table/ItemsTable.jsx';
 import SalesTable from './Table/Sales.jsx';
 import MobileMoneyTable from './Table/MobileMoney.jsx';
+
 import GlobalUnitTable from './Table/GlobalUnitTable.jsx';
 import GlobalCountFreqTable from './Table/GlobalCountFreqTable.jsx';
+import GlobalCategoryGroupTable from './Table/GlobalCategoryGroupTable.jsx';
 import GlobalCategoryTable from './Table/GlobalCategoryTable.jsx';
 import CreditTransferTable from './Table/CreditTransfer.jsx';
 import UserProfileTable from './Table/UserProfileTable.jsx';
@@ -124,7 +126,7 @@ export {
     //Snackbar
     Snackbar, SnackbarContent,
     // Table
-    Table, ItemsTable, SalesTable, MobileMoneyTable, GlobalUnitTable, GlobalCategoryTable,GlobalCountFreqTable, CreditTransferTable, UserProfileTable, 
+    Table, ItemsTable, SalesTable, MobileMoneyTable, GlobalUnitTable,GlobalCategoryGroupTable, GlobalCategoryTable,GlobalCountFreqTable, CreditTransferTable, UserProfileTable, 
     RecordsTable, FinishingItemsTable,
     // Tasks
     Tasks,

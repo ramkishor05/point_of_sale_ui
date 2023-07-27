@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Button } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import { getAllUnits, addUnit, editUnit } from 'actions';
+import { getAllGlobalUnits, addGlobalUnit, editGlobalUnit } from 'actions';
 
 import { CustomDatepicker, RegularCard, GlobalUnitTable, ItemGrid, CustomInput, Snackbar } from 'components';
 
@@ -22,29 +22,29 @@ class GlobalUnit extends Component {
     };
 
     componentDidMount() {
-        this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getUnits);
+        this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getGlobalUnits);
     }
 
     from = event => {
-        this.setState({ from: event.target.value }, this._getUnits);
+        this.setState({ from: event.target.value }, this._getGlobalUnits);
     };
 
     to = event => {
-        this.setState({ to: event.target.value }, this._getUnits);
+        this.setState({ to: event.target.value }, this._getGlobalUnits);
     };
 
     total = () => {
         let total = 0;
 
-        for (let Unit of this.props.units) {
+        for (let Unit of this.props.globalUnits) {
             total += 1;
         }
 
         return total.toFixed(2);
     };
 
-    _getUnits = () => {
-        this.props.getAllUnits();
+    _getGlobalUnits = () => {
+        this.props.getAllGlobalUnits();
     };
 
     dateNow = () => {
@@ -150,10 +150,10 @@ class GlobalUnit extends Component {
                                 <GlobalUnitTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
-                                    tableData={this.props.units}
-                                    editUnit={() => this.setState({ showEditUnitModal: true, notificationGroup: 'edit' })}
-                                    deleteUnit={() => this.setState({ notificationGroup: 'delete' })}
-                                    getUnits={this._getUnits}
+                                    tableData={this.props.globalUnits}
+                                    editGlobalUnit={() => this.setState({ showEditUnitModal: true, notificationGroup: 'edit' })}
+                                    deleteGlobalUnit={() => this.setState({ notificationGroup: 'delete' })}
+                                    getGlobalUnits={this._getGlobalUnits}
                                 />
                             }
                         />
@@ -163,8 +163,8 @@ class GlobalUnit extends Component {
                 <AddGlobalUnitModal
                     open={this.state.showAddUnitModal}
                     close={() => this.setState({ showAddUnitModal: false })}
-                    addUnit={this.props.addUnit}
-                    refresh={this._getUnits}
+                    addUnit={this.props.addGlobalUnit}
+                    refresh={this._getGlobalUnits}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -172,8 +172,8 @@ class GlobalUnit extends Component {
                 <EditGlobalUnitModal
                     open={this.state.showEditUnitModal}
                     close={() => this.setState({ showEditUnitModal: false })}
-                    editUnit={this.props.editUnit}
-                    refresh={this._getUnits}
+                    editUnit={this.props.editGlobalUnit}
+                    refresh={this._getGlobalUnits}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -233,9 +233,9 @@ const styles = {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { units } = state.units;
+    const { globalUnits } = state.globalUnits;
 
-    return { user, units };
+    return { user, globalUnits };
 };
 
-export default connect(mapStateToProps, { getAllUnits, addUnit, editUnit })(GlobalUnit);
+export default connect(mapStateToProps, { getAllGlobalUnits, addGlobalUnit, editGlobalUnit })(GlobalUnit);

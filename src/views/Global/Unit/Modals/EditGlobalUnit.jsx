@@ -9,7 +9,7 @@ const groupUnits =[{'id' : 1, 'name':'LB'}];
 const groupUnitMap ={1:{'id' : 1, 'name':'LB'}};
 
 class EditGlobalUnit extends Component {
-    state = {...this.props.unit_to_edit};
+    state = {...this.props.globalUnit_to_edit};
 
     _setName = event => {
         this.setState({ name: event.target.value });
@@ -36,15 +36,15 @@ class EditGlobalUnit extends Component {
     };
 
     _clear = () => {
-        this.setState(this.props.unit_to_edit);
+        this.setState(this.props.globalUnit_to_edit);
         this.props.close();
     };
 
-    _editUnit = () => {        
-        let id = this.props.unit_to_edit.id,
-        name = this.state.name || this.props.unit_to_edit.name
+    _editGlobalUnit = () => {        
+        let id = this.props.globalUnit_to_edit.id,
+        name = this.state.name || this.props.globalUnit_to_edit.name
         if (id && name ) {
-            this.props.editUnit(id, this.state, this.props.refresh, this._clear, this.props.successNotification, this.props.errorNotification);
+            this.props.editGlobalUnit(id, this.state, this.props.refresh, this._clear, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -62,7 +62,7 @@ class EditGlobalUnit extends Component {
     }
     
     render() {
-        const { classes, open, close, unit_to_edit } = this.props;
+        const { classes, open, close, globalUnit_to_edit } = this.props;
         return (
             <Modal
                 aria-labelledby="Edit Unit"
@@ -86,9 +86,9 @@ class EditGlobalUnit extends Component {
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setGroupId }
-                                                    defaultValue={ groupUnitMap[unit_to_edit.unitGroupId]? groupUnitMap[unit_to_edit.unitGroupId].name : '' }
+                                                    defaultValue={ groupUnitMap[globalUnit_to_edit.unitGroupId]? groupUnitMap[globalUnit_to_edit.unitGroupId].name : '' }
                                                     items= {groupUnits}
-                                                    value={ groupUnitMap[unit_to_edit.unitGroupId]? groupUnitMap[unit_to_edit.unitGroupId].name : ''}
+                                                    value={ groupUnitMap[globalUnit_to_edit.unitGroupId]? groupUnitMap[globalUnit_to_edit.unitGroupId].name : ''}
                                                 ></CustomSelect>
                                             </ItemGrid>
                                         </Grid>
@@ -101,7 +101,7 @@ class EditGlobalUnit extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ unit_to_edit.name }
+                                                    defaultValue={ globalUnit_to_edit.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -113,7 +113,7 @@ class EditGlobalUnit extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setDisplayName }
-                                                    defaultValue={ unit_to_edit.displayName }
+                                                    defaultValue={ globalUnit_to_edit.displayName }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -125,7 +125,7 @@ class EditGlobalUnit extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setLongDesc }
-                                                    defaultValue={ unit_to_edit.longDesc }
+                                                    defaultValue={ globalUnit_to_edit.longDesc }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -137,7 +137,7 @@ class EditGlobalUnit extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setShortDesc }
-                                                    defaultValue={ unit_to_edit.shortDesc }
+                                                    defaultValue={ globalUnit_to_edit.shortDesc }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -149,7 +149,7 @@ class EditGlobalUnit extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setTypeId }
-                                                    defaultValue={ unit_to_edit.typeId }
+                                                    defaultValue={ globalUnit_to_edit.typeId }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -160,7 +160,7 @@ class EditGlobalUnit extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._editUnit}>Edit</Button>
+                                        onClick={this._editGlobalUnit}>Edit</Button>
                                 }
                             />
                         </ItemGrid>
@@ -183,8 +183,8 @@ const styles = theme => ({
 const EditModalWrapped = withStyles(styles)(EditGlobalUnit);
 
 const mapStateToProps = state => {
-    const { unit_to_edit } = state.units;
-    return { unit_to_edit };
+    const { globalUnit_to_edit } = state.globalUnits;
+    return { globalUnit_to_edit };
 }
 
 export default connect(mapStateToProps)(EditModalWrapped);

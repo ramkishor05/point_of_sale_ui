@@ -2,16 +2,16 @@
 import GlobalCategory from "views/Global/Category/GlobalCategory.jsx";
 import GlobalUnit from "views/Global/Unit/GlobalUnit.jsx";
 import GlobalCountFreq from "views/Global/CountFreq/GlobalCountFreq.jsx";
+import GlobalCategoryGroup from "../views/Global/Category/GlobalCategoryGroup";
 
 import {
     Dashboard, Person, LocalDrink, LibraryBooks, BubbleChart, Notifications, PhoneIphone
 } from 'material-ui-icons';
-import GlobalCategoryGroup from "../views/Global/Category/GlobalCategoryGroup";
 
 const appRoutes = 
  [
-    { path: "/globalcategorygroup", sidebarName: "Global Category Group", navbarName: "globalCategoryList", icon: LibraryBooks, component: GlobalCategoryGroup },
-    { path: "/globalcategory", sidebarName: "Global Category", navbarName: "globalCategoryGroupList", icon: PhoneIphone, component: GlobalCategory },
+    { path: "/globalcategorygroup", sidebarName: "Global Category Group", navbarName: "GlobalCategoryList", icon: LibraryBooks, component: GlobalCategoryGroup },
+    { path: "/globalcategory", sidebarName: "Global Category", navbarName: "GlobalCategoryGroupList", icon: PhoneIphone, component: GlobalCategory },
     { path: "/globalunitgroup", sidebarName: "Global Unit Groups", navbarName: "GlobalUnitGroups", icon: BubbleChart, component: GlobalUnit },
     { path: "/globalunit", sidebarName: "Global Units", navbarName: "GlobalUnits", icon: BubbleChart, component: GlobalUnit },
     { path: "/globalcountfreq", sidebarName: "Global Freq", navbarName: "Global Freq", icon: PhoneIphone, component: GlobalCountFreq },
