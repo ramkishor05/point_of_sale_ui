@@ -1,6 +1,8 @@
 import { axios } from '../index';
-const hostname = `192.168.29.222`;
-const GLOBAL_CATEGORY_URL=`http://${hostname}:3333/api/global/category`
+import { PRODUCTION_BASE_URL} from '../../globals/constants'
+
+const GLOBAL_CATEGORY_URL=`${PRODUCTION_BASE_URL}/api/global/category`;
+
 export default {
     getAll() {
         return axios.get(GLOBAL_CATEGORY_URL)

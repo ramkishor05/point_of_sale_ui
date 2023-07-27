@@ -116,7 +116,7 @@ class AddGlobalCategoryGroup extends Component {
                                     <Button
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._addItem}>Add</Button>
+                                        onClick={this._addGlobalCategoryGroup}>Add</Button>
                                 }
                             />
                         </ItemGrid>

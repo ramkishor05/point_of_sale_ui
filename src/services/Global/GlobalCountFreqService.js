@@ -1,8 +1,8 @@
 import { axios } from '../index';
 
-const hostname = `192.168.29.222`;
+import { PRODUCTION_BASE_URL} from '../../globals/constants'
 
-const GLOBAL_COUNT_FREQ_URL=`http://${hostname}:3333/api/global/countfreq`
+const GLOBAL_COUNT_FREQ_URL=`${PRODUCTION_BASE_URL}/api/global/countfreq`
 
 export default {
     getAll() {

@@ -1,0 +1,1 @@
+export const PRODUCTION_BASE_URL = `http://localhost:3333`;

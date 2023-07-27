@@ -1,8 +1,8 @@
 import { axios } from '../index';
 
-const hostname = `192.168.29.222`;
+import { PRODUCTION_BASE_URL} from '../../globals/constants'
 
-const GLOBAL_UNIT_URL=`http://${hostname}:3333/api/global/unit`;
+const GLOBAL_UNIT_URL=`${PRODUCTION_BASE_URL}/api/global/unit`;
 
 const headers = {
     'Content-Type': 'application/json',
