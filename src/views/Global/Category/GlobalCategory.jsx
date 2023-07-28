@@ -33,8 +33,8 @@ class GlobalCategory extends Component {
 
     tableHead = () => {
         return this.isSuperAdmin()
-            ? ['Iden No.','Logo','Name', 'Description', 'Type', 'Actions']
-            : ['Iden No.','Logo','Name', 'Description', 'Type',  'Actions']
+            ? ['Logo','Iden No.','Name', 'Description', 'Type', 'Actions']
+            : ['Logo','Iden No.','Name', 'Description', 'Type',  'Actions']
     };
 
     showNotification(place) {

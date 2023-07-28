@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Grid, Button } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import { getAllGlobalUnitGroups, addGlobalUnitGroup, editGlobalUnitGroup } from '../../actions';
+import { getAllGlobalUnitGroups, addGlobalUnitGroup, editGlobalUnitGroup } from 'actions';
 
-import { CustomDatepicker, RegularCard, UnitTable, ItemGrid, CustomInput, Snackbar } from 'components';
+import { CustomDatepicker, RegularCard, GlobalUnitTable, ItemGrid, CustomInput, Snackbar } from 'components';
 
 import AddGlobalUnitGroupModal from './Modals/AddGlobalUnitGroup';
 import EditGlobalUnitGroupModal from './Modals/EditGlobalUnitGroup';
@@ -148,7 +148,7 @@ class GlobalUnitGroup extends Component {
                                 </div>
                             }
                             content={
-                                <UnitTable
+                                <GlobalUnitTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
                                     tableData={this.props.units}
@@ -234,9 +234,9 @@ const styles = {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { globalUnitGroups } = state.globalUnitGroups;
+    const { globalUnitGroup_to_edit, globalUnitGroups } = state.globalUnitGroups;
 
-    return { user, globalUnitGroups };
+    return { user, globalUnitGroup_to_edit, globalUnitGroups };
 };
 
 export default connect(mapStateToProps, { getAllGlobalUnitGroups, addGlobalUnitGroup, editGlobalUnitGroup })(GlobalUnitGroup);

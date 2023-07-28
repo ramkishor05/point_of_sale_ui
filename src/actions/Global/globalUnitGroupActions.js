@@ -10,12 +10,12 @@ import {
     RENDER_GLOBAL_UNIT_GROUP_TO_EDIT,
 } from '../types';
 
-import UnitGrouop from '../../services/Global/GlobalUnitGroupService';
+import UnitGroup from '../../services/Global/GlobalUnitGroupService';
 
 // Action creator for getting all Unit entries in the system.
-export const getAllGlobalGroupUnits = () => async dispatch => {
+export const getAllGlobalUnitGroups = () => async dispatch => {
     try {
-        let unitGroups = await UnitGrouop.getAll();
+        let unitGroups = await UnitGroup.getAll();
 
         if (unitGroups) {
             dispatch({ type: GET_ALL_GLOBAL_UNIT_GROUPS_SUCCESS, payload: unitGroups });
@@ -27,19 +27,19 @@ export const getAllGlobalGroupUnits = () => async dispatch => {
 };
 
 // Action creator for getting Unit entries according to specified dates in the system.
-export const getGlobalGroupUnitByDate = (from, to, day) => async dispatch => {
+export const getGlobalUnitGroupsByDate = (from, to, day) => async dispatch => {
     try {
-        let globalGroupUnits = await UnitGrouop.getByDate(new Date(from), new Date(`${to}T23:59:59`));
+        let globalUnitGroups = await UnitGroup.getByDate(new Date(from), new Date(`${to}T23:59:59`));
 
-        if (globalGroupUnits) {
+        if (globalUnitGroups) {
             if (day === 'today') {
-                dispatch({ type: GET_GLOBAL_UNIT_GROUPS_TODAY_SUCCESS, payload: globalGroupUnits });
+                dispatch({ type: GET_GLOBAL_UNIT_GROUPS_TODAY_SUCCESS, payload: globalUnitGroups });
             } else if (day === 'yesterday') {
-                dispatch({ type: GET_GLOBAL_UNIT_GROUPS_YESTERDAY_SUCCESS, payload: globalGroupUnits });
+                dispatch({ type: GET_GLOBAL_UNIT_GROUPS_YESTERDAY_SUCCESS, payload: globalUnitGroups });
             } else if (day === 'long') {
-                dispatch({ type: GET_GLOBAL_UNIT_GROUPS_LONG_SUCCESS, payload: globalGroupUnits });
+                dispatch({ type: GET_GLOBAL_UNIT_GROUPS_LONG_SUCCESS, payload: globalUnitGroups });
             } else {
-                dispatch({ type: GET_ALL_GLOBAL_UNIT_GROUPS_SUCCESS, payload: globalGroupUnits });
+                dispatch({ type: GET_ALL_GLOBAL_UNIT_GROUPS_SUCCESS, payload: globalUnitGroups });
             }
         }
     } catch (error) {
@@ -51,7 +51,7 @@ export const getGlobalGroupUnitByDate = (from, to, day) => async dispatch => {
 // Action creator for adding Unit transaction to the system.
 export const addGlobalUnitGroup = (data, refresh, clear, successNotification, errorNotification) => async dispatch => {
     try {
-        let unitGroup = await UnitGrouop.add(data);
+        let unitGroup = await UnitGroup.add(data);
 
         if (unitGroup) {
             dispatch({ type: ADD_GLOBAL_UNIT_GROUP_SUCCESS });

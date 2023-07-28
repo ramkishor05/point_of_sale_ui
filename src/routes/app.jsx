@@ -1,6 +1,7 @@
 
 import GlobalCategory from "views/Global/Category/GlobalCategory.jsx";
 import GlobalUnit from "views/Global/Unit/GlobalUnit.jsx";
+import GlobalUnitGroup from "views/Global/Unit/GlobalUnitGroup.jsx";
 import GlobalCountFreq from "views/Global/CountFreq/GlobalCountFreq.jsx";
 import GlobalCategoryGroup from "../views/Global/Category/GlobalCategoryGroup";
 
@@ -10,11 +11,11 @@ import {
 
 const appRoutes = 
  [
-    { path: "/globalcategorygroup", sidebarName: "Global Category Group", navbarName: "GlobalCategoryList", icon: LibraryBooks, component: GlobalCategoryGroup },
-    { path: "/globalcategory", sidebarName: "Global Category", navbarName: "GlobalCategoryGroupList", icon: PhoneIphone, component: GlobalCategory },
-    { path: "/globalunitgroup", sidebarName: "Global Unit Groups", navbarName: "GlobalUnitGroups", icon: BubbleChart, component: GlobalUnit },
-    { path: "/globalunit", sidebarName: "Global Units", navbarName: "GlobalUnits", icon: BubbleChart, component: GlobalUnit },
-    { path: "/globalcountfreq", sidebarName: "Global Freq", navbarName: "Global Freq", icon: PhoneIphone, component: GlobalCountFreq },
+    { path: "/admin/category/group", sidebarName: "Category Group", navbarName: "Category Goup", icon: LibraryBooks, component: GlobalCategoryGroup },
+    { path: "/admin/category", sidebarName: "Category", navbarName: "Categories", icon: PhoneIphone, component: GlobalCategory },
+    { path: "/admin/unit/group", sidebarName: "Unit Groups", navbarName: "Unit Groups", icon: BubbleChart, component: GlobalUnitGroup },
+    { path: "/admin/unit", sidebarName: "Units", navbarName: "Units", icon: LocalDrink, component: GlobalUnit },
+    { path: "/admin/frequncy", sidebarName: "Frequncy", navbarName: "Frequncy", icon: Notifications, component: GlobalCountFreq },
     { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ]/*
   [

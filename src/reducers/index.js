@@ -6,6 +6,8 @@ import sales from './Cust/saleReducer';
 import loader from './loaderReducer';
 import mobileMoneys from './Cust/mobileMoneyReducer';
 import globalUnits from './Global/GlobalUnitReducer';
+import globalUnitGroups from './Global/GlobalUnitGroupReducer';
+
 import footballs from './Cust/footballReducer';
 import creditTransfers from './Cust/creditTransferReducer';
 import globalCategoryList from './Global/GlobalCategoryReducer';
@@ -20,6 +22,7 @@ export default combineReducers({
     loader,
     mobileMoneys,
     globalUnits,
+    globalUnitGroups,
     footballs,
     creditTransfers,
     globalCategoryGroupList,

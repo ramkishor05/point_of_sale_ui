@@ -18,4 +18,6 @@ export * from './getGlobalCategoryGroupActionTypes';
 
 export * from './getGlobalUnitActionTypes';
 
+export * from './getGlobalUnitGroupActionTypes';
+
 export * from './getGlobalCountFreqActionTypes';

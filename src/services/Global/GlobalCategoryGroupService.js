@@ -2,6 +2,7 @@ import { axios } from '../index';
 import { PRODUCTION_BASE_URL} from '../../globals/constants'
 
 const GGLOBAL_CATEGERY_GROUP_URL=`${PRODUCTION_BASE_URL}/api/global/categorygroup`
+
 export default {
     getAll() {
         return axios.get(GGLOBAL_CATEGERY_GROUP_URL)

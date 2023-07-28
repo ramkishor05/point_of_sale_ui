@@ -11,8 +11,10 @@ import { RegularCard, GlobalCategoryGroupTable, ItemGrid, Snackbar } from 'compo
 import Loader from '../../../Loader';
 
 import { getGlobalCategoryGroupList, addGlobalCategoryGroup } from '../../../actions';
+import { DynamciTable } from '../../../components/DynamicTable/DynamicTable';
 
 class GlobalCategoryGroup extends Component {
+    
     state = {
         notificationGroup: 'add',
         showAddGlobalCategoryGroupModal: false,
@@ -28,6 +30,7 @@ class GlobalCategoryGroup extends Component {
 
     // Check if the user is super admin.
     isSuperAdmin = () => {
+        console.log("env=", process.env.PRODUCTION_APP_URL)
         return true; //this.props.user.role.name === 'super_admin';
     };
 
@@ -85,6 +88,7 @@ class GlobalCategoryGroup extends Component {
                                 )
                             }
                             content={
+                                <div>
                                 <GlobalCategoryGroupTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
@@ -92,6 +96,8 @@ class GlobalCategoryGroup extends Component {
                                     editGlobalCategoryGroup={() => this.setState({ showEditGlobalCategoryGroupModal: true, notificationGroup: 'edit' })}
                                     updateGlobalCategoryGroup={() => this.setState({ showUpdateGlobalCategoryGroupModal: true, notificationGroup: 'update' })}
                                 />
+                                
+                                </div>
                             }
                         />
                     </ItemGrid>

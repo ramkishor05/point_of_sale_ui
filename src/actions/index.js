@@ -18,6 +18,8 @@ export * from './Global/globalCategoryActions';
 
 export * from './Global/globalUnitActions';
 
+export * from './Global/globalUnitGroupActions';
+
 export * from './Global/globalCountFreqActions';
 
 
