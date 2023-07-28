@@ -16,7 +16,9 @@ const INITIAL_STATE = {
     globalCategoryList_long: [],
     globalCategory_to_edit: {
         name: '',
-        amount: ''
+        desc: '',
+        typeId:'',
+        glbCategoryGroupId: 0
     },
 };
 

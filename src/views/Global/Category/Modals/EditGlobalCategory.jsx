@@ -8,11 +8,7 @@ import { editGlobalCategory } from '../../../../actions';
 
 class EditGlobalCategory extends Component {
     state = {
-        id: '',
-        name: '',
-        desc: '',
-        typeId: '',
-        glbCategoryGroupId: 0
+        ... this.props.globalCategory_to_edit
     };
 
     getModalStyle() {
@@ -44,11 +40,8 @@ class EditGlobalCategory extends Component {
 
     _editGlobalCategory = () => {
         const 
-            id = this.props.globalCategory_to_edit.id,
-            name = this.props.globalCategory_to_edit.name,
-            desc = this.props.globalCategory_to_edit.desc;
-          
-        if (id && name && desc) {
+            id = this.props.globalCategory_to_edit.id;
+        if (id) {
             this.props.editGlobalCategory(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();

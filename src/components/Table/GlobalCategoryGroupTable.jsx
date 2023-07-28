@@ -25,7 +25,7 @@ class GlobalCategoryGroupTable extends React.Component {
         this.props.editGlobalCategoryGroup();
     };
 
-    deleteGlobalCategory = prop => {
+    _deleteGlobalCategory = prop => {
         if (window.confirm("Are you sure you want to delete this GlobalCategory transaction?")) {
             this.props.deleteGlobalCategoryGroup(prop.id, this.props.getGlobalCategoryGroupList);
             this.props.renderGlobalCategoryGroupToEdit(prop);
@@ -58,7 +58,7 @@ class GlobalCategoryGroupTable extends React.Component {
                         this.isSuperAdmin() && (
                             <TableCell className={classes.tableCell}>
                                 <Button style={ styles.updateButton } onClick={() => this._renderToEdit(prop)}>Edit</Button>
-                                <Button style={ styles.deleteButton } onClick={() => this.deleteGlobalCategoryGroup(prop)} >Delete</Button>
+                                <Button style={ styles.deleteButton } onClick={() => this._deleteGlobalCategory(prop)} >Delete</Button>
                             </TableCell>
                         )
                     }

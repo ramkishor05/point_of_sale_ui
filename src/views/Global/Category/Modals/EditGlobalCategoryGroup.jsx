@@ -8,10 +8,7 @@ import { editGlobalCategoryGroup } from '../../../../actions';
 
 class EditGlobalCategoryGroup extends Component {
     state = {
-        id: '',
-        name: '',
-        desc: '',
-        typeId: ''
+        ... this.props.globalCategoryGroup_to_edit
     };
 
     getModalStyle() {
@@ -39,11 +36,9 @@ class EditGlobalCategoryGroup extends Component {
 
     _editGlobalCategoryGroup = () => {
         const 
-            id = this.props.globalCategoryGroup_to_edit.id,
-            name = this.props.globalCategoryGroup_to_edit.name,
-            desc = this.props.globalCategoryGroup_to_edit.desc;
-          
-        if (id && name && desc) {
+            id = this.props.globalCategoryGroup_to_edit.id;
+            
+        if (id) {
             this.props.editGlobalCategoryGroup(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
@@ -88,8 +83,8 @@ class EditGlobalCategoryGroup extends Component {
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
-                                                    labelText="Item name"
-                                                    id="category-group-name"
+                                                    labelText="Description"
+                                                    id="category-group-desc"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setDesc }
@@ -100,11 +95,11 @@ class EditGlobalCategoryGroup extends Component {
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Type Id"
-                                                    id="category-group-name"
+                                                    id="category-group-typeId"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setTypeId }
-                                                    defaultValue={ globalCategoryGroup_to_edit.desc }
+                                                    defaultValue={ globalCategoryGroup_to_edit.typeId }
                                                 />
                                             </ItemGrid>
                                         </Grid>
