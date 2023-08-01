@@ -36,16 +36,16 @@ class SaleTable extends React.Component {
                             { ++number }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.item.name }
+                        { prop.name }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.item.mrp }
+                        { prop.mrp }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                         { prop.quantity }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.item.price }
+                        { prop.price }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                         { prop.quantity }
