@@ -19,12 +19,12 @@ import {
     getAllItems, getAllSales, getAllFootballs, getAllUnits, getAllMobileMoneys, getAllCreditTransfers,
     getSalesByDate, getFootballByDate, getUnitByDate, getMobileMoneyByDate, getCreditTransferByDate,
     getFinishingItems
-} from '../../../actions';
+} from 'actions';
 
 
-import UpdateItemModal from '../Items/Modals/UpdateItem';
+import UpdateItemModal from '../Product/Modals/UpdateCustProduct';
 
-class Dashboard extends Component {
+class CustDashboard extends Component {
     state = {
         yesterday_from: '2018-05-21',
         yesterday_to: '2018-05-21',
@@ -591,11 +591,11 @@ const styles = {
     }
 };
 
-Dashboard.propTypes = {
+CustDashboard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const dashboardStyleWrapped = withStyles(dashboardStyle)(Dashboard);
+const dashboardStyleWrapped = withStyles(dashboardStyle)(CustDashboard);
 
 const mapStateToProps = state => {
     const { user } = state.users;

@@ -4,9 +4,9 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-import { updateItem } from '../../../../actions';
+import { updateGlobalCategory } from '../../../../actions';
 
-class UpdateItem extends Component {
+class UpdateGlobalCategory extends Component {
     state = {
         id: '',
         name: '',
@@ -31,14 +31,14 @@ class UpdateItem extends Component {
         this.setState({ quantity_added: event.target.value });
     };
 
-    _updateItem = () => {
+    _updateGlobalCategory = () => {
         const 
             id = this.props.edit_item.id,
             quantity_added = Number(this.state.quantity_added),
             quantity_remaining = Number(this.state.quantity_added) + Number(this.props.edit_item.quantity);
 
         if (id && quantity_added && quantity_remaining) {
-            this.props.updateItem(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+            this.props.updateGlobalCategory(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -133,7 +133,7 @@ class UpdateItem extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._updateItem}
+                                        onClick={this._updateGlobalCategory}
                                     >
                                         Update
                                     </Button>
@@ -161,6 +161,6 @@ const mapStateToProps = state => {
     return { edit_item };
 };
 
-const UpdateModalWrapped = withStyles(styles)(UpdateItem);
+const UpdateModalWrapped = withStyles(styles)(UpdateGlobalCategory);
 
-export default connect(mapStateToProps, { updateItem })(UpdateModalWrapped);
+export default connect(mapStateToProps, { updateGlobalCategory })(UpdateModalWrapped);

@@ -3,27 +3,28 @@ import { connect } from 'react-redux';
 import { Grid, Button, IconButton, DeleteIcon } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import AddItemModal from './Modals/AddItem';
-import EditItemModal from './Modals/EditItem';
-import UpdateItemModal from './Modals/UpdateItem';
-import { RegularCard, ItemsTable, ItemGrid, Snackbar } from 'components';
+import SaveCustProductModal from './Modals/addCustProductModal';
+import EditCustProductModal from './Modals/EditCustProductModal';
+import UpdateCustProductModal from './Modals/UpdateCustProductModal';
 
-import Loader from '../../../Loader';
+import { RegularCard, CustProductTable, ItemGrid, Snackbar } from 'components';
 
-import { getAllItems, addItem } from '../../../actions';
+import Loader from 'Loader';
 
-class Items extends Component {
+import { getAllCustProducts, addCustProduct } from 'actions';
+
+class CustProducts extends Component {
     state = {
         notificationGroup: 'add',
-        showAddItemModal: false,
-        showEditItemModal: false,
-        showUpdateItemModal: false,
+        showAddCustProductModal: false,
+        showEditCustProductModal: false,
+        showUpdateCustProductModal: false,
         tr: false,
         tc: false,
     };
 
     componentDidMount() {
-        this.props.getAllItems();
+        this.props.getAllCustProducts();
     }
 
     // Check if the user is super admin.
@@ -33,9 +34,9 @@ class Items extends Component {
 
     tableHead = () => {
         return this.isSuperAdmin()
-            ? ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            ? ['Logo','Iden No.','Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
             'Create Dt','Updated Dt', 'Actions']
-            : ['Logo','Iden No.','Item Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            : ['Logo','Iden No.','Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
             'Created Dt','Updated Dt', 'Actions']
     };
 
@@ -53,19 +54,19 @@ class Items extends Component {
     notificationMessage = type => {
         if (type === 'success') {
             if (this.state.notificationGroup === 'add') {
-                return 'Item added successfully';
+                return 'Product added successfully';
             } else if (this.state.notificationGroup === 'edit') {
-                return 'Item edited successfully';
+                return 'Product edited successfully';
             } else {
-                return 'Item updated successfully';
+                return 'Product updated successfully';
             }
         } else if (type === 'error') {
             if (this.state.notificationGroup === 'edit') {
-                return 'Error Item could not be edited';
+                return 'Error product could not be edited';
             } else if (this.state.notificationGroup === 'add') {
-                return 'Error Item could not be added';
+                return 'Error product could not be added';
             } else {
-                return 'Error Item could not be updated';
+                return 'Error product could not be updated';
             }
         }
     };
@@ -77,22 +78,22 @@ class Items extends Component {
                     <ItemGrid xs={12} sm={12} md={12}>
                         <RegularCard
                             padIt
-                            cardTitle="Items"
-                            cardSubtitle="This is a list of all items in the system"
+                            cardTitle="Products"
+                            cardSubtitle="This is a list of all product in the system"
                             button={
                                 this.isSuperAdmin() && (
                                     <Button
-                                        style={ styles.addItemButton }
-                                        onClick={() => this.setState({ showAddItemModal: true, notificationGroup: 'add' })}>ADD ITEM</Button>
+                                        style={ styles.addCustProductButton }
+                                        onClick={() => this.setState({ showAddCustProductModal: true, notificationGroup: 'add' })}>ADD</Button>
                                 )
                             }
                             content={
-                                <ItemsTable
+                                <CustProductTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
-                                    tableData={this.props.items}
-                                    editItem={() => this.setState({ showEditItemModal: true, notificationGroup: 'edit' })}
-                                    updateItem={() => this.setState({ showUpdateItemModal: true, notificationGroup: 'update' })}
+                                    tableData={this.props.custProducts}
+                                    editCustProduct={() => this.setState({ showEditCustProductModal: true, notificationGroup: 'edit' })}
+                                    updateCustProduct={() => this.setState({ showUpdateCustProductModal: true, notificationGroup: 'update' })}
                                 />
                             }
                         />
@@ -135,32 +136,32 @@ class Items extends Component {
                     </ItemGrid>
                 </Grid>
 
-                <AddItemModal
-                    open={this.state.showAddItemModal}
-                    close={() => this.setState({ showAddItemModal: false })}
-                    addItem={this.props.addItem}
-                    refresh={this.props.getAllItems}
+                <SaveCustProductModal
+                    open={this.state.showAddCustProductModal}
+                    close={() => this.setState({ showAddCustProductModal: false })}
+                    addCustProduct={this.props.addCustProduct}
+                    refresh={this.props.getAllCustProducts}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
 
-                <EditItemModal
-                    open={this.state.showEditItemModal}
-                    close={() => this.setState({ showEditItemModal: false })}
-                    refresh={this.props.getAllItems}
+                <EditCustProductModal
+                    open={this.state.showEditCustProductModal}
+                    close={() => this.setState({ showEditCustProductModal: false })}
+                    refresh={this.props.getAllCustProducts}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
 
-                <UpdateItemModal
-                    open={this.state.showUpdateItemModal}
-                    close={() => this.setState({ showUpdateItemModal: false })}
-                    refresh={this.props.getAllItems}
+                <UpdateCustProductModal
+                    open={this.state.showUpdateCustProductModal}
+                    close={() => this.setState({ showUpdateCustProductModal: false })}
+                    refresh={this.props.getAllCustProducts}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
 
-                <Loader open={this.props.show_item_loader} />
+                <Loader open={this.props.show_cust_product_loader} />
             </div>
         );
     }
@@ -168,16 +169,16 @@ class Items extends Component {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { items, show_item_loader } = state.items;
+    const { custProducts, show_cust_product_loader } = state.custProducts;
 
-    return { user, items, show_item_loader };
+    return { user, custProducts, show_cust_product_loader };
 };
 
 const styles = {
-    addItemButton: {
+    addCustProductButton: {
         color: 'white',
         backgroundColor: 'purple'
     },
 };
 
-export default connect(mapStateToProps, { getAllItems, addItem })(Items);
+export default connect(mapStateToProps, { getAllCustProducts, addCustProduct })(CustProducts);

@@ -9,10 +9,10 @@ import { pink } from 'material-ui/colors';
 import logo_img from '../../assets/img/apple-icon.png';
 import { tableStyle } from 'variables/styles';
 
-import { renderToEdit } from '../../actions';
+import { renderToEdit } from 'actions';
 import { Edit } from 'material-ui-icons';
 
-class ItemsTable extends Component {
+class CustProductTable extends Component {
     // Check if the user is super admin.
     isSuperAdmin = () => {
         return true;//this.props.user.role.name === 'super_admin';
@@ -26,12 +26,12 @@ class ItemsTable extends Component {
 
     _renderEdit(prop) {
         this.props.renderToEdit(prop);
-        this.props.editItem();
+        this.props.editCustProduct();
     }
 
     _renderUpdate(prop) {
         this.props.renderToEdit(prop);
-        this.props.updateItem();
+        this.props.updateCustProduct();
     }
 
     _renderTableData = () => {
@@ -127,11 +127,11 @@ class ItemsTable extends Component {
     }
 }
 
-ItemsTable.defaultProps = {
+CustProductTable.defaultProps = {
     tableHeaderColor: 'gray',
 }
 
-ItemsTable.propTypes = {
+CustProductTable.propTypes = {
     classes: PropTypes.object.isRequired,
     tableHeaderColor: PropTypes.oneOf(['warning','primary','danger','success','info','rose','gray']),
     tableHead: PropTypes.arrayOf(PropTypes.string),
@@ -156,6 +156,6 @@ const mapStateToProps = state => {
     return { user };
 };
 
-const WrappedItemsTable = withStyles(tableStyle)(ItemsTable);
+const WrappedCustProductTable = withStyles(tableStyle)(CustProductTable);
 
-export default connect(mapStateToProps, { renderToEdit })(WrappedItemsTable);
+export default connect(mapStateToProps, { renderToEdit })(WrappedCustProductTable);

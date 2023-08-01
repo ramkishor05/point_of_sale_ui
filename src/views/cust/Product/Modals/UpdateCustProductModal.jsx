@@ -4,16 +4,21 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-import { updateItem } from '../../../../actions';
+import { updateCustProduct } from 'actions';
 
-class UpdateItem extends Component {
+class UpdateCustProduct extends Component {
     state = {
         id: '',
+        title: '',
         name: '',
-        mrp: '',
-        price: '',
-        quantity_added: '',
-        quantity_remaining: ''
+        desc: '',
+        stockQnt: 0,
+        purchasePrice: 0,
+        purchaseUnit: 1,
+        wholePrice: 0,
+        wholeUnit: 1,
+        retailPrice: 0,
+        retailUnit: 1
     };
 
     getModalStyle() {
@@ -31,14 +36,14 @@ class UpdateItem extends Component {
         this.setState({ quantity_added: event.target.value });
     };
 
-    _updateItem = () => {
+    _updateCustProduct = () => {
         const 
-            id = this.props.edit_item.id,
+            id = this.props.edit_CustProduct.id,
             quantity_added = Number(this.state.quantity_added),
-            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.edit_item.quantity);
+            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.edit_CustProduct.quantity);
 
         if (id && quantity_added && quantity_remaining) {
-            this.props.updateItem(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+            this.props.updateCustProduct(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -50,11 +55,11 @@ class UpdateItem extends Component {
     }
     
     render() {
-        const { classes, open, close, edit_item } = this.props;
+        const { classes, open, close, custProduct } = this.props;
         return (
             <Modal
-                aria-labelledby="Update Item"
-                aria-describedby="Modal for updating item"
+                aria-labelledby="Update Product"
+                aria-describedby="Modal for updating product"
                 open={open}
                 onClose={close}
             >
@@ -74,7 +79,7 @@ class UpdateItem extends Component {
                                                     id="item-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    defaultValue={ edit_item.name }
+                                                    defaultValue={ custProduct.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -86,7 +91,7 @@ class UpdateItem extends Component {
                                                     id="unit-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ edit_item.mrp }
+                                                    defaultValue={ custProduct.mrp }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -98,7 +103,7 @@ class UpdateItem extends Component {
                                                     id="whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ edit_item.price }
+                                                    defaultValue={ custProduct.price }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -110,7 +115,7 @@ class UpdateItem extends Component {
                                                     id="quantity-remaining"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ Number(edit_item.quantity_remaining) + Number(this.state.quantity_added) }
+                                                    value={ Number(custProduct.quantity_remaining) + Number(this.state.quantity_added) }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -157,10 +162,10 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { edit_item } = state.items;
-    return { edit_item };
+    const { custProduct } = state.custProducts;
+    return { custProduct };
 };
 
-const UpdateModalWrapped = withStyles(styles)(UpdateItem);
+const UpdateModalWrapped = withStyles(styles)(UpdateCustProduct);
 
-export default connect(mapStateToProps, { updateItem })(UpdateModalWrapped);
+export default connect(mapStateToProps, { updateCustProduct })(UpdateModalWrapped);

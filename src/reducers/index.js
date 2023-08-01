@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import users from './usersReducer';
-import items from './Cust/itemReducer';
+import custProducts from './Cust/custProductReducer';
 import sales from './Cust/saleReducer';
 import loader from './loaderReducer';
 import mobileMoneys from './Cust/mobileMoneyReducer';
@@ -17,7 +17,7 @@ import globalCountFreqList from './Global/GlobalCountFreqReducer';
 
 export default combineReducers({
     users,
-    items,
+    custProducts,
     sales,
     loader,
     mobileMoneys,

@@ -3,49 +3,51 @@ import { connect } from 'react-redux';
 import { Grid, Button } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import { getAllGlobalUnitGroups, addGlobalUnitGroup, editGlobalUnitGroup } from '../../../actions';
+import { getSalesByDate, addSale, getAllCustProducts } from 'actions';
 
-import { CustomDatepicker, RegularCard, UnitTable, ItemGrid, CustomInput, Snackbar } from 'components';
+import { CustomDatepicker, CustomInput, RegularCard, SalesTable, ItemGrid, Snackbar } from 'components';
 
-import AddGlobalUnitGroupModal from './Modals/AddGlobalUnitGroup';
-import EditGlobalUnitGroupModal from './Modals/EditGlobalUnitGroup';
+import AddSaleModal from './Modals/AddSale';
+import EditSaleModal from './Modals/EditSale';
 
 
-class GlobalUnitGroup extends Component {
+class SaleProducts extends Component {
     state = {
         notificationGroup: 'add',
+        openAddSaleModal: false,
+        openEditSaleModal: false,
+        openDeleteSaleModal: false,
         from: '2018-05-21',
         to: '2018-05-21',
-        showAddUnitModal: false,
-        showEditUnitModal: false,
-        tr: false,
-        tc: false,
     };
 
     componentDidMount() {
-        this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getGlobalUnitGroups);
+        // Set the dates (from and to) and pull corresponding sales from server.
+        this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getSales);
+
+        this.props.getAllCustProducts(); // Get all items (Useful in adding sales).
     }
 
+    _getSales = () => {
+        this.props.getSalesByDate(this.state.from, this.state.to);
+    };
+
     from = event => {
-        this.setState({ from: event.target.value }, this._getGlobalUnitGroups);
+        this.setState({ from: event.target.value }, this._getSales);
     };
 
     to = event => {
-        this.setState({ to: event.target.value }, this._getGlobalUnitGroups);
+        this.setState({ to: event.target.value }, this._getSales);
     };
 
     total = () => {
         let total = 0;
 
-        for (let unit of this.props.globalUnitGroups) {
-            total += 1;
+        for (let sale of this.props.sales) {
+            total += Number(sale.amount);
         }
 
         return total.toFixed(2);
-    };
-
-    _getGlobalUnitGroups = () => {
-        this.props.getAllGlobalUnitGroups();
     };
 
     dateNow = () => {
@@ -79,30 +81,19 @@ class GlobalUnitGroup extends Component {
     notificationMessage = type => {
         if (type === 'success') {
             if (this.state.notificationGroup === 'add') {
-                return 'Unit added successfully';
+                return 'Sale added successfully';
             } else {
-                return 'Unit edited successfully';
+                return 'Sale edited successfully';
             }
         } else if (type === 'error') {
             if (this.state.notificationGroup === 'edit') {
-                return 'Error Unit could not be edited';
+                return 'Error Sale could not be edited';
             } else {
-                return 'Error Unit could not be added';
+                return 'Error Sale could not be added';
             }
         }
     };
 
-    // Check if the user is super admin.
-    isSuperAdmin = () => {
-        return true;//this.props.user.role.name === 'super_admin';
-    };
-
-    tableHead = () => {
-        return this.isSuperAdmin()
-            ? ['No.', 'Name', 'Amount', 'Date Added', 'Date Updated', '']
-            : ['No.', 'Name', 'Amount', 'Date Added', 'Date Updated'] 
-    };
-    
     render() {
         return (
             <div>
@@ -110,22 +101,22 @@ class GlobalUnitGroup extends Component {
                     <ItemGrid xs={12} sm={12} md={12}>
                         <RegularCard
                             padIt
-                            cardTitle="Unit"
-                            cardSubtitle="List of Unit entries in the system"
+                            cardTitle="Sales"
+                            cardSubtitle="List of sale entries in the system"
                             button={
                                 <Button 
-                                    style={ styles.addTransactionButton } 
-                                    onClick={() => this.setState({ showAddUnitModal: true, notificationGroup: 'add' })}>ADD Unit</Button>
+                                    style={ styles.addSaleButton } 
+                                    onClick={() => this.setState({ openAddSaleModal: true })}>ADD SALE</Button>
                             }
                             total={
                                 <div>
                                     <CustomInput
                                         disabled
-                                        labelText="Total Amount"
-                                        id="total-amount"
+                                        labelText="Total"
+                                        id="total"
                                         formControlProps={{ fullWidth: true }}
                                         type="number"
-                                        value={ this.total() }
+                                        value={this.total()}
                                     />
                                 </div>
                             }
@@ -148,36 +139,35 @@ class GlobalUnitGroup extends Component {
                                 </div>
                             }
                             content={
-                                <UnitTable
+                                <SalesTable
                                     tableHeaderColor="primary"
-                                    tableHead={this.tableHead()}
-                                    tableData={this.props.units}
-                                    editUnit={() => this.setState({ showEditUnitModal: true, notificationGroup: 'edit' })}
-                                    deleteUnit={() => this.setState({ notificationGroup: 'delete' })}
-                                    getUnits={this._getUnits}
+                                    tableHead={['No.', 'Name', 'Unit Price', 'Qty.', 'Whole Price', 'Qty.', 'Amount', 'Date Added', 'Date Updated', '']}
+                                    tableData={this.props.sales}
+                                    editSale={() => this.setState({ openEditSaleModal: true })}
                                 />
                             }
                         />
                     </ItemGrid>
+                    
+                    <AddSaleModal 
+                        open={this.state.openAddSaleModal}
+                        close={() => this.setState({ openAddSaleModal: false })}
+                        items={this.props.custProducts}
+                        addSale={this.props.addSale}
+                        refreshSales={this._getSales}
+                        successNotification={() => this.showNotification('tr')}
+                        errorNotification={() => this.showNotification('tc')}
+                    />
+
+                    <EditSaleModal
+                        open={this.state.openEditSaleModal}
+                        close={() => this.setState({ openEditSaleModal: false })}
+                        editSale={this.props.editSale}
+                        refreshSales={this._getSales}
+                        successNotification={() => this.showNotification('tr')}
+                        errorNotification={() => this.showNotification('tc')}
+                    />
                 </Grid>
-
-                <AddGlobalUnitGroupModal
-                    open={this.state.showAddUnitModal}
-                    close={() => this.setState({ showAddUnitModal: false })}
-                    addUnit={this.props.addGlobalUnitGroup}
-                    refresh={this._getGlobalUnitGroups}
-                    successNotification={() => this.showNotification('tr')}
-                    errorNotification={() => this.showNotification('tc')}
-                />
-
-                <EditGlobalUnitGroupModal
-                    open={this.state.showEditUnitModal}
-                    close={() => this.setState({ showEditUnitModal: false })}
-                    editUnit={this.props.editGlobalUnitGroup}
-                    refresh={this._getGlobalUnitGroups}
-                    successNotification={() => this.showNotification('tr')}
-                    errorNotification={() => this.showNotification('tc')}
-                />
 
                 <Grid container justify='center'>
                     <ItemGrid xs={12} sm={12} md={10} lg={8}>
@@ -220,23 +210,23 @@ class GlobalUnitGroup extends Component {
 }
 
 const styles = {
-    addTransactionButton: {
+    addSaleButton: {
         color: '#FFF',
         backgroundColor: 'purple',
-        marginLeft: 20,
+        marginLeft: 20, 
     },
     datepickers: {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'baseline',
         justifyContent: 'center',
     }
 };
 
 const mapStateToProps = state => {
-    const { user } = state.users;
-    const { globalUnitGroups } = state.globalUnitGroups;
+    const { sales } = state.sales;
+    const { custProducts } = state.custProducts;
 
-    return { user, globalUnitGroups };
-};
+    return { sales, custProducts };
+}
 
-export default connect(mapStateToProps, { getAllGlobalUnitGroups, addGlobalUnitGroup, editGlobalUnitGroup })(GlobalUnitGroup);
+export default connect(mapStateToProps, { getSalesByDate, addSale, getAllCustProducts })(SaleProducts);

@@ -6,8 +6,8 @@ import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 class AddSale extends Component {
     state = {
         item_index: '',
-        retailQuantity: 0.00,
-        wholeQuantity: 0.00,
+        retailQnt: 0.00,
+        wholeQnt: 0.00,
     }
 
     calculate = type => {
@@ -26,16 +26,16 @@ class AddSale extends Component {
                     return Number(item.wholePrice);
 
                 case "retailAmount":
-                    return (Number(this.state.retailQuantity) * Number(item.retailPrice)).toFixed(2);
+                    return (Number(this.state.retailQnt) * Number(item.retailPrice)).toFixed(2);
                 
                 case "wholeAmount":
-                    return (Number(this.state.wholeQuantity) * Number(item.wholePrice)).toFixed(2);
+                    return (Number(this.state.wholeQnt) * Number(item.wholePrice)).toFixed(2);
 
                 case "totalAmount":
-                    let unit_price = Number(this.state.retailQuantity) * Number(item.retailPrice);
-                    let whole_price = Number(this.state.wholeQuantity) * Number(item.wholePrice);
+                    let retail_price = Number(this.state.retailQnt) * Number(item.retailPrice);
+                    let whole_price = Number(this.state.wholeQnt) * Number(item.wholePrice);
 
-                    return (unit_price + whole_price).toFixed(2);
+                    return (retail_price + whole_price).toFixed(2);
 
                 default:
                     return 0.00;
@@ -59,28 +59,63 @@ class AddSale extends Component {
 
     // Function for adding sales to database.
     _addSale = () => {
-        const { item_index, retailQuantity, wholeQuantity } = this.state;
+        const { item_index, retailQnt, wholeQnt } = this.state;
         const { refreshSales, successNotification, errorNotification } = this.props;
 
         if (!item_index && item_index !== 0) {
             return;
         }
 
-        if (!Number(retailQuantity) && !Number(wholeQuantity)) {
+        if (!Number(retailQnt) && !Number(wholeQnt)) {
             errorNotification && errorNotification();
             return;
         }
 
-        let item_id = this.props.items[item_index].id;
+        let custProductSale = {
+            discounts: 0.0,
+            retailSaleTotals: 0.0,
+            wholeSaletotals: 0.0,
+            custProductRetailSaleList: [],
+            custProductWholeSaleList: []
+        }
 
-        this.props.addSale({ item_id, retailQuantity, wholeQuantity }, refreshSales, this.clear, successNotification, errorNotification);
+        let item = this.props.items[item_index];
+        let item_id= item.id;
+        
+        if(retailQnt){
+            let custProductRetailSale={
+                name: item.name,
+                desc: item.desc,
+                purchasePrice: item.purchasePrice,
+                purchaseUnitId: 1,
+                retailQnt: retailQnt,
+                retailPrice: item.retailPrice,
+                retailUnitId: 1,
+                custProductId: item_id
+            }
+            custProductSale.custProductRetailSaleList.push(custProductRetailSale);
+        }
+        if(wholeQnt){
+            let custProductWholeSale={
+                name: item.name,
+                desc: item.desc,
+                purchasePrice: item.purchasePrice,
+                purchaseUnitId: 1,
+                wholeQnt: wholeQnt,
+                wholePrice: item.wholePrice,
+                wholeUnitId: 1,
+                custProductId: item_id
+            }
+            custProductSale.custProductWholeSaleList.push(custProductWholeSale);
+        }
+        this.props.addSale(custProductSale, refreshSales, this.clear, successNotification, errorNotification);
     };
 
     clear = () => {
         this.setState({
             item_index: '',
-            retailQuantity: 0.00,
-            wholeQuantity: 0.00,
+            retailQnt: 0.00,
+            wholeQnt: 0.00,
         });
 
         this.props.close();
@@ -136,8 +171,8 @@ class AddSale extends Component {
                                                     id="retail-quantity"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    onChange={event => this.setState({ retailQuantity: event.target.value })}
-                                                    defaultValue={ this.state.retailQuantity }
+                                                    onChange={event => this.setState({ retailQnt: event.target.value })}
+                                                    defaultValue={ this.state.retailQnt }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={12} sm={4} md={4}>
@@ -169,8 +204,8 @@ class AddSale extends Component {
                                                     id="whole-quantity"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    onChange={event => this.setState({ wholeQuantity: event.target.value })}
-                                                    defaultValue={ this.state.wholeQuantity }
+                                                    onChange={event => this.setState({ wholeQnt: event.target.value })}
+                                                    defaultValue={ this.state.wholeQnt }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={12} sm={4} md={4}>

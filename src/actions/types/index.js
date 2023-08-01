@@ -1,6 +1,6 @@
 export * from './usersActionTypes';
 
-export * from './itemActionTypes';
+export * from './custProductActionTypes';
 
 export * from './saleActionTypes';
 

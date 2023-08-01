@@ -16,15 +16,12 @@ import { dailySalesChart, completedTasksChart } from 'variables/charts';
 import { dashboardStyle } from 'variables/styles';
 
 import {
-    getAllItems, getAllSales, getAllFootballs, getAllUnits, getAllMobileMoneys, getAllCreditTransfers,
-    getSalesByDate, getFootballByDate, getUnitByDate, getMobileMoneyByDate, getCreditTransferByDate,
+    getAllCustProducts, getAllSales, getAllFootballs, getAllGlobalUnits, getAllMobileMoneys, getAllCreditTransfers,
+    getSalesByDate, getFootballByDate, getGlobalUnitByDate, getMobileMoneyByDate, getCreditTransferByDate,
     getFinishingItems
-} from '../../actions';
+} from 'actions';
 
-
-import UpdateItemModal from '../Items/Modals/UpdateItem';
-
-class Dashboard extends Component {
+class GlobalDashboard extends Component {
     state = {
         yesterday_from: '2018-05-21',
         yesterday_to: '2018-05-21',
@@ -49,10 +46,10 @@ class Dashboard extends Component {
     }
 
     getTotalRecords = () => {
-        this.props.getAllItems();
+        this.props.getAllCustProducts();
         this.props.getAllSales();
         this.props.getAllFootballs();
-        this.props.getAllUnits();
+        this.props.getAllGlobalUnits();
         this.props.getAllMobileMoneys();
         this.props.getAllCreditTransfers();
     };
@@ -75,7 +72,7 @@ class Dashboard extends Component {
     getRecords = (from, to, day) => {
         this.props.getSalesByDate(from, to, day);
         this.props.getFootballByDate(from, to, day);
-        this.props.getUnitByDate(from, to, day);
+        this.props.getGlobalUnitByDate(from, to, day);
         this.props.getMobileMoneyByDate(from, to, day);
         this.props.getCreditTransferByDate(from, to, day);
     };
@@ -166,17 +163,17 @@ class Dashboard extends Component {
 
             case 'units':
                 return day => {
-                    let units = this.props.units;
+                    let globalUnits = this.props.globalUnits;
 
                     if (day === 'today') {
-                        units = this.props.units_today;
+                        globalUnits = this.props.globalUnits_today;
                     } else if (day === 'yesterday') {
-                        units = this.props.units_yesterday;
+                        globalUnits = this.props.globalUnits_yesterday;
                     } else if (day === 'long') {
-                        units = this.props.units_long;
+                        globalUnits = this.props.globalUnits_long;
                     }
 
-                    for (let unit of units) {
+                    for (let unit of globalUnits) {
                         total += Number(unit.amount);
                     }
                     
@@ -230,33 +227,33 @@ class Dashboard extends Component {
         let records = [],
             sales = this.props.sales,
             footballs = this.props.footballs,
-            units = this.props.units,
+            globalUnits = this.props.globalUnits,
             mobile_moneys = this.props.mobile_moneys,
             credit_transfers = this.props.credit_transfers;
 
         if (day === 'today') {
             sales = this.props.sales_today;
             footballs = this.props.footballs_today;
-            units = this.props.units_today;
+            globalUnits = this.props.globalUnits_today;
             mobile_moneys = this.props.mobile_moneys_today;
             credit_transfers = this.props.credit_transfers_today;
         } else if (day === 'yesterday') {  
             sales = this.props.sales_yesterday;
             footballs = this.props.footballs_yesterday;
-            units = this.props.units_yesterday;
+            globalUnits = this.props.globalUnits_yesterday;
             mobile_moneys = this.props.mobile_moneys_yesterday;
             credit_transfers = this.props.credit_transfers_today;
         } else if (day === 'long') {
             sales = this.props.sales_long;
             footballs = this.props.footballs_long;
-            units = this.props.units_long;
+            globalUnits = this.props.globalUnits_long;
             mobile_moneys = this.props.mobile_moneys_long;
             credit_transfers = this.props.credit_transfers_long;
         }
 
         records.push({name: 'Sales', total: this.calculate('sales')(day)});
         records.push({name: 'Footballs', total: this.calculate('footballs')(day)});
-        records.push({name: 'units', total: this.calculate('units')(day)});
+        records.push({name: 'globalUnits', total: this.calculate('globalUnits')(day)});
         records.push({name: 'Mobile moneys', total: this.calculate('mobile_moneys')(day)});
         records.push({name: 'Credit Transfers', total: this.calculate('credit_transfers')(day)});
 
@@ -338,10 +335,10 @@ class Dashboard extends Component {
                         <StatsCard
                             icon={Accessibility}
                             iconColor="blue"
-                            title="units today"
-                            description={`GHS ${this.calculate('units')('today')}`}
+                            title="globalUnits today"
+                            description={`GHS ${this.calculate('globalUnits')('today')}`}
                             statIcon={Update}
-                            statText="units recorded today"
+                            statText="globalUnits recorded today"
                         />
                     </ItemGrid>
                     <ItemGrid xs={12} sm={6} md={4}>
@@ -431,12 +428,12 @@ class Dashboard extends Component {
                                             <ChartistGraph
                                                 className="ct-chart"
                                                 data={{
-                                                    labels: ['Sales', 'Footballs', 'units', 'Mobile Money', 'Credit'],
+                                                    labels: ['Sales', 'Footballs', 'globalUnits', 'Mobile Money', 'Credit'],
                                                     series: [
                                                         [
                                                             this.calculate('sales')('yesterday'),
                                                             this.calculate('footballs')('yesterday'),
-                                                            this.calculate('units')('yesterday'),
+                                                            this.calculate('globalUnits')('yesterday'),
                                                             this.calculate('mobile_moneys')('yesterday'),
                                                             this.calculate('credit_transfers')('yesterday')
                                                         ]
@@ -463,12 +460,12 @@ class Dashboard extends Component {
                                             <ChartistGraph
                                                 className="ct-chart"
                                                 data={{
-                                                    labels: ['Sales', 'Footballs', 'units', 'Mobile Money', 'Credit'],
+                                                    labels: ['Sales', 'Footballs', 'globalUnits', 'Mobile Money', 'Credit'],
                                                     series: [
                                                         [
                                                             this.calculate('sales')('today'),
                                                             this.calculate('footballs')('today'),
-                                                            this.calculate('units')('today'),
+                                                            this.calculate('globalUnits')('today'),
                                                             this.calculate('mobile_moneys')('today'),
                                                             this.calculate('credit_transfers')('today')
                                                         ]
@@ -571,13 +568,6 @@ class Dashboard extends Component {
                     )
                 }
                 
-                <UpdateItemModal
-                    open={this.state.showUpdateItemModal}
-                    close={() => this.setState({ showUpdateItemModal: false })}
-                    refresh={() => this.props.getFinishingItems(10)}
-                    successNotification={() => this.showNotification('tr')}
-                    errorNotification={() => this.showNotification('tc')}
-                />
             </div>
         );
     }
@@ -591,33 +581,33 @@ const styles = {
     }
 };
 
-Dashboard.propTypes = {
+GlobalDashboard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const dashboardStyleWrapped = withStyles(dashboardStyle)(Dashboard);
+const dashboardStyleWrapped = withStyles(dashboardStyle)(GlobalDashboard);
 
 const mapStateToProps = state => {
     const { user } = state.users;
     const { items, items_finishing } = state.items;
     const { sales, sales_today, sales_yesterday, sales_long } = state.sales;
     const { footballs, footballs_today, footballs_yesterday, footballs_long } = state.footballs;
-    const { units, units_today, units_yesterday, units_long } = state.units;
+    const { globalUnits, globalUnits_today, globalUnits_yesterday, globalUnits_long } = state.globalUnits;
     const { mobile_moneys, mobile_moneys_today, mobile_moneys_yesterday, mobile_moneys_long } = state.mobileMoneys;
     const { credit_transfers, credit_transfers_today, credit_transfers_yesterday, credit_transfers_long } = state.creditTransfers;
 
     return {
         user,
         items, items_finishing,
-        sales, footballs, units, mobile_moneys, credit_transfers,
-        sales_today, footballs_today, units_today, credit_transfers_today, mobile_moneys_today,
-        sales_yesterday, footballs_yesterday, units_yesterday, mobile_moneys_yesterday, credit_transfers_yesterday,
-        sales_long, footballs_long, units_long, mobile_moneys_long, credit_transfers_long
+        sales, footballs, globalUnits, mobile_moneys, credit_transfers,
+        sales_today, footballs_today, globalUnits_today, credit_transfers_today, mobile_moneys_today,
+        sales_yesterday, footballs_yesterday, globalUnits_yesterday, mobile_moneys_yesterday, credit_transfers_yesterday,
+        sales_long, footballs_long, globalUnits_long, mobile_moneys_long, credit_transfers_long
     };
 };
 
 export default connect(mapStateToProps, {
-    getAllItems, getAllSales, getAllFootballs, getAllUnits, getAllMobileMoneys, getAllCreditTransfers,
-    getSalesByDate, getFootballByDate, getUnitByDate, getMobileMoneyByDate, getCreditTransferByDate,
+    getAllCustProducts, getAllSales, getAllFootballs, getAllGlobalUnits, getAllMobileMoneys, getAllCreditTransfers,
+    getSalesByDate, getFootballByDate, getGlobalUnitByDate, getMobileMoneyByDate, getCreditTransferByDate,
     getFinishingItems
 })(dashboardStyleWrapped);

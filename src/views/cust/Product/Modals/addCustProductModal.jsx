@@ -1,47 +1,38 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
-import { editItem } from '../../../../actions';
+const ids = {
+    id: '',
+    title: '',
+    name: '',
+    desc: '',
+    stockQnt: 0,
+    purchasePrice: 0,
+    purchaseUnit: 1,
+    wholePrice: 0,
+    wholeUnit: 1,
+    retailPrice: 0,
+    retailUnit: 1,
+    custProducts: []
+};
 const units =[{'id' : 1, 'name':'KGS'}];
-class EditItem extends Component {
-    state = {
-        id: '',
-        title: '',
-        name: '',
-        description: '',
-        purchasePrice: 0,
-        purchaseUnit: 1,
-        wholePrice: 0,
-        wholeUnit: 1,
-        retailPrice: 0,
-        retailUnit: 1,
-        stockQnt: 0
-    };
 
-    getModalStyle() {
-        const top = 50;
-        const left = 50;
+class addCustProductModal extends Component {
+    
+    state = {...ids};
 
-        return {
-            top: `${top}%`,
-            left: `${left}%`,
-            transform: `translate(-${top}%, -${left}%)`,
-        };
-    }
-
-    _setItemTitle = event => {
+    _setTitle = event => {
         this.setState({ title: event.target.value });
     };
 
-    _setItemName = event => {
+    _setName = event => {
         this.setState({ name: event.target.value });
     };
 
-    _setItemDesc = event => {
-        this.setState({ description: event.target.value });
+    _setDesc = event => {
+        this.setState({ desc: event.target.value });
     };
 
     _setUnitPrice = event => {
@@ -76,32 +67,38 @@ class EditItem extends Component {
         this.setState({ stockQnt: event.target.value });
     };
 
-    _editItem = () => {
-        this.state.id=this.props.edit_item.id;
-        const 
-            id = this.state.id,
-            name = this.state.name,
-            retailPrice = this.props.edit_item.retailPrice;
-          console.log('this.props.edit_item=', this.props.edit_item)
-          console.log('this.state=', this.state)
-        if (id && name) {
-            this.props.editItem(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+    _saveCustProduct = () => {
+        const {name} = this.state;
+
+        if (name) {
+            this.props.addCustProduct(this.state, this.props.refresh, this._resetInput, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
     };
 
-    clearAndRefresh = () => {
-        this.props.close();
-        this.props.refresh();
+    _resetInput = () => {
+        this.setState(ids, this.props.close);
+    };
+
+    getModalStyle() {
+        const top = 50;
+        const left = 50;
+
+        return {
+            top: `${top}%`,
+            left: `${left}%`,
+            transform: `translate(-${top}%, -${left}%)`,
+        };
     }
     
     render() {
-        const { classes, open, close, edit_item } = this.props;
+        const { classes, open, close } = this.props;
+
         return (
             <Modal
-                aria-labelledby="Edit Item"
-                aria-describedby="Modal for editing item"
+                aria-labelledby="Add Product"
+                aria-describedby="Modal for adding Products"
                 open={open}
                 onClose={close}
             >
@@ -109,42 +106,42 @@ class EditItem extends Component {
                     <Grid container>
                         <ItemGrid xs={12} sm={12} md={12}>
                             <RegularCard
-                                cardTitle="EDIT ITEM"
-                                cardSubtitle="Edit the form below to edit the selected item"
+                                cardTitle="ADD PRODUCT"
+                                cardSubtitle="Fill the form below to add product to the system"
                                 content={
                                     <div>
                                         <Grid container>
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
-                                                    labelText="Item title"
-                                                    id="item-name"
+                                                    labelText="Title"
+                                                    id="cust-product-title"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setItemTitle }
-                                                    defaultValue={ edit_item.title }
+                                                    onChange={ this._setTitle }
+                                                    defaultValue={ this.state.title }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
-                                                    labelText="Item name"
-                                                    id="item-name"
+                                                    labelText="Name"
+                                                    id="cust-product-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setItemName }
-                                                    defaultValue={ edit_item.name }
+                                                    onChange={ this._setName }
+                                                    defaultValue={ this.state.name }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
-                                                    labelText="Item Desc"
-                                                    id="item-name"
+                                                    labelText="Desciption"
+                                                    id="cust-product-desc"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setItemDesc }
-                                                    defaultValue={ edit_item.description }
+                                                    onChange={ this._setDesc }
+                                                    defaultValue={ this.state.desc }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -154,20 +151,20 @@ class EditItem extends Component {
                                             <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Purchase price"
-                                                    id="purchase-price"
+                                                    id="cust-product-purchase-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setPurchasePrice }
-                                                    defaultValue={ edit_item.purchasePrice }
+                                                    defaultValue={ this.state.purchasePrice }
                                                 />
                                                 <CustomSelect
                                                    labelText="Purchase Unit"
-                                                    id="purchase-unit"
+                                                    id="cust-product-purchase-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setPurchaseUnit }
-                                                    defaultValue={ edit_item.purchaseUnit }
-                                                    items= {units}
+                                                    defaultValue={ this.state.purchaseUnit }
+                                                    items= {this.state.custProducts}
                                                     value={ this.state.purchaseUnit }
                                                 ></CustomSelect>
                                             </div>
@@ -178,20 +175,20 @@ class EditItem extends Component {
                                                <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Retail price"
-                                                    id="retail-price"
+                                                    id="cust-product-retail-price"
                                                     formControlProps={{ fullWidth:true , marginRight: 10 }}
                                                     type="text"
                                                     onChange={ this._setRetailPrice }
-                                                    defaultValue={ edit_item.retailPrice }
+                                                    defaultValue={ this.state.retailPrice }
                                                 />
                                             
                                                 <CustomSelect
                                                    labelText="Retail Unit"
-                                                    id="retail-unit"
+                                                    id="cust-product-retail-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setRetailUnit }
-                                                    defaultValue={ edit_item.retailUnit }
+                                                    defaultValue={ this.state.retailUnit }
                                                     items= {units}
                                                     value={ this.state.retailUnit }
                                                 ></CustomSelect>
@@ -201,19 +198,19 @@ class EditItem extends Component {
                                             <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Whole price"
-                                                    id="whole-price"
+                                                    id="cust-product-whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setWholePrice }
-                                                    defaultValue={ edit_item.wholePrice }
+                                                    defaultValue={ this.state.wholePrice }
                                                 />
                                                 <CustomSelect
                                                    labelText="Whole Unit"
-                                                    id="whole-unit"
+                                                    id="cust-product-whole-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setWholeUnit }
-                                                    defaultValue={ edit_item.wholeUnit }
+                                                    defaultValue={ this.state.wholeUnit }
                                                     items= {units}
                                                     value={ this.state.wholeUnit }
                                                 ></CustomSelect>
@@ -225,7 +222,7 @@ class EditItem extends Component {
                                             <CustomInput
                                                     autoFocus
                                                     labelText="Stock Qnt"
-                                                    id="item-stack-qnt"
+                                                    id="cust-product-stack-qnt"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setStockQnt }
@@ -238,10 +235,10 @@ class EditItem extends Component {
                                 }
                                 
                                 footer={
-                                    <Button 
+                                    <Button
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._editItem}>Edit</Button>
+                                        onClick={this._addCustProduct}>Add</Button>
                                 }
                             />
                         </ItemGrid>
@@ -262,11 +259,13 @@ const styles = theme => ({
     },
 });
 
-const mapStateToProps = state => {
-    const { edit_item } = state.items;
-    return { edit_item };
-};
 
-const EditModalWrapped = withStyles(styles)(EditItem);
+const AddModalWrapped = withStyles(styles)(addCustProductModal);
 
-export default connect(mapStateToProps, { editItem })(EditModalWrapped);
+export default AddModalWrapped;
+
+
+
+
+
+

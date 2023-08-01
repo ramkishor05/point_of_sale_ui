@@ -4,7 +4,7 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
-import { editGlobalCategory } from '../../../../actions';
+import { editGlobalCategory } from 'actions';
 
 class EditGlobalCategory extends Component {
     state = {

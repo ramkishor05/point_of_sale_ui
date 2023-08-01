@@ -21,7 +21,7 @@ export const getAllSales = () => async dispatch => {
 // Action creator for getting sales according to date.
 export const getSalesByDate = (from, to, day) => async dispatch => {
     try {
-        let sales = await Sale.getByDate(new Date(from), new Date(`${to}T23:59:59`));
+        let sales = await Sale.getByDate(new Date(from), new Date(to));
 
         if (sales) {
             if (day === 'today') {

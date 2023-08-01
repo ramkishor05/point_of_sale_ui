@@ -151,10 +151,10 @@ class GlobalUnitGroup extends Component {
                                 <GlobalUnitTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
-                                    tableData={this.props.units}
+                                    tableData={this.props.globalUnitGroups}
                                     editUnit={() => this.setState({ showEditUnitModal: true, notificationGroup: 'edit' })}
                                     deleteUnit={() => this.setState({ notificationGroup: 'delete' })}
-                                    getUnits={this._getUnits}
+                                    getUnits={this._getGlobalUnitGroups}
                                 />
                             }
                         />
