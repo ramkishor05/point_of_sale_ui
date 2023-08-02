@@ -13,6 +13,7 @@ import creditTransfers from './Cust/creditTransferReducer';
 import globalCategoryList from './Global/GlobalCategoryReducer';
 import globalCategoryGroupList from './Global/GlobalCategoryGroupReducer';
 import globalCountFreqList from './Global/GlobalCountFreqReducer';
+import vendorList from './vendorReducer';
 
 
 export default combineReducers({
@@ -27,5 +28,6 @@ export default combineReducers({
     creditTransfers,
     globalCategoryGroupList,
     globalCategoryList,
-    globalCountFreqList
+    globalCountFreqList,
+    vendorList
 });

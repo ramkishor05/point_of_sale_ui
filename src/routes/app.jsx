@@ -9,6 +9,8 @@ import GlobalCategoryGroup from "../views/Global/Category/GlobalCategoryGroup";
 //import CustDashboard from "views/Cust/Dashboard/CustDashboard.jsx";
 import CustProducts from "views/Cust/Product/CustProducts.jsx"
 import SaleProducts from "views/Cust/Sales/SaleProducts.jsx"
+import Vendors from "views/Vendor/Vendors.jsx"
+
 
 import {
     Dashboard, Person, LocalDrink, LibraryBooks, BubbleChart, Notifications, PhoneIphone
@@ -28,6 +30,7 @@ const appRoutes =
     //{ path: "/cust/dashboard", sidebarName: "Dashboard", navbarName: "Dashboard", icon: Dashboard, component: CustDashboard },
     { path: "/cust/products", sidebarName: "Products", navbarName: "Products", icon: LocalDrink, component: CustProducts }
     ,{ path: "/cust/sales", sidebarName: "Sales", navbarName: "Sales", icon: LocalDrink, component: SaleProducts }
+    ,{ path: "/cust/vendors", sidebarName: "Vendors", navbarName: "Vendors", icon: LocalDrink, component: Vendors }
     /*,
     { path: "/category", sidebarName: "Category", navbarName: "categoryList", icon: LibraryBooks, component: GlobalCategory },
     { path: "/unit", sidebarName: "Units", navbarName: "Units", icon: BubbleChart, component: Unit },
