@@ -96,8 +96,8 @@ class addBusinessModal extends Component {
 
         return (
             <Modal
-                aria-labelledby="Add Product"
-                aria-describedby="Modal for adding Products"
+                aria-labelledby="Add business"
+                aria-describedby="Modal for adding businesss"
                 open={open}
                 onClose={close}
             >
@@ -105,8 +105,8 @@ class addBusinessModal extends Component {
                     <Grid container>
                         <ItemGrid xs={12} sm={12} md={12}>
                             <RegularCard
-                                cardTitle="ADD PRODUCT"
-                                cardSubtitle="Fill the form below to add product to the system"
+                                cardTitle="ADD business"
+                                cardSubtitle="Fill the form below to add business to the system"
                                 content={
                                     <div>
                                         <Grid container>
@@ -114,7 +114,7 @@ class addBusinessModal extends Component {
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Title"
-                                                    id="cust-product-title"
+                                                    id="cust-business-title"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setTitle }
@@ -125,7 +125,7 @@ class addBusinessModal extends Component {
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Name"
-                                                    id="cust-product-name"
+                                                    id="cust-business-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
@@ -136,7 +136,7 @@ class addBusinessModal extends Component {
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Desciption"
-                                                    id="cust-product-desc"
+                                                    id="cust-business-desc"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setDesc }
@@ -150,7 +150,7 @@ class addBusinessModal extends Component {
                                             <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Purchase price"
-                                                    id="cust-product-purchase-price"
+                                                    id="cust-business-purchase-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setPurchasePrice }
@@ -158,7 +158,7 @@ class addBusinessModal extends Component {
                                                 />
                                                 <CustomSelect
                                                    labelText="Purchase Unit"
-                                                    id="cust-product-purchase-unit"
+                                                    id="cust-business-purchase-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setPurchaseUnit }
@@ -174,7 +174,7 @@ class addBusinessModal extends Component {
                                                <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Retail price"
-                                                    id="cust-product-retail-price"
+                                                    id="cust-business-retail-price"
                                                     formControlProps={{ fullWidth:true , marginRight: 10 }}
                                                     type="text"
                                                     onChange={ this._setRetailPrice }
@@ -183,7 +183,7 @@ class addBusinessModal extends Component {
                                             
                                                 <CustomSelect
                                                    labelText="Retail Unit"
-                                                    id="cust-product-retail-unit"
+                                                    id="cust-business-retail-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setRetailUnit }
@@ -197,7 +197,7 @@ class addBusinessModal extends Component {
                                             <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Whole price"
-                                                    id="cust-product-whole-price"
+                                                    id="cust-business-whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setWholePrice }
@@ -205,7 +205,7 @@ class addBusinessModal extends Component {
                                                 />
                                                 <CustomSelect
                                                    labelText="Whole Unit"
-                                                    id="cust-product-whole-unit"
+                                                    id="cust-business-whole-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setWholeUnit }
@@ -221,7 +221,7 @@ class addBusinessModal extends Component {
                                             <CustomInput
                                                     autoFocus
                                                     labelText="Stock Qnt"
-                                                    id="cust-product-stack-qnt"
+                                                    id="cust-business-stack-qnt"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setStockQnt }
@@ -259,9 +259,9 @@ const styles = theme => ({
 });
 
 
-const AddModalWrapped = withStyles(styles)(addBusinessModal);
+const AddBusinessModalWrapped = withStyles(styles)(addBusinessModal);
 
-export default AddModalWrapped;
+export default AddBusinessModalWrapped;
 
 
 

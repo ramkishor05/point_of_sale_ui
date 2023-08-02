@@ -4,9 +4,9 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-import { updateVendor } from 'actions';
+import { updateVendorBusiness } from 'actions';
 
-class UpdateVendor extends Component {
+class UpdateBusinessModal extends Component {
     state = {
         id: '',
         title: '',
@@ -36,14 +36,14 @@ class UpdateVendor extends Component {
         this.setState({ quantity_added: event.target.value });
     };
 
-    _updateVendor = () => {
+    _updateBusiness = () => {
         const 
-            id = this.props.edit_vendor.id,
+            id = this.props.vendorBusiness.id,
             quantity_added = Number(this.state.quantity_added),
-            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.edit_vendor.quantity);
+            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.vendorBusiness.quantity);
 
         if (id && quantity_added && quantity_remaining) {
-            this.props.updateVendor(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+            this.props.updateVendorBusiness(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -55,11 +55,11 @@ class UpdateVendor extends Component {
     }
     
     render() {
-        const { classes, open, close, vendor } = this.props;
+        const { classes, open, close, vendorBusiness } = this.props;
         return (
             <Modal
-                aria-labelledby="Update vendor"
-                aria-describedby="Modal for updating vendor"
+                aria-labelledby="Update business"
+                aria-describedby="Modal for updating business"
                 open={open}
                 onClose={close}
             >
@@ -79,7 +79,7 @@ class UpdateVendor extends Component {
                                                     id="item-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    defaultValue={ vendor.name }
+                                                    defaultValue={ vendorBusiness.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -91,7 +91,7 @@ class UpdateVendor extends Component {
                                                     id="unit-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ vendor.mrp }
+                                                    defaultValue={ vendorBusiness.mrp }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -103,7 +103,7 @@ class UpdateVendor extends Component {
                                                     id="whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ vendor.price }
+                                                    defaultValue={ vendorBusiness.price }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -115,7 +115,7 @@ class UpdateVendor extends Component {
                                                     id="quantity-remaining"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ Number(vendor.quantity_remaining) + Number(this.state.quantity_added) }
+                                                    value={ Number(vendorBusiness.quantity_remaining) + Number(this.state.quantity_added) }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -162,10 +162,10 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { vendor } = state.vendorList;
-    return { vendor };
+    const { vendorBusiness } = state.vendorBusinessReducer;
+    return { vendorBusiness };
 };
 
-const UpdateModalWrapped = withStyles(styles)(UpdateVendor);
+const UpdateBusinessModalWrapped = withStyles(styles)(UpdateBusinessModal);
 
-export default connect(mapStateToProps, { updateVendor })(UpdateModalWrapped);
+export default connect(mapStateToProps, { updateVendorBusiness })(UpdateBusinessModalWrapped);

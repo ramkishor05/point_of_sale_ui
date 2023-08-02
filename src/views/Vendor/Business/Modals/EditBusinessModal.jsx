@@ -4,7 +4,7 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
-import { editBusiness } from 'actions';
+import { editVendorBusiness } from 'actions';
 
 const units =[{'id' : 1, 'name':'KGS'}];
 
@@ -78,11 +78,11 @@ class EditBusinessModal extends Component {
         this.setState({ stockQnt: event.target.value });
     };
 
-    _editBusiness = () => {
+    _editVendorBusiness = () => {
         const 
-            id = this.props.Business.id;
+            id = this.props.vendorBusiness.id;
         if (id) {
-            this.props.editBusiness(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+            this.props.editVendorBusiness(id, this.state, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -94,12 +94,12 @@ class EditBusinessModal extends Component {
     }
     
     render() {
-        const { classes, open, close, business } = this.props;
-        console.log("Business=",business)
+        const { classes, open, close, vendorBusiness } = this.props;
+        console.log("Business=",vendorBusiness)
         return (
             <Modal
-                aria-labelledby="Edit Product"
-                aria-describedby="Modal for editing products"
+                aria-labelledby="Edit business"
+                aria-describedby="Modal for editing business "
                 open={open}
                 onClose={close}
             >
@@ -107,8 +107,8 @@ class EditBusinessModal extends Component {
                     <Grid container>
                         <ItemGrid xs={12} sm={12} md={12}>
                             <RegularCard
-                                cardTitle="EDIT PRODUCT"
-                                cardSubtitle="Fill the form below to edit product to the system"
+                                cardTitle="EDIT business"
+                                cardSubtitle="Fill the form below to edit business to the system"
                                 content={
                                     <div>
                                         <Grid container>
@@ -116,33 +116,33 @@ class EditBusinessModal extends Component {
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Title"
-                                                    id="cust-product-title"
+                                                    id="cust-business-title"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setTitle }
-                                                    defaultValue={ business.title }
+                                                    defaultValue={ vendorBusiness.title }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Name"
-                                                    id="cust-product-name"
+                                                    id="cust-business-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ business.name }
+                                                    defaultValue={ vendorBusiness.name }
                                                 />
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Desciption"
-                                                    id="cust-product-desc"
+                                                    id="cust-business-desc"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setDesc }
-                                                    defaultValue={ business.desc }
+                                                    defaultValue={ vendorBusiness.desc }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -152,21 +152,21 @@ class EditBusinessModal extends Component {
                                             <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Purchase price"
-                                                    id="cust-product-purchase-price"
+                                                    id="cust-business-purchase-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setPurchasePrice }
-                                                    defaultValue={ business.purchasePrice }
+                                                    defaultValue={ vendorBusiness.purchasePrice }
                                                 />
                                                 <CustomSelect
                                                    labelText="Purchase Unit"
-                                                    id="cust-product-purchase-unit"
+                                                    id="cust-business-purchase-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setPurchaseUnit }
-                                                    defaultValue={ business.purchaseUnit|1 }
+                                                    defaultValue={ vendorBusiness.purchaseUnit|1 }
                                                     items= {units}
-                                                    value={ business.purchaseUnit |1}
+                                                    value={ vendorBusiness.purchaseUnit |1}
                                                 ></CustomSelect>
                                             </div>
                                             </ItemGrid>
@@ -176,22 +176,22 @@ class EditBusinessModal extends Component {
                                                <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Retail price"
-                                                    id="cust-product-retail-price"
+                                                    id="cust-business-retail-price"
                                                     formControlProps={{ fullWidth:true , marginRight: 10 }}
                                                     type="text"
                                                     onChange={ this._setRetailPrice }
-                                                    defaultValue={ business.retailPrice }
+                                                    defaultValue={ vendorBusiness.retailPrice }
                                                 />
                                             
                                                 <CustomSelect
                                                    labelText="Retail Unit"
-                                                    id="cust-product-retail-unit"
+                                                    id="cust-business-retail-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setRetailUnit }
-                                                    defaultValue={ business.retailUnit | 1 }
+                                                    defaultValue={ vendorBusiness.retailUnit | 1 }
                                                     items= {units}
-                                                    value={ business.retailUnit | 1 }
+                                                    value={ vendorBusiness.retailUnit | 1 }
                                                 ></CustomSelect>
                                               </div>
                                             </ItemGrid>
@@ -199,21 +199,21 @@ class EditBusinessModal extends Component {
                                             <div style={{display: 'flex'}}>
                                                 <CustomInput
                                                     labelText="Whole price"
-                                                    id="cust-product-whole-price"
+                                                    id="cust-business-whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setWholePrice }
-                                                    defaultValue={ business.wholePrice }
+                                                    defaultValue={ vendorBusiness.wholePrice }
                                                 />
                                                 <CustomSelect
                                                    labelText="Whole Unit"
-                                                    id="cust-product-whole-unit"
+                                                    id="cust-business-whole-unit"
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setWholeUnit }
-                                                    defaultValue={ business.wholeUnit | 1 }
+                                                    defaultValue={ vendorBusiness.wholeUnit | 1 }
                                                     items= {units}
-                                                    value={ business.wholeUnit | 1 }
+                                                    value={ vendorBusiness.wholeUnit | 1 }
                                                 ></CustomSelect>
                                                 </div>
                                             </ItemGrid>
@@ -223,11 +223,11 @@ class EditBusinessModal extends Component {
                                             <CustomInput
                                                     autoFocus
                                                     labelText="Stock Qnt"
-                                                    id="cust-product-stack-qnt"
+                                                    id="cust-business-stack-qnt"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setStockQnt }
-                                                    defaultValue={ business.stockQnt }
+                                                    defaultValue={ vendorBusiness.stockQnt }
                                                 />
                                                 
                                             </ItemGrid>
@@ -239,7 +239,7 @@ class EditBusinessModal extends Component {
                                     <Button
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._editBusiness}>Edit</Button>
+                                        onClick={this._editVendorBusiness}>Edit</Button>
                                 }
                             />
                         </ItemGrid>
@@ -261,10 +261,10 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { business } = state.businessList;
-    return { business };
+    const { vendorBusiness } = state.vendorBusinessReducer;
+    return { vendorBusiness };
 };
 
 const EditModalWrapped = withStyles(styles)(EditBusinessModal);
 
-export default connect(mapStateToProps, { editBusiness })(EditModalWrapped);
+export default connect(mapStateToProps, { editVendorBusiness })(EditModalWrapped);

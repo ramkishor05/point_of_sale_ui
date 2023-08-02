@@ -9,10 +9,10 @@ import { pink } from 'material-ui/colors';
 import logo_img from '../../assets/img/apple-icon.png';
 import { tableStyle } from 'variables/styles';
 
-import { renderToEdit } from 'actions';
+import { renderToVendorBusinessEdit } from 'actions';
 import { Edit } from 'material-ui-icons';
 
-class CustProductTable extends Component {
+class VendorBusinessTable extends Component {
     // Check if the user is super admin.
     isSuperAdmin = () => {
         return true;//this.props.user.role.name === 'super_admin';
@@ -25,12 +25,12 @@ class CustProductTable extends Component {
     }
 
     _renderEdit(prop) {
-        this.props.renderToCustProductEdit(prop);
+        this.props.renderToVendorBusinessEdit(prop);
         this.props.editCustProduct();
     }
 
     _renderUpdate(prop) {
-        this.props.renderToCustProductEdit(prop);
+        this.props.renderToVendorBusinessEdit(prop);
         this.props.updateCustProduct();
     }
 
@@ -127,11 +127,11 @@ class CustProductTable extends Component {
     }
 }
 
-CustProductTable.defaultProps = {
+VendorBusinessTable.defaultProps = {
     tableHeaderColor: 'gray',
 }
 
-CustProductTable.propTypes = {
+VendorBusinessTable.propTypes = {
     classes: PropTypes.object.isRequired,
     tableHeaderColor: PropTypes.oneOf(['warning','primary','danger','success','info','rose','gray']),
     tableHead: PropTypes.arrayOf(PropTypes.string),
@@ -156,6 +156,6 @@ const mapStateToProps = state => {
     return { user };
 };
 
-const WrappedCustProductTable = withStyles(tableStyle)(CustProductTable);
+const WrappedVendorBusinessTable = withStyles(tableStyle)(VendorBusinessTable);
 
-export default connect(mapStateToProps, { renderToEdit })(WrappedCustProductTable);
+export default connect(mapStateToProps, { renderToVendorBusinessEdit })(WrappedVendorBusinessTable);

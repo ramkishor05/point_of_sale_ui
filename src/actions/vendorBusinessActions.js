@@ -2,11 +2,11 @@ import {
     GET_ALL_VENDOR_BUSINESS_LIST_SUCCESS, VENDOR_BUSINESS_ADD_SUCCESS,
     SHOW_VENDOR_BUSINESS_LOADER, REMOVE_VENDOR_BUSINESS_LOADER,
     VENDOR_BUSINESS_TO_EDIT, VENDOR_BUSINESS_EDIT_SUCCESS, GET_FINISHING_VENDOR_BUSINESS_LIST
-} from '../types';
+} from './types';
 import VendorBusinessService from 'services/vendorBusinessService';
 
 // Action creator for getting all VendorBusinessServices --<
-export const getVendorBusinessList = () => async dispatch => {
+export const getAllVendorBusinessList = () => async dispatch => {
     dispatch({ type: SHOW_VENDOR_BUSINESS_LOADER });
 
     try {
@@ -34,7 +34,7 @@ export const addVendorBusiness = (data, refreshVendorBusinessList, clear, succes
             dispatch({ type: REMOVE_VENDOR_BUSINESS_LOADER });
         }
 
-        refreshVendorBusinessList && refreshvendorBusinessList();
+        refreshVendorBusinessList && refreshVendorBusinessList();
 
         clear && clear();
 
@@ -49,7 +49,7 @@ export const addVendorBusiness = (data, refreshVendorBusinessList, clear, succes
     }
 };
 
-export const renderToEdit = vendorBusiness => {
+export const renderToVendorBusinessEdit = vendorBusiness => {
     return {
         type: VENDOR_BUSINESS_TO_EDIT,
         payload: vendorBusiness,

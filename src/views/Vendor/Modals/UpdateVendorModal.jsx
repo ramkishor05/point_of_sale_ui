@@ -162,7 +162,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { vendor } = state.vendorList;
+    const { vendor } = state.vendorReducer;
     return { vendor };
 };
 

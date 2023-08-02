@@ -7,13 +7,13 @@ import SaveBusinessModal from './Modals/addBusinessModal';
 import EditBusinessModal from './Modals/EditBusinessModal';
 import UpdateBusinessModal from './Modals/UpdateBusinessModal';
 
-import { RegularCard, BusinessTable, ItemGrid, Snackbar } from 'components';
+import { RegularCard, VendorBusinessTable, ItemGrid, Snackbar } from 'components';
 
 import Loader from 'Loader';
 
-import { getAllBusinessList, addBusiness } from 'actions';
+import { getAllVendorBusinessList, addVendorBusiness } from 'actions';
 
-class Businesss extends Component {
+class Business extends Component {
     state = {
         notificationGroup: 'add',
         showAddBusinessModal: false,
@@ -24,7 +24,7 @@ class Businesss extends Component {
     };
 
     componentDidMount() {
-        this.props.getAllBusinessList();
+        this.props.getAllVendorBusinessList();
     }
 
     // Check if the user is super admin.
@@ -54,19 +54,19 @@ class Businesss extends Component {
     notificationMessage = type => {
         if (type === 'success') {
             if (this.state.notificationGroup === 'add') {
-                return 'Product added successfully';
+                return 'business added successfully';
             } else if (this.state.notificationGroup === 'edit') {
-                return 'Product edited successfully';
+                return 'business edited successfully';
             } else {
-                return 'Product updated successfully';
+                return 'business updated successfully';
             }
         } else if (type === 'error') {
             if (this.state.notificationGroup === 'edit') {
-                return 'Error product could not be edited';
+                return 'Error business could not be edited';
             } else if (this.state.notificationGroup === 'add') {
-                return 'Error product could not be added';
+                return 'Error business could not be added';
             } else {
-                return 'Error product could not be updated';
+                return 'Error business could not be updated';
             }
         }
     };
@@ -88,10 +88,10 @@ class Businesss extends Component {
                                 )
                             }
                             content={
-                                <BusinessTable
+                                <VendorBusinessTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
-                                    tableData={this.props.businessList}
+                                    tableData={this.props.vendorBusinessList}
                                     editBusiness={() => this.setState({ showEditBusinessModal: true, notificationGroup: 'edit' })}
                                     updateBusiness={() => this.setState({ showUpdateBusinessModal: true, notificationGroup: 'update' })}
                                 />
@@ -169,9 +169,9 @@ class Businesss extends Component {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { businessList, show_business_loader } = state.businessList;
+    const { vendorBusinessList, show_business_loader } = state.vendorBusinessReducer;
 
-    return { user, businessList, show_business_loader };
+    return { user, vendorBusinessList, show_business_loader };
 };
 
 const styles = {
@@ -181,4 +181,4 @@ const styles = {
     },
 };
 
-export default connect(mapStateToProps, { getAllBusinessList, addBusiness })(Businesss);
+export default connect(mapStateToProps, { getAllVendorBusinessList, addVendorBusiness })(Business);

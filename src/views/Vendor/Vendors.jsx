@@ -34,9 +34,9 @@ class Vendors extends Component {
 
     tableHead = () => {
         return this.isSuperAdmin()
-            ? ['Logo','Iden No.','Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            ? ['Logo','Name','Phone number', 'Mobile number', 'Email address', 
             'Create Dt','Updated Dt', 'Actions']
-            : ['Logo','Iden No.','Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            : ['Logo','Name','Phone number', 'Mobile number', 'Email address', 
             'Created Dt','Updated Dt', 'Actions']
     };
 
@@ -54,19 +54,19 @@ class Vendors extends Component {
     notificationMessage = type => {
         if (type === 'success') {
             if (this.state.notificationGroup === 'add') {
-                return 'Product added successfully';
+                return 'Vendor added successfully';
             } else if (this.state.notificationGroup === 'edit') {
-                return 'Product edited successfully';
+                return 'Vendor edited successfully';
             } else {
-                return 'Product updated successfully';
+                return 'Vendor updated successfully';
             }
         } else if (type === 'error') {
             if (this.state.notificationGroup === 'edit') {
-                return 'Error product could not be edited';
+                return 'Error vendor could not be edited';
             } else if (this.state.notificationGroup === 'add') {
-                return 'Error product could not be added';
+                return 'Error vendor could not be added';
             } else {
-                return 'Error product could not be updated';
+                return 'Error vendor could not be updated';
             }
         }
     };
@@ -169,7 +169,7 @@ class Vendors extends Component {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { vendorList, show_vendor_loader } = state.vendorList;
+    const { vendorList, show_vendor_loader } = state.vendorReducer;
 
     return { user, vendorList, show_vendor_loader };
 };

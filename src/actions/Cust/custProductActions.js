@@ -50,7 +50,7 @@ export const addCustProduct = (data, refreshItemsList, clear, successNotificatio
     }
 };
 
-export const renderToEdit = custProduct => {
+export const renderToCustProductEdit = custProduct => {
     return {
         type: CUST_PRODUCT_TO_EDIT,
         payload: custProduct,

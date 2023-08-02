@@ -2,16 +2,16 @@ import {
     GET_ALL_VENDOR_CUSTOMER_LIST_SUCCESS, VENDOR_CUSTOMER_ADD_SUCCESS,
     SHOW_VENDOR_CUSTOMER_LOADER, REMOVE_VENDOR_CUSTOMER_LOADER,
     VENDOR_CUSTOMER_TO_EDIT, VENDOR_CUSTOMER_EDIT_SUCCESS, GET_FINISHING_VENDOR_CUSTOMER_LIST
-} from 'types';
+} from './types';
 
-import VendorCustomer from 'services/vendorCustomer';
+import VendorCustomerService from 'services/vendorCustomerService';
 
 // Action creator for getting all vendorCustomers --<
 export const getAllVendorCustomerList = () => async dispatch => {
     dispatch({ type: SHOW_VENDOR_CUSTOMER_LOADER });
 
     try {
-        const vendorCustomers = await VendorCustomer.getAll();
+        const vendorCustomers = await VendorCustomerService.getAll();
 
         if (vendorCustomers) {
             dispatch({ type: GET_ALL_VENDOR_CUSTOMER_LIST_SUCCESS, payload: vendorCustomers });
@@ -28,7 +28,7 @@ export const addVendorCustomer = (data, refreshVendorCustomerList, clear, succes
     dispatch({ type: SHOW_VENDOR_CUSTOMER_LOADER });
 
     try {
-        const vendorCustomer = await VendorCustomer.add(data);
+        const vendorCustomer = await VendorCustomerService.add(data);
 
         if (vendorCustomer) {
             dispatch({ type: VENDOR_CUSTOMER_ADD_SUCCESS });
@@ -50,7 +50,7 @@ export const addVendorCustomer = (data, refreshVendorCustomerList, clear, succes
     }
 };
 
-export const renderToEdit = vendorCustomer => {
+export const renderToVendorCustomerEdit = vendorCustomer => {
     return {
         type: VENDOR_CUSTOMER_TO_EDIT,
         payload: vendorCustomer,
@@ -61,7 +61,7 @@ export const editVendorCustomer = (id, data, clearAndRefresh, successNotificatio
     dispatch({ type: SHOW_VENDOR_CUSTOMER_LOADER });
 
     try {
-        const vendorCustomer = await VendorCustomer.update(id, data);
+        const vendorCustomer = await VendorCustomerService.update(id, data);
 
         if (vendorCustomer) {
             dispatch({ type: VENDOR_CUSTOMER_EDIT_SUCCESS });
@@ -81,7 +81,7 @@ export const updateVendorCustomer = (id, data, clearAndRefresh, successNotificat
     dispatch({ type: SHOW_VENDOR_CUSTOMER_LOADER });
 
     try {
-        const vendorCustomer = await VendorCustomer.update(id, data);
+        const vendorCustomer = await VendorCustomerService.update(id, data);
 
         if (vendorCustomer) {
             dispatch({ type: VENDOR_CUSTOMER_EDIT_SUCCESS });
@@ -101,7 +101,7 @@ export const getFinishingVendorCustomerList = minimum => async dispatch => {
     dispatch({ type: SHOW_VENDOR_CUSTOMER_LOADER });
 
     try {
-        const vendorCustomer = await VendorCustomer.find(minimum);
+        const vendorCustomer = await VendorCustomerService.find(minimum);
 
         if (vendorCustomer) {
             dispatch({ type: GET_FINISHING_VENDOR_CUSTOMER_LIST, payload: vendorCustomer });

@@ -4,7 +4,7 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-import { updateCustomer } from 'actions';
+import { updateVendorCustomer } from 'actions';
 
 class UpdateCustomerModal extends Component {
     state = {
@@ -36,14 +36,14 @@ class UpdateCustomerModal extends Component {
         this.setState({ quantity_added: event.target.value });
     };
 
-    _updateCustomer = () => {
+    _updateVendorCustomer = () => {
         const 
-            id = this.props.edit_Customer.id,
+            id = this.props.vendorCustomer.id,
             quantity_added = Number(this.state.quantity_added),
-            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.edit_Customer.quantity);
+            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.vendorCustomer.quantity);
 
         if (id && quantity_added && quantity_remaining) {
-            this.props.updateCustomer(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
+            this.props.updateVendorCustomer(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -55,7 +55,7 @@ class UpdateCustomerModal extends Component {
     }
     
     render() {
-        const { classes, open, close, Customer } = this.props;
+        const { classes, open, close, vendorCustomer } = this.props;
         return (
             <Modal
                 aria-labelledby="Update customer"
@@ -79,7 +79,7 @@ class UpdateCustomerModal extends Component {
                                                     id="item-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    defaultValue={ customer.name }
+                                                    defaultValue={ vendorCustomer.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -91,7 +91,7 @@ class UpdateCustomerModal extends Component {
                                                     id="unit-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ customer.mrp }
+                                                    defaultValue={ vendorCustomer.mrp }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -103,7 +103,7 @@ class UpdateCustomerModal extends Component {
                                                     id="whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ customer.price }
+                                                    defaultValue={ vendorCustomer.price }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -115,7 +115,7 @@ class UpdateCustomerModal extends Component {
                                                     id="quantity-remaining"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ Number(customer.quantity_remaining) + Number(this.state.quantity_added) }
+                                                    value={ Number(vendorCustomer.quantity_remaining) + Number(this.state.quantity_added) }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -138,7 +138,7 @@ class UpdateCustomerModal extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._updateItem}
+                                        onClick={this._updateVendorCustomer}
                                     >
                                         Update
                                     </Button>
@@ -162,10 +162,10 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { customer } = state.customerList;
-    return { customer };
+    const { vendorCustomer } = state.vendorCustomerReducer;
+    return { vendorCustomer };
 };
 
 const UpdateModalWrapped = withStyles(styles)(UpdateCustomerModal);
 
-export default connect(mapStateToProps, { updateCustomer })(UpdateModalWrapped);
+export default connect(mapStateToProps, { updateVendorCustomer })(UpdateModalWrapped);

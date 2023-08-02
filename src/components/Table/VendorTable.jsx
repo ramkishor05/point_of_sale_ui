@@ -9,7 +9,7 @@ import { pink } from 'material-ui/colors';
 import logo_img from '../../assets/img/apple-icon.png';
 import { tableStyle } from 'variables/styles';
 
-import { renderToEdit } from 'actions';
+import { renderToVendorEdit } from 'actions';
 import { Edit } from 'material-ui-icons';
 
 class VendorTable extends Component {
@@ -25,13 +25,13 @@ class VendorTable extends Component {
     }
 
     _renderEdit(prop) {
-        this.props.renderToEdit(prop);
-        this.props.editCustProduct();
+        this.props.renderToVendorEdit(prop);
+        this.props.editVendor();
     }
 
     _renderUpdate(prop) {
-        this.props.renderToEdit(prop);
-        this.props.updateCustProduct();
+        this.props.renderToVendorEdit(prop);
+        this.props.updateVendor();
     }
 
     _renderTableData = () => {
@@ -51,13 +51,13 @@ class VendorTable extends Component {
                         { prop.name }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.retailPrice }
+                        { prop.phoneNumber }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.purchasePrice }
+                        { prop.mobileNumber }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        {prop.stockQnt}
+                        {prop.emailAddress}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                         { this._renderDate(prop.createdDt) }
@@ -158,4 +158,4 @@ const mapStateToProps = state => {
 
 const WrappedVendorTable = withStyles(tableStyle)(VendorTable);
 
-export default connect(mapStateToProps, { renderToEdit })(WrappedVendorTable);
+export default connect(mapStateToProps, { renderToVendorEdit })(WrappedVendorTable);

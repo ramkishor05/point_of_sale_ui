@@ -10,4 +10,4 @@ export const VENDOR_CUSTOMER_TO_EDIT = 'vendor_customer_to_edit';
 
 export const VENDOR_CUSTOMER_EDIT_SUCCESS = 'vendor_customer_edit_success';
 
-export const GET_FINISHING_VENDOR_CUSTOMER_LIST = 'get_finishing_cust_product_list';
+export const GET_FINISHING_VENDOR_CUSTOMER_LIST = 'get_finishing_vendor_customer_list';

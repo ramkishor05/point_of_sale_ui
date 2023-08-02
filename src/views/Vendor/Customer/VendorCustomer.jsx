@@ -7,13 +7,13 @@ import SaveCustomerModal from './Modals/addCustomerModal';
 import EditCustomerModal from './Modals/EditCustomerModal';
 import UpdateCustomerModal from './Modals/UpdateCustomerModal';
 
-import { RegularCard, CustomerTable, ItemGrid, Snackbar } from 'components';
+import { RegularCard, VendorCustomerTable, ItemGrid, Snackbar } from 'components';
 
 import Loader from 'Loader';
 
-import { getAllCustomerList, addCustomer } from 'actions';
+import { getAllVendorCustomerList, addVendorCustomer } from 'actions';
 
-class Customers extends Component {
+class VendorCustomer extends Component {
     state = {
         notificationGroup: 'add',
         showAddCustomerModal: false,
@@ -24,7 +24,7 @@ class Customers extends Component {
     };
 
     componentDidMount() {
-        this.props.getAllCustomerList();
+        this.props.getAllVendorCustomerList();
     }
 
     // Check if the user is super admin.
@@ -88,10 +88,10 @@ class Customers extends Component {
                                 )
                             }
                             content={
-                                <CustomerTable
+                                <VendorCustomerTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
-                                    tableData={this.props.customerList}
+                                    tableData={this.props.vendorCustomerList}
                                     editCustomer={() => this.setState({ showEditCustomerModal: true, notificationGroup: 'edit' })}
                                     updateCustomer={() => this.setState({ showUpdateCustomerModal: true, notificationGroup: 'update' })}
                                 />
@@ -169,9 +169,9 @@ class Customers extends Component {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { customerList, show_customer_loader } = state.customerList;
+    const { vendorCustomerList, show_customer_loader } = state.vendorCustomerReducer;
 
-    return { user, customerList, show_customer_loader };
+    return { user, vendorCustomerList, show_customer_loader };
 };
 
 const styles = {
@@ -181,4 +181,4 @@ const styles = {
     },
 };
 
-export default connect(mapStateToProps, { getAllCustomerList, addCustomer })(Customers);
+export default connect(mapStateToProps, { getAllVendorCustomerList, addVendorCustomer })(VendorCustomer);

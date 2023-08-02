@@ -50,7 +50,7 @@ export const addVendor = (data, refreshVendorListList, clear, successNotificatio
     }
 };
 
-export const renderToEdit = vendor => {
+export const renderToVendorEdit = vendor => {
     return {
         type: VENDOR_TO_EDIT,
         payload: vendor,

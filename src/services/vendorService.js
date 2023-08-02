@@ -20,7 +20,7 @@ export default {
     },
     add(item) {
         
-        return axios.post(VENDOR_URL,{headers: headers}, item)
+        return axios.post(VENDOR_URL, item,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },

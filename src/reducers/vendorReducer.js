@@ -11,14 +11,11 @@ const INITIAL_STATE = {
         id: '',
         title: '',
         name: '',
-        desc: '',
-        stockQnt: 0,
-        purchasePrice: 0,
-        purchaseUnit: 1,
-        wholePrice: 0,
-        wholeUnit: 1,
-        retailPrice: 0,
-        retailUnit: 1
+        phoneNumber: '',
+        mobileNumber: '',
+        emailAddress: '',
+        permamentAddress: '',
+        presentAddress: ''
     },
     show_vendor_loader: false,
 };
