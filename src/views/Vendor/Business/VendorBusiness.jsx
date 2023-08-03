@@ -11,7 +11,7 @@ import { RegularCard, VendorBusinessTable, ItemGrid, Snackbar } from 'components
 
 import Loader from 'Loader';
 
-import { getAllVendorBusinessList, addVendorBusiness } from 'actions';
+import { getAllVendorBusinessList, addVendorBusiness, getAllVendorList } from 'actions';
 
 class Business extends Component {
     state = {
@@ -25,6 +25,7 @@ class Business extends Component {
 
     componentDidMount() {
         this.props.getAllVendorBusinessList();
+        this.props.getAllVendorList();
     }
 
     // Check if the user is super admin.
@@ -34,9 +35,9 @@ class Business extends Component {
 
     tableHead = () => {
         return this.isSuperAdmin()
-            ? ['Logo','Iden No.','Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            ? ['Logo','Name','Phone number', 'Mobile number', 'Email address', 
             'Create Dt','Updated Dt', 'Actions']
-            : ['Logo','Iden No.','Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            : ['Logo','Name','Phone number', 'Mobile number', 'Email address', 
             'Created Dt','Updated Dt', 'Actions']
     };
 
@@ -92,8 +93,8 @@ class Business extends Component {
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
                                     tableData={this.props.vendorBusinessList}
-                                    editBusiness={() => this.setState({ showEditBusinessModal: true, notificationGroup: 'edit' })}
-                                    updateBusiness={() => this.setState({ showUpdateBusinessModal: true, notificationGroup: 'update' })}
+                                    editVendorBusiness={() => this.setState({ showEditBusinessModal: true, notificationGroup: 'edit' })}
+                                    updateVendorBusiness={() => this.setState({ showUpdateBusinessModal: true, notificationGroup: 'update' })}
                                 />
                             }
                         />
@@ -139,8 +140,9 @@ class Business extends Component {
                 <SaveBusinessModal
                     open={this.state.showAddBusinessModal}
                     close={() => this.setState({ showAddBusinessModal: false })}
-                    addBusiness={this.props.addBusiness}
-                    refresh={this.props.getAllBusinessList}
+                    addVendorBusiness={this.props.addVendorBusiness}
+                    vendorList = {this.getAllVendorList}
+                    refresh={this.props.getAllVendorBusinessList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -148,7 +150,8 @@ class Business extends Component {
                 <EditBusinessModal
                     open={this.state.showEditBusinessModal}
                     close={() => this.setState({ showEditBusinessModal: false })}
-                    refresh={this.props.getAllBusinessList}
+                    refresh={this.props.getAllVendorBusinessList}
+                    vendorList = {this.getAllVendorList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -156,7 +159,7 @@ class Business extends Component {
                 <UpdateBusinessModal
                     open={this.state.showUpdateBusinessModal}
                     close={() => this.setState({ showUpdateBusinessModal: false })}
-                    refresh={this.props.getAllBusinessList}
+                    refresh={this.props.getAllVendorBusinessList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -170,7 +173,6 @@ class Business extends Component {
 const mapStateToProps = state => {
     const { user } = state.users;
     const { vendorBusinessList, show_business_loader } = state.vendorBusinessReducer;
-
     return { user, vendorBusinessList, show_business_loader };
 };
 
@@ -181,4 +183,4 @@ const styles = {
     },
 };
 
-export default connect(mapStateToProps, { getAllVendorBusinessList, addVendorBusiness })(Business);
+export default connect(mapStateToProps, { getAllVendorList, getAllVendorBusinessList, addVendorBusiness })(Business);

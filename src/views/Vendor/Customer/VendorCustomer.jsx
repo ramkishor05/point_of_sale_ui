@@ -34,9 +34,9 @@ class VendorCustomer extends Component {
 
     tableHead = () => {
         return this.isSuperAdmin()
-            ? ['Logo','Iden No.','Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            ? ['Logo','Name','Phone number', 'Mobile number', 'Email address', 
             'Create Dt','Updated Dt', 'Actions']
-            : ['Logo','Iden No.','Name','Retail Price', 'Purchase Price', 'Stock Qnt', 
+            : ['Logo','Name','Phone number', 'Mobile number', 'Email address', 
             'Created Dt','Updated Dt', 'Actions']
     };
 
@@ -92,8 +92,8 @@ class VendorCustomer extends Component {
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
                                     tableData={this.props.vendorCustomerList}
-                                    editCustomer={() => this.setState({ showEditCustomerModal: true, notificationGroup: 'edit' })}
-                                    updateCustomer={() => this.setState({ showUpdateCustomerModal: true, notificationGroup: 'update' })}
+                                    editVendorCustomer={() => this.setState({ showEditCustomerModal: true, notificationGroup: 'edit' })}
+                                    updateVendorCustomer={() => this.setState({ showUpdateCustomerModal: true, notificationGroup: 'update' })}
                                 />
                             }
                         />
@@ -139,8 +139,8 @@ class VendorCustomer extends Component {
                 <SaveCustomerModal
                     open={this.state.showAddCustomerModal}
                     close={() => this.setState({ showAddCustomerModal: false })}
-                    addCustomer={this.props.addCustomer}
-                    refresh={this.props.getAllCustomerList}
+                    addVendorCustomer={this.props.addVendorCustomer}
+                    refresh={this.props.getAllVendorCustomerList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -148,7 +148,7 @@ class VendorCustomer extends Component {
                 <EditCustomerModal
                     open={this.state.showEditCustomerModal}
                     close={() => this.setState({ showEditCustomerModal: false })}
-                    refresh={this.props.getAllCustomerList}
+                    refresh={this.props.getAllVendorCustomerList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -156,7 +156,7 @@ class VendorCustomer extends Component {
                 <UpdateCustomerModal
                     open={this.state.showUpdateCustomerModal}
                     close={() => this.setState({ showUpdateCustomerModal: false })}
-                    refresh={this.props.getAllCustomerList}
+                    refresh={this.props.getAllVendorCustomerList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />

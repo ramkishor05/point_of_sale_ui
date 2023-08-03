@@ -9,10 +9,13 @@ class CustomSelect extends Component {
 	render() {
 		const { 
 			classes, formControlProps, labelText, id, labelProps, inputProps, error, success, 
-			onChange, value, items
+			onChange, value, items, idKey, valueKey
 		} = this.props;
-
+        items.forEach(item => (
+            console.log('key='+item[idKey]+',  value=' +item[valueKey]+'')
+        ))
 		return (
+            
 			<FormControl {...formControlProps} className={formControlProps.className + " " + classes.formControl}>
 				{
                     labelText !== undefined 
@@ -38,7 +41,7 @@ class CustomSelect extends Component {
                     {
                         typeof items[0] === "object"
                             ? items.map((item, index) => (
-                                <MenuItem value={index} key={item.id}>{ item.name }</MenuItem>
+                                <MenuItem value={index} key={item[idKey]}>{ item[valueKey] }</MenuItem>
                             ))
                             : items.map(item => (
                                 <MenuItem value={item} key={item}>{ item }</MenuItem>
@@ -62,6 +65,8 @@ CustomSelect.propTypes = {
     labelText: PropTypes.node,
     labelProps: PropTypes.object,
     id: PropTypes.string,
+    valueKey: PropTypes.string,
+    idKey: PropTypes.string,
     inputProps: PropTypes.object,
     formControlProps: PropTypes.object,
     error: PropTypes.bool,

@@ -3,7 +3,8 @@ import { axios } from './index';
 const BUSINESS_URL="http://localhost:3333/api/business";
 const headers = {
     'Content-Type': 'application/json',
-    'custAppId': 1
+    'custAppId': 1,
+     vendorId: 31
 };
 
 export default {
@@ -18,8 +19,10 @@ export default {
                     .catch(error => Promise.reject(error.response.data));
     },
     add(item) {
-        
-        return axios.post(BUSINESS_URL,{headers: headers}, item)
+        if(item['vendorId']){
+            headers['vendorId']=item['vendorId']
+        }
+        return axios.post(BUSINESS_URL, item,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },

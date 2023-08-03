@@ -35,7 +35,7 @@ export const addVendorCustomer = (data, refreshVendorCustomerList, clear, succes
             dispatch({ type: REMOVE_VENDOR_CUSTOMER_LOADER });
         }
 
-        refreshVendorCustomerList && refreshVendorCustomerList();
+        getAllVendorCustomerList();
 
         clear && clear();
 

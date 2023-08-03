@@ -4,7 +4,8 @@ const CUSTOMER_URL="http://localhost:3333/api/customer";
 
 const headers = {
     'Content-Type': 'application/json',
-    'custAppId': 1
+    'custAppId': 1,
+    'vendorId' : 31
 };
 
 export default {
@@ -19,8 +20,10 @@ export default {
                     .catch(error => Promise.reject(error.response.data));
     },
     add(item) {
-        
-        return axios.post(CUSTOMER_URL,{headers: headers}, item)
+        if(item['vendorId']){
+            headers['vendorId']=item['vendorId']
+        }
+        return axios.post(CUSTOMER_URL, item,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },

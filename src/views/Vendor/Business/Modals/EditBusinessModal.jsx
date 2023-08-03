@@ -6,33 +6,24 @@ import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
 import { editVendorBusiness } from 'actions';
 
-const units =[{'id' : 1, 'name':'KGS'}];
+const ids = {
+    id: '',
+    title: '',
+    name: '',
+    phoneNumber: '',
+    mobileNumber: '',
+    emailAddress: '',
+    permamentAddress: '',
+    presentAddress: '',
+    vendorId: 0
+};
 
 class EditBusinessModal extends Component {
-    state = {
-        id: '',
-        title: '',
-        name: '',
-        desc: '',
-        stockQnt: 0,
-        purchasePrice: 0,
-        purchaseUnit: 1,
-        wholePrice: 0,
-        wholeUnit: 1,
-        retailPrice: 0,
-        retailUnit: 1
+    state = {...ids};
+    
+    _setVendorId = event => {
+        this.setState({ vendorId: event.target.value });
     };
-
-    getModalStyle() {
-        const top = 50;
-        const left = 50;
-
-        return {
-            top: `${top}%`,
-            left: `${left}%`,
-            transform: `translate(-${top}%, -${left}%)`,
-        };
-    }
 
     _setTitle = event => {
         this.setState({ title: event.target.value });
@@ -42,40 +33,24 @@ class EditBusinessModal extends Component {
         this.setState({ name: event.target.value });
     };
 
-    _setDesc = event => {
-        this.setState({ desc: event.target.value });
+    _setPhoneNumber = event => {
+        this.setState({ phoneNumber: event.target.value });
     };
 
-    _setUnitPrice = event => {
-        this.setState({ unitPrice: event.target.value });
+    _setMobileNumber = event => {
+        this.setState({ mobileNumber: event.target.value });
     };
 
-    _setPurchasePrice = event => {
-        this.setState({ purchasePrice: event.target.value });
+    _setEmailAddress = event => {
+        this.setState({ emailAddress: event.target.value });
     };
 
-    _setPurchaseUnit = event => {
-        this.setState({ purchaseUnit: event.target.value });
+    _setPermamentAddress = event => {
+        this.setState({ permamentAddress: event.target.value });
     };
 
-    _setWholePrice = event => {
-        this.setState({ wholePrice: event.target.value });
-    };
-
-    _setWholeUnit = event => {
-        this.setState({ wholeUnit: event.target.value });
-    };
-
-    _setRetailPrice = event => {
-        this.setState({ retailPrice: event.target.value });
-    };
-
-    _setRetailUnit = event => {
-        this.setState({ retailUnit: event.target.value });
-    };
-
-    _setStockQnt = event => {
-        this.setState({ stockQnt: event.target.value });
+    _setPresentAddress = event => {
+        this.setState({ presentAddress: event.target.value });
     };
 
     _editVendorBusiness = () => {
@@ -92,10 +67,21 @@ class EditBusinessModal extends Component {
         this.props.close();
         this.props.refresh();
     }
+
+    getModalStyle() {
+        const top = 50;
+        const left = 50;
+
+        return {
+            top: `${top}%`,
+            left: `${left}%`,
+            transform: `translate(-${top}%, -${left}%)`,
+        };
+    }
     
     render() {
-        const { classes, open, close, vendorBusiness } = this.props;
-        console.log("Business=",vendorBusiness)
+        const { classes, open, close, vendorBusiness, vendorList } = this.props;
+
         return (
             <Modal
                 aria-labelledby="Edit business"
@@ -111,123 +97,103 @@ class EditBusinessModal extends Component {
                                 cardSubtitle="Fill the form below to edit business to the system"
                                 content={
                                     <div>
-                                        <Grid container>
-                                            <ItemGrid xs={4} sm={4} md={4}>
+                                        <Grid container> 
+                                            <ItemGrid xs={6} sm={6} md={6}>
+                                                <CustomSelect
+                                                    labelText="Vendors"
+                                                    id="cust-product-purchase-unit"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setVendorId }
+                                                    defaultValue={ this.state.vendorId }
+                                                    items= {vendorList}
+                                                    value={ vendorBusiness.vendorId | this.state.vendorId }
+                                                    idKey = "id"
+                                                    valueKey = "name"
+                                                ></CustomSelect>
+                                            </ItemGrid>
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Title"
-                                                    id="cust-business-title"
+                                                    id="cust-vendor-title"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setTitle }
                                                     defaultValue={ vendorBusiness.title }
                                                 />
                                             </ItemGrid>
-                                            <ItemGrid xs={4} sm={4} md={4}>
+                                        </Grid>
+                                        <Grid container>
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Name"
-                                                    id="cust-business-name"
+                                                    id="cust-vendorBusiness-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
                                                     defaultValue={ vendorBusiness.name }
                                                 />
                                             </ItemGrid>
-                                            <ItemGrid xs={4} sm={4} md={4}>
+                                        
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
                                                     autoFocus
-                                                    labelText="Desciption"
-                                                    id="cust-business-desc"
+                                                    labelText="Phone Number"
+                                                    id="cust-vendorBusiness-phonenumber"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setDesc }
-                                                    defaultValue={ vendorBusiness.desc }
+                                                    onChange={ this._setPhoneNumber }
+                                                    defaultValue={ vendorBusiness.phoneNumber }
+                                                />
+                                            </ItemGrid>
+                                        </Grid>
+                                        <Grid container>                                               
+                                            <ItemGrid xs={6} sm={6} md={6}>
+                                                <CustomInput
+                                                    labelText="Mobile number"
+                                                    id="cust-vendorBusiness-mobileNumber"
+                                                    formControlProps={{ fullWidth:true}}
+                                                    type="text"
+                                                    onChange={ this._setMobileNumber }
+                                                    defaultValue={ vendorBusiness.mobileNumber }
+                                                />
+                                            </ItemGrid>
+                                        
+
+                                            <ItemGrid xs={6} sm={6} md={6}>
+                                                <CustomInput
+                                                    labelText="Email address"
+                                                    id="cust-vendorBusiness-emailAddress"
+                                                    formControlProps={{ fullWidth: true }}
+                                                    type="text"
+                                                    onChange={ this._setEmailAddress }
+                                                    defaultValue={ vendorBusiness.emailAddress }
                                                 />
                                             </ItemGrid>
                                         </Grid>
                                         <Grid container>
-                                            
-                                            <ItemGrid xs={4} sm={4} md={4}>
-                                            <div style={{display: 'flex'}}>
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
-                                                    labelText="Purchase price"
-                                                    id="cust-business-purchase-price"
+                                                    labelText="Permament address"
+                                                    id="cust-vendorBusiness-permamentAddress"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setPurchasePrice }
-                                                    defaultValue={ vendorBusiness.purchasePrice }
+                                                    onChange={ this._setPermamentAddress }
+                                                    defaultValue={ vendorBusiness.permamentAddress }
                                                 />
-                                                <CustomSelect
-                                                   labelText="Purchase Unit"
-                                                    id="cust-business-purchase-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
-                                                    type="text"
-                                                    onChange={ this._setPurchaseUnit }
-                                                    defaultValue={ vendorBusiness.purchaseUnit|1 }
-                                                    items= {units}
-                                                    value={ vendorBusiness.purchaseUnit |1}
-                                                ></CustomSelect>
-                                            </div>
                                             </ItemGrid>
-                                            
-
-                                            <ItemGrid xs={4} sm={4} md={4}>
-                                               <div style={{display: 'flex'}}>
-                                                <CustomInput
-                                                    labelText="Retail price"
-                                                    id="cust-business-retail-price"
-                                                    formControlProps={{ fullWidth:true , marginRight: 10 }}
-                                                    type="text"
-                                                    onChange={ this._setRetailPrice }
-                                                    defaultValue={ vendorBusiness.retailPrice }
-                                                />
-                                            
-                                                <CustomSelect
-                                                   labelText="Retail Unit"
-                                                    id="cust-business-retail-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
-                                                    type="text"
-                                                    onChange={ this._setRetailUnit }
-                                                    defaultValue={ vendorBusiness.retailUnit | 1 }
-                                                    items= {units}
-                                                    value={ vendorBusiness.retailUnit | 1 }
-                                                ></CustomSelect>
-                                              </div>
-                                            </ItemGrid>
-                                            <ItemGrid xs={4} sm={4} md={4}>
-                                            <div style={{display: 'flex'}}>
-                                                <CustomInput
-                                                    labelText="Whole price"
-                                                    id="cust-business-whole-price"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="text"
-                                                    onChange={ this._setWholePrice }
-                                                    defaultValue={ vendorBusiness.wholePrice }
-                                                />
-                                                <CustomSelect
-                                                   labelText="Whole Unit"
-                                                    id="cust-business-whole-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
-                                                    type="text"
-                                                    onChange={ this._setWholeUnit }
-                                                    defaultValue={ vendorBusiness.wholeUnit | 1 }
-                                                    items= {units}
-                                                    value={ vendorBusiness.wholeUnit | 1 }
-                                                ></CustomSelect>
-                                                </div>
-                                            </ItemGrid>
-                                        </Grid>
-                                        <Grid container>.
-                                            <ItemGrid xs={4} sm={4} md={4}>
+                                        
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                             <CustomInput
                                                     autoFocus
-                                                    labelText="Stock Qnt"
-                                                    id="cust-business-stack-qnt"
+                                                    labelText="Present address"
+                                                    id="cust-vendorBusiness-presentAddress"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setStockQnt }
-                                                    defaultValue={ vendorBusiness.stockQnt }
+                                                    onChange={ this._setPresentAddress }
+                                                    defaultValue={ vendorBusiness.presentAddress }
                                                 />
                                                 
                                             </ItemGrid>
@@ -250,6 +216,8 @@ class EditBusinessModal extends Component {
     }
 }
 
+
+
 const styles = theme => ({
     paper: {
         position: 'absolute',
@@ -262,7 +230,8 @@ const styles = theme => ({
 
 const mapStateToProps = state => {
     const { vendorBusiness } = state.vendorBusinessReducer;
-    return { vendorBusiness };
+    const { vendorList } = state.vendorReducer;
+    return { vendorBusiness , vendorList};
 };
 
 const EditModalWrapped = withStyles(styles)(EditBusinessModal);

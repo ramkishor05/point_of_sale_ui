@@ -26,12 +26,12 @@ class VendorCustomerTable extends Component {
 
     _renderEdit(prop) {
         this.props.renderToVendorCustomerEdit(prop);
-        this.props.editCustProduct();
+        this.props.editVendorCustomer();
     }
 
     _renderUpdate(prop) {
         this.props.renderToVendorCustomerEdit(prop);
-        this.props.updateCustProduct();
+        this.props.updateVendorCustomer();
     }
 
     _renderTableData = () => {
@@ -44,20 +44,18 @@ class VendorCustomerTable extends Component {
                    <TableCell className={classes.tableCell}>
                         <img src={logo_img} width={30} height= {30}></img>
                     </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { prop.idenNo }
-                    </TableCell>
+                    
                     <TableCell className={classes.tableCell}>
                         { prop.name }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.retailPrice }
+                        { prop.phoneNumber }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.purchasePrice }
+                        { prop.mobileNumber }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        {prop.stockQnt}
+                        {prop.emailAddress}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                         { this._renderDate(prop.createdDt) }

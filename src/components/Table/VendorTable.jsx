@@ -44,9 +44,7 @@ class VendorTable extends Component {
                    <TableCell className={classes.tableCell}>
                         <img src={logo_img} width={30} height= {30}></img>
                     </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { prop.idenNo }
-                    </TableCell>
+                    
                     <TableCell className={classes.tableCell}>
                         { prop.name }
                     </TableCell>

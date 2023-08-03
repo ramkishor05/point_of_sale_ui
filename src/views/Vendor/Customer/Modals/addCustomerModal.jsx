@@ -2,25 +2,27 @@ import React, { Component } from 'react';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
+import { connect } from 'react-redux';
 
 const ids = {
     id: '',
     title: '',
     name: '',
-    desc: '',
-    stockQnt: 0,
-    purchasePrice: 0,
-    purchaseUnit: 1,
-    wholePrice: 0,
-    wholeUnit: 1,
-    retailPrice: 0,
-    retailUnit: 1
+    phoneNumber: '',
+    mobileNumber: '',
+    emailAddress: '',
+    permamentAddress: '',
+    presentAddress: ''
 };
-const units =[{'id' : 1, 'name':'KGS'}];
 
-class addVendorModal extends Component {
+class addCustomerModal extends Component {
     
     state = {...ids};
+
+    
+    _setVendorId = event => {
+        this.setState({ vendorId: event.target.value });
+    };
 
     _setTitle = event => {
         this.setState({ title: event.target.value });
@@ -30,47 +32,30 @@ class addVendorModal extends Component {
         this.setState({ name: event.target.value });
     };
 
-    _setDesc = event => {
-        this.setState({ desc: event.target.value });
+    _setPhoneNumber = event => {
+        this.setState({ phoneNumber: event.target.value });
     };
 
-    _setUnitPrice = event => {
-        this.setState({ unitPrice: event.target.value });
+    _setMobileNumber = event => {
+        this.setState({ mobileNumber: event.target.value });
     };
 
-    _setPurchasePrice = event => {
-        this.setState({ purchasePrice: event.target.value });
+    _setEmailAddress = event => {
+        this.setState({ emailAddress: event.target.value });
     };
 
-    _setPurchaseUnit = event => {
-        this.setState({ purchaseUnit: event.target.value });
+    _setPermamentAddress = event => {
+        this.setState({ permamentAddress: event.target.value });
     };
 
-    _setWholePrice = event => {
-        this.setState({ wholePrice: event.target.value });
+    _setPresentAddress = event => {
+        this.setState({ presentAddress: event.target.value });
     };
 
-    _setWholeUnit = event => {
-        this.setState({ wholeUnit: event.target.value });
-    };
-
-    _setRetailPrice = event => {
-        this.setState({ retailPrice: event.target.value });
-    };
-
-    _setRetailUnit = event => {
-        this.setState({ retailUnit: event.target.value });
-    };
-
-    _setStockQnt = event => {
-        this.setState({ stockQnt: event.target.value });
-    };
-
-    _saveVendor = () => {
+    _addCustomer = () => {
         const {name} = this.state;
-
         if (name) {
-            this.props.addVendor(this.state, this.props.refresh, this._resetInput, this.props.successNotification, this.props.errorNotification);
+            this.props.addVendorCustomer(this.state, this.props.refresh, this._resetInput, this.props.successNotification, this.props.errorNotification);
         } else {
             this.props.errorNotification();
         }
@@ -92,7 +77,7 @@ class addVendorModal extends Component {
     }
     
     render() {
-        const { classes, open, close } = this.props;
+        const { classes, open, close, vendorList } = this.props;
 
         return (
             <Modal
@@ -110,122 +95,102 @@ class addVendorModal extends Component {
                                 content={
                                     <div>
                                         <Grid container>
-                                            <ItemGrid xs={4} sm={4} md={4}>
+                                            <ItemGrid xs={6} sm={6} md={6}>
+                                                <CustomSelect
+                                                    labelText="Vendors"
+                                                    id="cust-product-purchase-unit"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setVendorId }
+                                                    defaultValue={ this.state.vendorId }
+                                                    items= {vendorList}
+                                                    value={ this.state.vendorId }
+                                                    idKey = "id"
+                                                    valueKey = "name"
+                                                ></CustomSelect>
+                                            </ItemGrid>
+
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Title"
-                                                    id="cust-product-title"
+                                                    id="cust-vendor-title"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setTitle }
                                                     defaultValue={ this.state.title }
                                                 />
                                             </ItemGrid>
-                                            <ItemGrid xs={4} sm={4} md={4}>
+                                        </Grid>
+                                        <Grid container>
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
                                                     autoFocus
                                                     labelText="Name"
-                                                    id="cust-product-name"
+                                                    id="cust-vendor-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
                                                     defaultValue={ this.state.name }
                                                 />
                                             </ItemGrid>
-                                            <ItemGrid xs={4} sm={4} md={4}>
+                                       
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
                                                     autoFocus
-                                                    labelText="Desciption"
-                                                    id="cust-product-desc"
+                                                    labelText="Phone Number"
+                                                    id="cust-vendor-phonenumber"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setDesc }
-                                                    defaultValue={ this.state.desc }
+                                                    onChange={ this._setPhoneNumber }
+                                                    defaultValue={ this.state.phoneNumber }
                                                 />
                                             </ItemGrid>
                                         </Grid>
-                                        <Grid container>
-                                            
-                                            <ItemGrid xs={4} sm={4} md={4}>
-                                            <div style={{display: 'flex'}}>
+                                        <Grid container>   
+                                           
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
-                                                    labelText="Purchase price"
-                                                    id="cust-product-purchase-price"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="text"
-                                                    onChange={ this._setPurchasePrice }
-                                                    defaultValue={ this.state.purchasePrice }
-                                                />
-                                                <CustomSelect
-                                                   labelText="Purchase Unit"
-                                                    id="cust-product-purchase-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
-                                                    type="text"
-                                                    onChange={ this._setPurchaseUnit }
-                                                    defaultValue={ this.state.purchaseUnit }
-                                                    items= {this.state.Vendors}
-                                                    value={ this.state.purchaseUnit }
-                                                ></CustomSelect>
-                                            </div>
-                                            </ItemGrid>
-                                            
-
-                                            <ItemGrid xs={4} sm={4} md={4}>
-                                               <div style={{display: 'flex'}}>
-                                                <CustomInput
-                                                    labelText="Retail price"
-                                                    id="cust-product-retail-price"
+                                                    labelText="Mobile number"
+                                                    id="cust-vendor-mobileNumber"
                                                     formControlProps={{ fullWidth:true , marginRight: 10 }}
                                                     type="text"
-                                                    onChange={ this._setRetailPrice }
-                                                    defaultValue={ this.state.retailPrice }
+                                                    onChange={ this._setMobileNumber }
+                                                    defaultValue={ this.state.mobileNumber }
                                                 />
-                                            
-                                                <CustomSelect
-                                                   labelText="Retail Unit"
-                                                    id="cust-product-retail-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
-                                                    type="text"
-                                                    onChange={ this._setRetailUnit }
-                                                    defaultValue={ this.state.retailUnit }
-                                                    items= {units}
-                                                    value={ this.state.retailUnit }
-                                                ></CustomSelect>
-                                              </div>
                                             </ItemGrid>
-                                            <ItemGrid xs={4} sm={4} md={4}>
-                                            <div style={{display: 'flex'}}>
+                                       
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                                 <CustomInput
-                                                    labelText="Whole price"
-                                                    id="cust-product-whole-price"
+                                                    labelText="Email address"
+                                                    id="cust-vendor-emailAddress"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setWholePrice }
-                                                    defaultValue={ this.state.wholePrice }
+                                                    onChange={ this._setEmailAddress }
+                                                    defaultValue={ this.state.emailAddress }
                                                 />
-                                                <CustomSelect
-                                                   labelText="Whole Unit"
-                                                    id="cust-product-whole-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                            </ItemGrid>
+                                            <ItemGrid xs={6} sm={6} md={6}>
+                                                <CustomInput
+                                                    labelText="Permament address"
+                                                    id="cust-vendor-permamentAddress"
+                                                    formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setWholeUnit }
-                                                    defaultValue={ this.state.wholeUnit }
-                                                    items= {units}
-                                                    value={ this.state.wholeUnit }
-                                                ></CustomSelect>
-                                                </div>
+                                                    onChange={ this._setPermamentAddress }
+                                                    defaultValue={ this.state.permamentAddress }
+                                                />
                                             </ItemGrid>
                                         </Grid>
                                         <Grid container>.
-                                            <ItemGrid xs={4} sm={4} md={4}>
+                                            <ItemGrid xs={6} sm={6} md={6}>
                                             <CustomInput
                                                     autoFocus
-                                                    labelText="Stock Qnt"
-                                                    id="cust-product-stack-qnt"
+                                                    labelText="Present address"
+                                                    id="cust-vendor-presentAddress"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setStockQnt }
-                                                    defaultValue={ this.state.stockQnt }
+                                                    onChange={ this._setPresentAddress }
+                                                    defaultValue={ this.state.presentAddress }
                                                 />
                                                 
                                             </ItemGrid>
@@ -237,7 +202,7 @@ class addVendorModal extends Component {
                                     <Button
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._addVendor}>Add</Button>
+                                        onClick={this._addCustomer}>Add</Button>
                                 }
                             />
                         </ItemGrid>
@@ -258,10 +223,14 @@ const styles = theme => ({
     },
 });
 
+const mapStateToProps = state => {
+    const { vendorList } = state.vendorReducer;
+    return { vendorList };
+};
 
-const AddModalWrapped = withStyles(styles)(addVendorModal);
+const AddModalWrapped = withStyles(styles)(addCustomerModal);
 
-export default AddModalWrapped;
+export default connect(mapStateToProps)(AddModalWrapped);
 
 
 
