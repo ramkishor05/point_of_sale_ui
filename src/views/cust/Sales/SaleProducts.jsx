@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Button } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import { getSalesByDate, addSale, getAllCustProducts } from 'actions';
+import { getSalesByDate, addSale, getAllCustProducts, getAllVendorCustomerList } from 'actions';
 
 import { CustomDatepicker, CustomInput, RegularCard, SalesTable, ItemGrid, Snackbar } from 'components';
 
@@ -26,6 +26,7 @@ class SaleProducts extends Component {
         this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getSales);
 
         this.props.getAllCustProducts(); // Get all items (Useful in adding sales).
+        this.props.getAllVendorCustomerList();
     }
 
     _getSales = () => {
@@ -152,8 +153,9 @@ class SaleProducts extends Component {
                     <AddSaleModal 
                         open={this.state.openAddSaleModal}
                         close={() => this.setState({ openAddSaleModal: false })}
-                        items={this.props.custProducts}
+                        custProducts={this.getAllCustProducts}
                         addSale={this.props.addSale}
+                        customerVendorList = {this.getAllVendorCustomerList}
                         refreshSales={this._getSales}
                         successNotification={() => this.showNotification('tr')}
                         errorNotification={() => this.showNotification('tc')}
@@ -162,7 +164,9 @@ class SaleProducts extends Component {
                     <EditSaleModal
                         open={this.state.openEditSaleModal}
                         close={() => this.setState({ openEditSaleModal: false })}
+                        custProducts={this.getAllCustProducts}
                         editSale={this.props.editSale}
+                        customerVendorList = {this.getAllVendorCustomerList}
                         refreshSales={this._getSales}
                         successNotification={() => this.showNotification('tr')}
                         errorNotification={() => this.showNotification('tc')}
@@ -224,9 +228,7 @@ const styles = {
 
 const mapStateToProps = state => {
     const { sales } = state.sales;
-    const { custProducts } = state.custProducts;
-
-    return { sales, custProducts };
+    return { sales };
 }
 
-export default connect(mapStateToProps, { getSalesByDate, addSale, getAllCustProducts })(SaleProducts);
+export default connect(mapStateToProps, { getSalesByDate, addSale, getAllCustProducts, getAllVendorCustomerList})(SaleProducts);

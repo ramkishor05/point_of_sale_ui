@@ -11,9 +11,7 @@ class CustomSelect extends Component {
 			classes, formControlProps, labelText, id, labelProps, inputProps, error, success, 
 			onChange, value, items, idKey, valueKey
 		} = this.props;
-        items.forEach(item => (
-            console.log('key='+item[idKey]+',  value=' +item[valueKey]+'')
-        ))
+        
 		return (
             
 			<FormControl {...formControlProps} className={formControlProps.className + " " + classes.formControl}>

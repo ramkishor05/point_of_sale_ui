@@ -2,13 +2,24 @@ import React, { Component } from 'react';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
+import { connect } from 'react-redux';
 
 class AddSale extends Component {
     state = {
         item_index: '',
         retailQnt: 0.00,
         wholeQnt: 0.00,
+        customerId: 0,
+        userId: 0,
     }
+    
+    _setCustomerId = event => {
+        this.setState({ customerId: event.target.value });
+    };
+
+    _setUserId = event => {
+        this.setState({ userId: event.target.value });
+    };
 
     calculate = type => {
         if (!this.state.item_index && this.state.item_index !== 0) {
@@ -133,7 +144,7 @@ class AddSale extends Component {
     }
     
     render() {
-        const { classes, open, close } = this.props;
+        const { classes, open, close , vendorCustomerList, custProducts} = this.props;
 
         return (
             <Modal
@@ -152,6 +163,20 @@ class AddSale extends Component {
                                 content={
                                     <div>
                                         <Grid container>
+                                           <ItemGrid xs={12} sm={12} md={12}>
+                                                <CustomSelect
+                                                    labelText="Customer"
+                                                    id="cust-sale-customer-id"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setCustomerId }
+                                                    defaultValue={ this.state.customerId }
+                                                    items= {vendorCustomerList}
+                                                    value={ this.state.customerId }
+                                                    idKey = "id"
+                                                    valueKey = "name"
+                                                ></CustomSelect>
+                                            </ItemGrid>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomSelect
                                                     labelText="Item name"
@@ -159,7 +184,9 @@ class AddSale extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     onChange={event => this.setState({ item_index: event.target.value })}
                                                     value={this.state.item_index}
-                                                    items={this.props.items}
+                                                    items={custProducts}
+                                                    idKey = "id"
+                                                    valueKey = "name"
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -269,9 +296,15 @@ const styles = theme => ({
     },
 });
 
+const mapStateToProps = state => {
+    const { vendorCustomerList } = state.vendorCustomerReducer;
+    const { custProducts } = state.custProducts;
+    return { vendorCustomerList, custProducts };
+};
+
 const AddModalWrapped = withStyles(styles)(AddSale);
 
-export default AddModalWrapped;
+export default connect(mapStateToProps)(AddModalWrapped);
 
 
 

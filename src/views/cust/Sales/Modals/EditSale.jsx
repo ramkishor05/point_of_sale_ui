@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
-import { RegularCard, ItemGrid, CustomInput } from 'components';
+import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
 class EditSale extends Component {
     state = {
@@ -12,7 +12,17 @@ class EditSale extends Component {
         whole_quantity: 0,
         whole_price: 0,
         total: 0,
+        customerId: 0,
+        userId: 0,
     }
+        
+    _setCustomerId = event => {
+        this.setState({ customerId: event.target.value });
+    };
+
+    _setUserId = event => {
+        this.setState({ userId: event.target.value });
+    };
 
     calculate = type => {
         if (!this.props.sale_to_edit.id) {
@@ -88,7 +98,7 @@ class EditSale extends Component {
     }
     
     render() {
-        const { classes, open, close } = this.props;
+        const { classes, open, close , vendorCustomerList} = this.props;
 
         return (
             <Modal
@@ -107,6 +117,20 @@ class EditSale extends Component {
                                 content={
                                     <div>
                                         <Grid container>
+                                           <ItemGrid xs={12} sm={12} md={12}>
+                                            <CustomSelect
+                                                    labelText="Customer"
+                                                    id="cust-sale-customer-id"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setCustomerId }
+                                                    defaultValue={ this.state.customerId }
+                                                    items= {vendorCustomerList}
+                                                    value={ this.state.customerId }
+                                                    idKey = "id"
+                                                    valueKey = "name"
+                                                ></CustomSelect>
+                                            </ItemGrid>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
                                                     disabled
@@ -227,9 +251,10 @@ const styles = theme => ({
 
 const mapStateToProps = state => {
     const { sale_to_edit } = state.sales;
-
-    return { sale_to_edit };
+    const { vendorCustomerList } = state.vendorCustomerReducer;
+    return { sale_to_edit, vendorCustomerList };
 };
+
 
 const AddModalWrapped = withStyles(styles)(EditSale);
 
