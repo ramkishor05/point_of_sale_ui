@@ -12,7 +12,8 @@ const ids = {
     mobileNumber: '',
     emailAddress: '',
     permamentAddress: '',
-    presentAddress: ''
+    presentAddress: '',
+    vendorId:0
 };
 
 class addCustomerModal extends Component {
@@ -99,12 +100,12 @@ class addCustomerModal extends Component {
                                                 <CustomSelect
                                                     labelText="Vendors"
                                                     id="cust-product-purchase-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    formControlProps={{ fullWidth:true}}
                                                     type="text"
                                                     onChange={ this._setVendorId }
                                                     defaultValue={ this.state.vendorId }
                                                     items= {vendorList}
-                                                    value={ this.state.vendorId }
+                                                    value={ this.state.vendorId | 1}
                                                     idKey = "id"
                                                     valueKey = "name"
                                                 ></CustomSelect>
@@ -153,7 +154,7 @@ class addCustomerModal extends Component {
                                                 <CustomInput
                                                     labelText="Mobile number"
                                                     id="cust-vendor-mobileNumber"
-                                                    formControlProps={{ fullWidth:true , marginRight: 10 }}
+                                                    formControlProps={{ fullWidth:true}}
                                                     type="text"
                                                     onChange={ this._setMobileNumber }
                                                     defaultValue={ this.state.mobileNumber }

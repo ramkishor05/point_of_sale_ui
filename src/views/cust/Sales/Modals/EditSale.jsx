@@ -121,7 +121,7 @@ class EditSale extends Component {
                                             <CustomSelect
                                                     labelText="Customer"
                                                     id="cust-sale-customer-id"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    formControlProps={{ fullWidth:true }}
                                                     type="text"
                                                     onChange={ this._setCustomerId }
                                                     defaultValue={ this.state.customerId }

@@ -39,7 +39,7 @@ class CustomSelect extends Component {
                     {
                         typeof items[0] === "object"
                             ? items.map((item, index) => (
-                                <MenuItem value={index} key={item[idKey]}>{ item[valueKey] }</MenuItem>
+                                <MenuItem value={item[idKey]} key={item[idKey]}>{ item[valueKey] }</MenuItem>
                             ))
                             : items.map(item => (
                                 <MenuItem value={item} key={item}>{ item }</MenuItem>

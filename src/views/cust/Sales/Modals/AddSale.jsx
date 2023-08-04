@@ -6,12 +6,16 @@ import { connect } from 'react-redux';
 
 class AddSale extends Component {
     state = {
-        item_index: '',
         retailQnt: 0.00,
         wholeQnt: 0.00,
         customerId: 0,
-        userId: 0,
+        productId: 0,
+        userId: 0
     }
+
+    findById = (items, productId) => {
+        return items.find(item=>item['id']==productId);
+    };
     
     _setCustomerId = event => {
         this.setState({ customerId: event.target.value });
@@ -21,12 +25,29 @@ class AddSale extends Component {
         this.setState({ userId: event.target.value });
     };
 
+    _setProductId = event => {
+        this.setState({ productId: event.target.value });
+    };
+
+    _setRetailQnt = event => {
+        this.setState({ retailQnt: event.target.value });
+    };
+
+    _setWholeQnt = event => {
+        this.setState({ wholeQnt: event.target.value });
+    };
+
     calculate = type => {
-        if (!this.state.item_index && this.state.item_index !== 0) {
+        if (!this.state.productId && this.state.productId !== 0) {
             return () => 0.00;
         }
 
-        let item = this.props.items[this.state.item_index];
+        let item = this.findById(this.props.custProducts,this.state.productId);
+        console.log("item=",item)
+
+        if(!item){
+            return () => 0.00; 
+        }
 
         return () => {
             switch(type) {
@@ -56,24 +77,29 @@ class AddSale extends Component {
 
     // Function for disabling quantity input if corresponding price is 0.
     disableInput = type => {
-        if (this.state.item_index || this.state.item_index === 0) {
-    
-            let item = this.props.items[this.state.item_index];
-
-            if (Number(item[type]) !== 0) {
-                return false;
-            }
+        if (this.state.productId || (this.state.productId || this.state.productId === 0)) {
+            return false;
         }
+    
+        let item = this.findById(this.props.custProducts,this.state.productId);
+        if(!item){
+            return false;
+        }
+
+        if (Number(item[type]) !== 0) {
+            return false;
+        }
+        
 
         return true;
     };
 
     // Function for adding sales to database.
     _addSale = () => {
-        const { item_index, retailQnt, wholeQnt } = this.state;
+        const { productId, retailQnt, wholeQnt } = this.state;
         const { refreshSales, successNotification, errorNotification } = this.props;
 
-        if (!item_index && item_index !== 0) {
+        if (!productId && productId === 0) {
             return;
         }
 
@@ -85,12 +111,13 @@ class AddSale extends Component {
         let custProductSale = {
             discounts: 0.0,
             retailSaleTotals: 0.0,
+            customerId: this.state.customerId,
             wholeSaletotals: 0.0,
             custProductRetailSaleList: [],
             custProductWholeSaleList: []
         }
 
-        let item = this.props.items[item_index];
+        let item = this.findById(this.props.custProducts,this.state.productId);
         let item_id= item.id;
         
         if(retailQnt){
@@ -124,9 +151,11 @@ class AddSale extends Component {
 
     clear = () => {
         this.setState({
-            item_index: '',
             retailQnt: 0.00,
             wholeQnt: 0.00,
+            customerId: 0,
+            productId: 0,
+            userId: 0
         });
 
         this.props.close();
@@ -167,7 +196,7 @@ class AddSale extends Component {
                                                 <CustomSelect
                                                     labelText="Customer"
                                                     id="cust-sale-customer-id"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    formControlProps={{ fullWidth:true}}
                                                     type="text"
                                                     onChange={ this._setCustomerId }
                                                     defaultValue={ this.state.customerId }
@@ -182,8 +211,8 @@ class AddSale extends Component {
                                                     labelText="Item name"
                                                     id="item-name"
                                                     formControlProps={{ fullWidth: true }}
-                                                    onChange={event => this.setState({ item_index: event.target.value })}
-                                                    value={this.state.item_index}
+                                                    onChange={this._setProductId }
+                                                    value={ this.state.productId }
                                                     items={custProducts}
                                                     idKey = "id"
                                                     valueKey = "name"
@@ -198,7 +227,7 @@ class AddSale extends Component {
                                                     id="retail-quantity"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    onChange={event => this.setState({ retailQnt: event.target.value })}
+                                                    onChange={this._setRetailQnt}
                                                     defaultValue={ this.state.retailQnt }
                                                 />
                                             </ItemGrid>
@@ -231,7 +260,7 @@ class AddSale extends Component {
                                                     id="whole-quantity"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    onChange={event => this.setState({ wholeQnt: event.target.value })}
+                                                    onChange={this._setWholeQnt}
                                                     defaultValue={ this.state.wholeQnt }
                                                 />
                                             </ItemGrid>

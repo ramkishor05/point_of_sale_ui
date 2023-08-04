@@ -161,7 +161,7 @@ class EditCustomerModal extends Component {
                                                 <CustomSelect
                                                    labelText="Purchase Unit"
                                                     id="cust-customer-purchase-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    formControlProps={{ fullWidth:true}}
                                                     type="text"
                                                     onChange={ this._setPurchaseUnit }
                                                     defaultValue={ vendorCustomer.purchaseUnit|1 }
@@ -177,7 +177,7 @@ class EditCustomerModal extends Component {
                                                 <CustomInput
                                                     labelText="Retail price"
                                                     id="cust-customer-retail-price"
-                                                    formControlProps={{ fullWidth:true , marginRight: 10 }}
+                                                    formControlProps={{ fullWidth:true }}
                                                     type="text"
                                                     onChange={ this._setRetailPrice }
                                                     defaultValue={ vendorCustomer.retailPrice }
@@ -186,7 +186,7 @@ class EditCustomerModal extends Component {
                                                 <CustomSelect
                                                    labelText="Retail Unit"
                                                     id="cust-customer-retail-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    formControlProps={{ fullWidth:true}}
                                                     type="text"
                                                     onChange={ this._setRetailUnit }
                                                     defaultValue={ vendorCustomer.retailUnit | 1 }
@@ -208,7 +208,7 @@ class EditCustomerModal extends Component {
                                                 <CustomSelect
                                                    labelText="Whole Unit"
                                                     id="cust-customer-whole-unit"
-                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    formControlProps={{ fullWidth:true}}
                                                     type="text"
                                                     onChange={ this._setWholeUnit }
                                                     defaultValue={ vendorCustomer.wholeUnit | 1 }
