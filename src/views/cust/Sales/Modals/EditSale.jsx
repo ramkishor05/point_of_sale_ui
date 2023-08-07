@@ -259,8 +259,8 @@ class EditSale extends Component {
              <div  component="fieldset"> 
                  <Grid container>
                    <ItemGrid xs={12} sm={4} md={4}>
-                    <div>Product Id: {custProductWholeSale.productId}</div>
-                    <div>{this.productName(this.props.custProducts,custProductWholeSale.productId)}</div>
+                    <div>Product Id: {custProductWholeSale.custProduct.id}</div>
+                    <div>Product Name : {custProductWholeSale.custProduct.name}</div>
                     </ItemGrid>
                 </Grid>
                 <Grid container>
