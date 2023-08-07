@@ -10,12 +10,13 @@ const INITIAL_STATE = {
     sales_yesterday: [],
     sales_long: [],
     sale_to_edit: {
-        name: '',
-        unit_quantity: 0,
-        unit_price: 0,
-        whole_quantity: 0,
-        whole_price: 0,
-        total: 0,
+        retailQnt: 0.00,
+        wholeQnt: 0.00,
+        customerId: 0,
+        productId: 0,
+        userId: 0,
+        custProductRetailSaleList: [],
+        custProductWholeSaleList: []
     },
 };
 

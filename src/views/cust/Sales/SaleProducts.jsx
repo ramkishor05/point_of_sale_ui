@@ -45,7 +45,7 @@ class SaleProducts extends Component {
         let total = 0;
 
         for (let sale of this.props.sales) {
-            total += Number(sale.amount);
+            total += Number(sale.retailSaleTotals)+Number(sale.wholeSaletotals);
         }
 
         return total.toFixed(2);
@@ -142,7 +142,7 @@ class SaleProducts extends Component {
                             content={
                                 <SalesTable
                                     tableHeaderColor="primary"
-                                    tableHead={['No.', 'Name', 'Unit Price', 'Qty.', 'Whole Price', 'Qty.', 'Amount', 'Date Added', 'Date Updated', '']}
+                                    tableHead={['Bill No.','Bill Date',  'Customer', 'Qty.', 'Amount','Actions']}
                                     tableData={this.props.sales}
                                     editSale={() => this.setState({ openEditSaleModal: true })}
                                 />
@@ -228,7 +228,9 @@ const styles = {
 
 const mapStateToProps = state => {
     const { sales } = state.sales;
-    return { sales };
+    const { custProducts } = state.custProducts;
+
+    return { sales, custProducts };
 }
 
 export default connect(mapStateToProps, { getSalesByDate, addSale, getAllCustProducts, getAllVendorCustomerList})(SaleProducts);

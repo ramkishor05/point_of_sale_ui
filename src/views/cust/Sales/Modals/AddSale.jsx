@@ -10,7 +10,9 @@ class AddSale extends Component {
         wholeQnt: 0.00,
         customerId: 0,
         productId: 0,
-        userId: 0
+        userId: 0,
+        custProductRetailSaleList: [],
+        custProductWholeSaleList: []
     }
 
     findById = (items, productId) => {

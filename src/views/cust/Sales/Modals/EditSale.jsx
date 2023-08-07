@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withStyles, Grid, Button, Modal } from 'material-ui';
+import { withStyles, Grid, Button, Modal} from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
+
+
 class EditSale extends Component {
     state = {
-        name: '',
-        unit_quantity: 0,
-        unit_price: 0,
-        whole_quantity: 0,
-        whole_price: 0,
-        total: 0,
-        customerId: 0,
-        userId: 0,
+       ... this.props.sale_to_edit
     }
-        
+    
+
+    findById = (items, productId) => {
+        return items.find(item=>item['id']==productId);
+    };
+    
     _setCustomerId = event => {
         this.setState({ customerId: event.target.value });
     };
@@ -24,32 +24,49 @@ class EditSale extends Component {
         this.setState({ userId: event.target.value });
     };
 
-    calculate = type => {
-        if (!this.props.sale_to_edit.id) {
+    _setProductId = event => {
+        this.setState({ productId: event.target.value });
+    };
+
+    _setRetailQnt = event => {
+        this.setState({ retailQnt: event.target.value });
+    };
+
+    _setWholeQnt = event => {
+        this.setState({ wholeQnt: event.target.value });
+    };
+
+    calculate = (custProductRetailSale,type) => {
+        if (!custProductRetailSale) {
             return () => 0.00;
         }
 
-        const { sale_to_edit } = this.props;
+        let item = custProductRetailSale;
+        console.log("item=",item)
+
+        if(!item){
+            return () => 0.00; 
+        }
 
         return () => {
             switch(type) {
-                case "unit_price":
-                    return Number(sale_to_edit.unit_price);
+                case "retailPrice":
+                    return Number(item.retailPrice);
 
-                case "whole_price":
-                    return Number(sale_to_edit.whole_price);
+                case "wholePrice":
+                    return Number(item.wholePrice);
 
-                case "unit_amount":
-                    return (Number(this.state.unit_quantity) * Number(sale_to_edit.unit_price)).toFixed(2);
+                case "retailAmount":
+                    return (Number(this.state.retailQnt) * Number(item.retailPrice)).toFixed(2);
                 
-                case "whole_amount":
-                    return (Number(this.state.whole_quantity) * Number(sale_to_edit.whole_price)).toFixed(2);
+                case "wholeAmount":
+                    return (Number(this.state.wholeQnt) * Number(item.wholePrice)).toFixed(2);
 
-                case "total_amount":
-                    let unit_price = Number(this.state.unit_quantity) * Number(sale_to_edit.unit_price);
-                    let whole_price = Number(this.state.whole_quantity) * Number(sale_to_edit.whole_price);
+                case "totalAmount":
+                    let retail_price = Number(this.state.retailQnt) * Number(item.retailPrice);
+                    let whole_price = Number(this.state.wholeQnt) * Number(item.wholePrice);
 
-                    return (unit_price + whole_price).toFixed(2);
+                    return (retail_price + whole_price).toFixed(2);
 
                 default:
                     return 0.00;
@@ -57,30 +74,95 @@ class EditSale extends Component {
         }
     };
 
+    productName = (custProducts, productId ) =>{
+        let item = this.findById(custProducts,productId);
+        if(item){
+            return item.name;
+        }
+        return '';
+    }
+
+    // Function for disabling quantity input if corresponding price is 0.
+    disableInput = type => {
+        if (this.state.productId || (this.state.productId || this.state.productId === 0)) {
+            return false;
+        }
+    
+        let item = this.findById(this.props.custProducts,this.state.productId);
+        if(!item){
+            return false;
+        }
+
+        if (Number(item[type]) !== 0) {
+            return false;
+        }
+        
+
+        return true;
+    };
+
     // Function for adding sales to database.
-    _addSale = () => {
-        const { item_index, unit_quantity, whole_quantity } = this.state;
+    _editSale = () => {
+        const { productId, retailQnt, wholeQnt } = this.state;
         const { refreshSales, successNotification, errorNotification } = this.props;
 
-        if (!item_index && item_index !== 0) {
+        if (!productId && productId === 0) {
             return;
         }
 
-        if (!Number(unit_quantity) && !Number(whole_quantity)) {
+        if (!Number(retailQnt) && !Number(wholeQnt)) {
             errorNotification && errorNotification();
             return;
         }
 
-        let item_id = this.props.items[item_index].id;
+        let custProductSale = {
+            discounts: 0.0,
+            retailSaleTotals: 0.0,
+            customerId: this.state.customerId,
+            wholeSaletotals: 0.0,
+            custProductRetailSaleList: [],
+            custProductWholeSaleList: []
+        }
 
-        this.props.addSale({ item_id, unit_quantity, whole_quantity }, refreshSales, this.clear, successNotification, errorNotification);
+        let item = this.findById(this.props.custProducts,this.state.productId);
+        let item_id= item.id;
+        
+        if(retailQnt){
+            let custProductRetailSale={
+                name: item.name,
+                desc: item.desc,
+                purchasePrice: item.purchasePrice,
+                purchaseUnitId: 1,
+                retailQnt: retailQnt,
+                retailPrice: item.retailPrice,
+                retailUnitId: 1,
+                custProductId: item_id
+            }
+            custProductSale.custProductRetailSaleList.push(custProductRetailSale);
+        }
+        if(wholeQnt){
+            let custProductWholeSale={
+                name: item.name,
+                desc: item.desc,
+                purchasePrice: item.purchasePrice,
+                purchaseUnitId: 1,
+                wholeQnt: wholeQnt,
+                wholePrice: item.wholePrice,
+                wholeUnitId: 1,
+                custProductId: item_id
+            }
+            custProductSale.custProductWholeSaleList.push(custProductWholeSale);
+        }
+        this.props.addSale(custProductSale, refreshSales, this.clear, successNotification, errorNotification);
     };
 
     clear = () => {
         this.setState({
-            item_index: '',
-            unit_quantity: 0.00,
-            whole_quantity: 0.00,
+            retailQnt: 0.00,
+            wholeQnt: 0.00,
+            customerId: 0,
+            productId: 0,
+            userId: 0
         });
 
         this.props.close();
@@ -96,146 +178,243 @@ class EditSale extends Component {
             transform: `translate(-${top}%, -${left}%)`,
         };
     }
+
+    _renderToRetailItems = (custProductRetailSaleList) => {
+       return custProductRetailSaleList.map(custProductRetailSale=>
+           <div component="fieldset"> 
+            <div>{this.productName(this.props.custProducts,custProductRetailSale.productId)}</div>
+                <Grid container>
+                      <ItemGrid xs={12} sm={4} md={4}>
+                          <CustomInput
+                              disabled={this.disableInput("retailPrice")}
+                              labelText="Retail quantity"
+                              id="retail-quantity"
+                              formControlProps={{ fullWidth: true }}
+                              type="number"
+                              onChange={this._setRetailQnt}
+                              defaultValue={ custProductRetailSale.retailQnt }
+                          />
+                      </ItemGrid>
+                      <ItemGrid xs={12} sm={4} md={4}>
+                          <CustomInput
+                              disabled
+                              labelText="Retail price"
+                              id="retail-price"
+                              formControlProps={{ fullWidth: true }}
+                              type="number"
+                              value={ this.calculate(custProductRetailSale, "retailPrice")() }
+                          />
+                      </ItemGrid>
+                      <ItemGrid xs={12} sm={4} md={4}>
+                          <CustomInput
+                              disabled
+                              labelText="Retail amount"
+                              id="retail-amount"
+                              formControlProps={{ fullWidth: true }}
+                              type="number"
+                              value={ this.calculate(custProductRetailSale, "retailAmount")() }
+                          />
+                      </ItemGrid>
+                  </Grid>
+                  <Grid container>
+                      <ItemGrid xs={12} sm={4} md={4}>
+                          <CustomInput
+                              disabled={this.disableInput("wholePrice")}
+                              labelText="Whole quantity"
+                              id="whole-quantity"
+                              formControlProps={{ fullWidth: true }}
+                              type="number"
+                              onChange={this._setWholeQnt}
+                              defaultValue={ custProductRetailSale.wholeQnt }
+                          />
+                      </ItemGrid>
+                      <ItemGrid xs={12} sm={4} md={4}>
+                          <CustomInput
+                              disabled
+                              labelText="Whole price"
+                              id="whole-price"
+                              formControlProps={{ fullWidth: true }}
+                              type="number"
+                              value={ this.calculate(custProductRetailSale,"wholePrice")() }
+                          />
+                      </ItemGrid>
+                      <ItemGrid xs={12} sm={4} md={4}>
+                          <CustomInput
+                              disabled
+                              labelText="Whole amount"
+                              id="whole-amount"
+                              formControlProps={{ fullWidth: true }}
+                              type="number"
+                              value={ this.calculate(custProductRetailSale, "wholeAmount")() }
+                          />
+                      </ItemGrid>
+                      
+                  </Grid>
+              </div> 
+          )
+    }
+
+    _renderToWholeItems = (custProductWholeSaleList) => {
+        return custProductWholeSaleList.map(custProductWholeSale=>
+             <div  component="fieldset"> 
+                 <Grid container>
+                   <ItemGrid xs={12} sm={4} md={4}>
+                    <div>Product Id: {custProductWholeSale.productId}</div>
+                    <div>{this.productName(this.props.custProducts,custProductWholeSale.productId)}</div>
+                    </ItemGrid>
+                </Grid>
+                <Grid container>
+                   <ItemGrid xs={12} sm={4} md={4}>
+                        <CustomInput
+                               disabled={this.disableInput("retailPrice")}
+                               labelText="Retail quantity"
+                               id="retail-quantity"
+                               formControlProps={{ fullWidth: true }}
+                               type="number"
+                               onChange={this._setRetailQnt}
+                               defaultValue={ custProductWholeSale.retailQnt }
+                           />
+                       </ItemGrid>
+                       <ItemGrid xs={12} sm={4} md={4}>
+                           <CustomInput
+                               disabled
+                               labelText="Retail price"
+                               id="retail-price"
+                               formControlProps={{ fullWidth: true }}
+                               type="number"
+                               value={ this.calculate(custProductWholeSale, "retailPrice")() }
+                           />
+                       </ItemGrid>
+                       <ItemGrid xs={12} sm={4} md={4}>
+                           <CustomInput
+                               disabled
+                               labelText="Retail amount"
+                               id="retail-amount"
+                               formControlProps={{ fullWidth: true }}
+                               type="number"
+                               value={ this.calculate(custProductWholeSale, "retailAmount")() }
+                           />
+                       </ItemGrid>
+                   </Grid>
+                   <Grid container>
+                       <ItemGrid xs={12} sm={4} md={4}>
+                           <CustomInput
+                               disabled={this.disableInput("wholePrice")}
+                               labelText="Whole quantity"
+                               id="whole-quantity"
+                               formControlProps={{ fullWidth: true }}
+                               type="number"
+                               onChange={this._setWholeQnt}
+                               defaultValue={ custProductWholeSale.wholeQnt }
+                           />
+                       </ItemGrid>
+                       <ItemGrid xs={12} sm={4} md={4}>
+                           <CustomInput
+                               disabled
+                               labelText="Whole price"
+                               id="whole-price"
+                               formControlProps={{ fullWidth: true }}
+                               type="number"
+                               value={ this.calculate(custProductWholeSale,"wholePrice")() }
+                           />
+                       </ItemGrid>
+                       <ItemGrid xs={12} sm={4} md={4}>
+                           <CustomInput
+                               disabled
+                               labelText="Whole amount"
+                               id="whole-amount"
+                               formControlProps={{ fullWidth: true }}
+                               type="number"
+                               value={ this.calculate(custProductWholeSale, "wholeAmount")() }
+                           />
+                       </ItemGrid>
+                   </Grid>
+               </div> 
+           )
+     }
     
     render() {
-        const { classes, open, close , vendorCustomerList} = this.props;
+        const { classes, open, close , vendorCustomerList, custProducts, sale_to_edit} = this.props;
 
         return (
             <Modal
-                aria-labelledby="Add Sale"
-                aria-describedby="Modal for adding sales"
-                open={open}
-                onClose={close}
-            >
-                <div style={this.getModalStyle()} className={classes.paper}>
-                    <Grid container>
-                        <ItemGrid xs={12} sm={12} md={12}>
-                            
-                            <RegularCard
-                                cardTitle="ADD SALE"
-                                cardSubtitle="Fill the form below to add sale to the system"
-                                content={
-                                    <div>
-                                        <Grid container>
-                                           <ItemGrid xs={12} sm={12} md={12}>
+            aria-labelledby="Edit Sale"
+            aria-describedby="Modal for editing sales"
+            open={open}
+            onClose={close}
+        >
+            <div style={this.getModalStyle()} className={classes.paper}>
+                <Grid container>
+                    <ItemGrid xs={12} sm={12} md={12}>
+                        
+                        <RegularCard
+                            cardTitle="ADD EDIT"
+                            cardSubtitle="Fill the form below to edit sale to the system"
+                            content={
+                                <div>
+                                    <Grid container>
+                                       <ItemGrid xs={12} sm={12} md={12}>
                                             <CustomSelect
-                                                    labelText="Customer"
-                                                    id="cust-sale-customer-id"
-                                                    formControlProps={{ fullWidth:true }}
-                                                    type="text"
-                                                    onChange={ this._setCustomerId }
-                                                    defaultValue={ this.state.customerId }
-                                                    items= {vendorCustomerList}
-                                                    value={ this.state.customerId }
-                                                    idKey = "id"
-                                                    valueKey = "name"
-                                                ></CustomSelect>
-                                            </ItemGrid>
-                                            <ItemGrid xs={12} sm={12} md={12}>
-                                                <CustomInput
-                                                    disabled
-                                                    labelText="Item"
-                                                    id="item"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="text"
-                                                    onChange={event => this.setState({ unit_quantity: event.target.value })}
-                                                    defaultValue={ this.state.unit_quantity }
-                                                />
-                                            </ItemGrid>
-                                        </Grid>
-                                        <Grid container>
-                                            <ItemGrid xs={12} sm={4} md={4}>
-                                                <CustomInput
-                                                    disabled={this.state.item_index === ""}
-                                                    labelText="Unit quantity"
-                                                    id="unit-quantity"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    onChange={event => this.setState({ unit_quantity: event.target.value })}
-                                                    defaultValue={ this.state.unit_quantity }
-                                                />
-                                            </ItemGrid>
-                                            <ItemGrid xs={12} sm={4} md={4}>
-                                                <CustomInput
-                                                    disabled
-                                                    labelText="Unit price"
-                                                    id="unit-price"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    value={ this.calculate("unit_price")() }
-                                                />
-                                            </ItemGrid>
-                                            <ItemGrid xs={12} sm={4} md={4}>
-                                                <CustomInput
-                                                    disabled
-                                                    labelText="Unit amount"
-                                                    id="unit-amount"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    value={ this.calculate("unit_amount")() }
-                                                />
-                                            </ItemGrid>
-                                        </Grid>
-                                        <Grid container>
-                                            <ItemGrid xs={12} sm={4} md={4}>
-                                                <CustomInput
-                                                    disabled={this.state.item_index === ""}
-                                                    labelText="Whole quantity"
-                                                    id="whole-quantity"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    onChange={event => this.setState({ whole_quantity: event.target.value })}
-                                                    defaultValue={ this.state.whole_quantity }
-                                                />
-                                            </ItemGrid>
-                                            <ItemGrid xs={12} sm={4} md={4}>
-                                                <CustomInput
-                                                    disabled
-                                                    labelText="Whole price"
-                                                    id="whole-price"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    value={ this.calculate("whole_price")() }
-                                                />
-                                            </ItemGrid>
-                                            <ItemGrid xs={12} sm={4} md={4}>
-                                                <CustomInput
-                                                    disabled
-                                                    labelText="Whole amount"
-                                                    id="whole-amount"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    value={ this.calculate("whole_amount")() }
-                                                />
-                                            </ItemGrid>
-                                        </Grid>
-                                        <Grid container>
-                                            <ItemGrid xs={12} sm={12} md={12}>
-                                                <CustomInput
-                                                    disabled
-                                                    labelText="Total amount"
-                                                    id="total-amount"
-                                                    formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    value={ this.calculate("total_amount")() }
-                                                />
-                                            </ItemGrid>
-                                        </Grid>
-                                    </div>
-                                }
-                                
-                                footer={
-                                    <Button 
-                                        variant="raised" 
-                                        style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._addSale}
-                                    >Add</Button>
-                                }
-                            />
-                        </ItemGrid>
-                    </Grid>
-                </div>
-            </Modal>
+                                                labelText="Customer"
+                                                id="cust-sale-customer-id"
+                                                formControlProps={{ fullWidth:true}}
+                                                type="text"
+                                                onChange={ this._setCustomerId }
+                                                defaultValue={ this.state.customerId }
+                                                items= {vendorCustomerList}
+                                                value={ this.state.customerId }
+                                                idKey = "id"
+                                                valueKey = "name"
+                                            ></CustomSelect>
+                                        </ItemGrid>
+                                        <ItemGrid xs={12} sm={12} md={12}>
+                                            <CustomSelect
+                                                labelText="Item name"
+                                                id="item-name"
+                                                formControlProps={{ fullWidth: true }}
+                                                onChange={this._setProductId }
+                                                value={ this.state.productId }
+                                                items={custProducts}
+                                                idKey = "id"
+                                                valueKey = "name"
+                                            />
+                                        </ItemGrid>
+                                    </Grid>
+
+                                    {
+                                        this._renderToRetailItems(sale_to_edit.custProductRetailSaleList)
+                                    }
+                                    { 
+                                        this._renderToWholeItems(sale_to_edit.custProductWholeSaleList)
+                                    }
+                                    
+                                    <Grid container>
+                                        <ItemGrid xs={12} sm={12} md={12}>
+                                            <CustomInput
+                                                disabled
+                                                labelText="Total amount"
+                                                id="total-amount"
+                                                formControlProps={{ fullWidth: true }}
+                                                type="number"
+                                                value={ this.calculate("totalAmount")() }
+                                            />
+                                        </ItemGrid>
+                                    </Grid>
+                                </div>
+                            }
+                            
+                            footer={
+                                <Button 
+                                    variant="raised" 
+                                    style={{ backgroundColor: 'purple', color: 'white' }} 
+                                    onClick={this._editSale}
+                                >Edit</Button>
+                            }
+                        />
+                    </ItemGrid>
+                </Grid>
+            </div>
+        </Modal>
         );
     }
 }
@@ -247,12 +426,16 @@ const styles = theme => ({
         backgroundColor: 'transparent',
         padding: theme.spacing.unit * 4,
     },
+    fieldset: {
+        border: '3px solid'
+    }
 });
 
 const mapStateToProps = state => {
     const { sale_to_edit } = state.sales;
     const { vendorCustomerList } = state.vendorCustomerReducer;
-    return { sale_to_edit, vendorCustomerList };
+    const { custProducts } = state.custProducts;
+    return { sale_to_edit, vendorCustomerList, custProducts };
 };
 
 

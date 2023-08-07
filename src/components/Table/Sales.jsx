@@ -36,29 +36,19 @@ class SaleTable extends React.Component {
                             { ++number }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.name }
+                        { prop.saleDate}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.mrp }
+                        { prop.customer.name  }
+                    </TableCell>
+                    
+                    <TableCell className={classes.tableCell}>
+                        { prop.retailSaleQnt + prop.wholeSaleQnt}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.quantity }
+                        { prop.retailSaleTotals + prop.wholeSaletotals}
                     </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { prop.price }
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { prop.quantity }
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { `GHS ${prop.amount}` }
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { this._renderDate(prop.created_at) }
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                        { this._renderDate(prop.updated_at) }
-                    </TableCell>
+                    
                     {
                         this.isSuperAdmin() && (
                             <TableCell className={classes.tableCell}>
