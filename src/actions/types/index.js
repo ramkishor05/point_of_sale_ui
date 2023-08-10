@@ -1,4 +1,8 @@
-export * from './usersActionTypes';
+export * from './userActionTypes';
+
+export * from './roleActionTypes';
+
+export * from './authActionTypes';
 
 export * from './custProductActionTypes';
 
