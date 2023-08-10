@@ -6,11 +6,7 @@ import {
     USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,
     OPEN_ADD_USER_MODAL, OPEN_EDIT_USER_MODAL, OPEN_DELETE_USER_MODAL,
 } from './types';
-import User from '../services/User';
-
-export const usernameChanged = payload => ({type: USERNAME_CHANGED, payload});
-
-export const passwordChanged = payload => ({type: PASSWORD_CHANGED, payload});
+import UserService from '../services/UserService';
 
 /**
  * User Action - For adding a new user in the system.
@@ -21,7 +17,7 @@ export const passwordChanged = payload => ({type: PASSWORD_CHANGED, payload});
  */
 export const addUser = (data, refresh, resetInput) => async dispatch => {
     try {
-        const user = await User.register(data);
+        const user = await UserService.register(data);
         if (user) {
             if (refresh) {
                 refresh();
@@ -36,38 +32,6 @@ export const addUser = (data, refresh, resetInput) => async dispatch => {
     }
 };
 
-/**
- * User Action - For logging user into the system.
- *
- * @param {Object} param0
- * @param {Function} _clearCredentials
- */
-export const login = ({ username, password }, _clearCredentials) => async dispatch => {
-    try {
-        dispatch({ type: SHOW_LOADER });
-
-        const user = await User.authenticate({ username, password });
-
-        if (user) {
-            dispatch({ type: REMOVE_LOADER });
-
-            localStorage.setItem('api_token', user.token);
-
-            if (localStorage.getItem('api_token')) {
-                dispatch({ type: LOGIN_SUCCESS, payload: user });
-
-                if (_clearCredentials) {
-                    _clearCredentials();
-                }
-            }
-        }
-    } catch (error) {
-        localStorage.removeItem('api_token');
-        dispatch({ type: LOGIN_FAIL, payload: error.error.message });
-        dispatch({ type: REMOVE_LOADER });
-        console.log(error);
-    }
-};
 
 /**
  * User Action - For updating the user details in the system.
@@ -78,7 +42,7 @@ export const login = ({ username, password }, _clearCredentials) => async dispat
  */
 export const updateUser = (id, data, resetPassword) => async dispatch => {
     try {
-        const user = await User.update(id, data);
+        const user = await UserService.update(id, data);
 
         if (user) {
             dispatch({ type: USER_UPDATE_SUCCESS, payload: user });
@@ -101,7 +65,7 @@ export const updateUser = (id, data, resetPassword) => async dispatch => {
  */
 export const deleteUser = (id, refresh) => async dispatch => {
     try {
-        const result = await User.delete(id);
+        const result = await UserService.delete(id);
 
         console.log("This is working")
         if (result) {
@@ -118,7 +82,7 @@ export const deleteUser = (id, refresh) => async dispatch => {
 // Action creator for getting all users.
 export const getUsers = () => async dispatch => {
     try {
-        const users = await User.getUsers();
+        const users = await UserService.getAll();
 
         if (users) {
             dispatch({ type: GET_USERS_SUCCESS, payload: users });
@@ -128,19 +92,6 @@ export const getUsers = () => async dispatch => {
     }
 };
 
-export const getRoles = () => async dispatch => {
-    try {
-        const roles = await User.getRoles();
-
-        if (roles) {
-            dispatch({ type: GET_ROLES_SUCCESS, payload: roles });
-        }
-    } catch (error) {
-        dispatch({ type: GET_ROLES_FAIL, payload: error });
-        console.log('this is the error from getting roles', error)
-    }
-}
-
 // Action creator for opening the Add User modal.
 export const openAddUserModal = payload => ({type: OPEN_ADD_USER_MODAL, payload });
 
@@ -149,12 +100,6 @@ export const openEditUserModal = payload => ({type: OPEN_EDIT_USER_MODAL, payloa
 
 // Action creator for opening the Delete User modal.
 export const openDeleteUserModal = payload => ({type: OPEN_DELETE_USER_MODAL, payload});
-
-// Action creator for logging out the user.
-export const logout = () => {
-    localStorage.removeItem('api_token');
-    return { type: LOGOUT_SUCCESS };
-};
 
 // Function for parsing error gotten from server.
 const parseError = error => {

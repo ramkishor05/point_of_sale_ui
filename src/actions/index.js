@@ -1,4 +1,8 @@
-export * from './usersActions';
+export * from './userActions';
+
+export * from './roleActions';
+
+export * from './authActions';
 
 export * from './loaderActions';
 
