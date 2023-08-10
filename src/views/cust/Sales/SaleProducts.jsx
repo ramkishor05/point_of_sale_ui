@@ -10,6 +10,10 @@ import { CustomDatepicker, CustomInput, RegularCard, SalesTable, ItemGrid, Snack
 import AddSaleModal from './Modals/AddSale';
 import EditSaleModal from './Modals/EditSale';
 
+import AddSaleView from './Views/AddSaleView';
+import EditSaleView from './Views/EditSaleView';
+
+
 
 class SaleProducts extends Component {
     state = {
@@ -19,6 +23,7 @@ class SaleProducts extends Component {
         openDeleteSaleModal: false,
         from: '2018-05-21',
         to: '2018-05-21',
+
     };
 
     componentDidMount() {
@@ -95,59 +100,78 @@ class SaleProducts extends Component {
         }
     };
 
+    _showTableView = () =>{
+        return <RegularCard
+        padIt
+        cardTitle="Sales"
+        cardSubtitle="List of sale entries in the system"
+        button={
+            <Button 
+                style={ styles.addSaleButton } 
+                onClick={() => this.setState({ openAddSaleModal: true })}>ADD SALE</Button>
+        }
+        total={
+            <div>
+                <CustomInput
+                    disabled
+                    labelText="Total"
+                    id="total"
+                    formControlProps={{ fullWidth: true }}
+                    type="number"
+                    value={this.total()}
+                />
+            </div>
+        }
+        date_picker={
+            <div style={ styles.datepickers }>
+                <div style={{ paddingRight: 10 }}>
+                    <CustomDatepicker
+                        label="From"
+                        value={this.state.from}
+                        onChange={this.from}
+                    />
+                </div>
+                <div>
+                    <CustomDatepicker
+                        label="To"
+                        value={this.state.to}
+                        onChange={this.to}
+                    />
+                </div>
+            </div>
+        }
+        content={
+            <SalesTable
+                tableHeaderColor="primary"
+                tableHead={['Bill No.','Bill Date',  'Customer', 'Qty.', 'Amount','Actions']}
+                tableData={this.props.sales}
+                editSale={() => this.setState({ openEditSaleModal: true })}
+            />
+        }
+    />
+    }
+
+    _showAddView = () =>{
+        return <AddSaleView
+            open={this.state.openAddSaleModal}
+            close={() => this.setState({ openAddSaleModal: false })}
+            custProducts={this.getAllCustProducts}
+            addSale={this.props.addSale}
+            customerVendorList = {this.getAllVendorCustomerList}
+            refreshSales={this._getSales}
+            successNotification={() => this.showNotification('tr')}
+            errorNotification={() => this.showNotification('tc')}
+        />
+    }
+
     render() {
         return (
             <div>
                 <Grid container>
                     <ItemGrid xs={12} sm={12} md={12}>
-                        <RegularCard
-                            padIt
-                            cardTitle="Sales"
-                            cardSubtitle="List of sale entries in the system"
-                            button={
-                                <Button 
-                                    style={ styles.addSaleButton } 
-                                    onClick={() => this.setState({ openAddSaleModal: true })}>ADD SALE</Button>
-                            }
-                            total={
-                                <div>
-                                    <CustomInput
-                                        disabled
-                                        labelText="Total"
-                                        id="total"
-                                        formControlProps={{ fullWidth: true }}
-                                        type="number"
-                                        value={this.total()}
-                                    />
-                                </div>
-                            }
-                            date_picker={
-                                <div style={ styles.datepickers }>
-                                    <div style={{ paddingRight: 10 }}>
-                                        <CustomDatepicker
-                                            label="From"
-                                            value={this.state.from}
-                                            onChange={this.from}
-                                        />
-                                    </div>
-                                    <div>
-                                        <CustomDatepicker
-                                            label="To"
-                                            value={this.state.to}
-                                            onChange={this.to}
-                                        />
-                                    </div>
-                                </div>
-                            }
-                            content={
-                                <SalesTable
-                                    tableHeaderColor="primary"
-                                    tableHead={['Bill No.','Bill Date',  'Customer', 'Qty.', 'Amount','Actions']}
-                                    tableData={this.props.sales}
-                                    editSale={() => this.setState({ openEditSaleModal: true })}
-                                />
-                            }
-                        />
+                        {
+                            this._showAddView()
+                        }
                     </ItemGrid>
                     
                     <AddSaleModal 

@@ -29,9 +29,9 @@ const transition = {
 };
 
 const container = {
-    paddingRight: '15px',
-    paddingLeft: '15px',
-    marginRight: 'auto',
+    paddingRight: '5px',
+    paddingLeft: '0px',
+    marginRight: '5px',
     marginLeft: 'auto',
 };
 
@@ -43,7 +43,7 @@ const card = {
     display: 'inline-block',
     position: 'relative',
     width: '100%',
-    margin: '25px 0',
+    margin: '5px 0',
     boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)',
     borderRadius: '3px',
     color: 'rgba(0, 0, 0, 0.87)',
@@ -110,9 +110,9 @@ const cardActions = {
 };
 
 const cardHeader = {
-    margin: '-20px 15px 0',
     borderRadius: '3px',
     padding: '15px',
+    marginBottom: '10px'
 };
 
 const defaultBoxShadow = {
@@ -150,8 +150,8 @@ const appStyle = theme => ({
     },
     content: {
         marginTop: '70px',
-        padding: '30px 15px',
-        minHeight: 'calc(100% - 123px)',
+        padding: '5px 0px',
+        minHeight: 'calc(100% - 20px)',
     },
     container,
     map:{
@@ -370,11 +370,10 @@ const sidebarStyle = theme => ({
 
 const headerStyle = theme => ({
     appBar: {
-        top: '-30px',
+        top: '-15px',
         [theme.breakpoints.down('md')]:{
             top: '-15px'
         },
-        backgroundColor: 'transparent',
         boxShadow: 'none',
         borderBottom: '0',
         marginBottom: '0',
@@ -382,7 +381,6 @@ const headerStyle = theme => ({
         width: '100%',
         paddingTop: '10px',
         zIndex: '1029',
-        color: '#555555',
         border: '0',
         borderRadius: '3px',
         padding: '10px 0',
@@ -437,6 +435,46 @@ const headerStyle = theme => ({
         backgroundColor: dangerColor,
         color: '#FFFFFF',
         ...defaultBoxShadow
+    },
+    purple: {
+        backgroundColor: primaryColor,
+        ...primaryBoxShadow,
+        '&:hover': {
+            backgroundColor: primaryColor,
+            ...primaryBoxShadow,
+        }
+    },
+    blue: {
+        backgroundColor: infoColor,
+        boxShadow: '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
+        '&:hover': {
+            backgroundColor: infoColor,
+            boxShadow: '0 12px 20px -10px rgba(0,188,212,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(0,188,212,.2)',
+        }
+    },
+    green: {
+        backgroundColor: successColor,
+        boxShadow: '0 12px 20px -10px rgba(76,175,80,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(76,175,80,.2)',
+        '&:hover': {
+            backgroundColor: successColor,
+            boxShadow: '0 12px 20px -10px rgba(76,175,80,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(76,175,80,.2)',
+        }
+    },
+    orange: {
+        backgroundColor: warningColor,
+        boxShadow: '0 12px 20px -10px rgba(255,152,0,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(255,152,0,.2)',
+        '&:hover': {
+            backgroundColor: warningColor,
+            boxShadow: '0 12px 20px -10px rgba(255,152,0,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(255,152,0,.2)',
+        }
+    },
+    red: {
+        backgroundColor: dangerColor,
+        boxShadow: '0 12px 20px -10px rgba(244,67,54,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(244,67,54,.2)',
+        '&:hover': {
+            backgroundColor: dangerColor,
+            boxShadow: '0 12px 20px -10px rgba(244,67,54,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(244,67,54,.2)',
+        }
     }
 });
 

@@ -67,7 +67,7 @@ class addCustProductModal extends Component {
         this.setState({ stockQnt: event.target.value });
     };
 
-    _saveCustProduct = () => {
+    _addCustProduct = () => {
         const {name} = this.state;
 
         if (name) {
@@ -166,6 +166,8 @@ class addCustProductModal extends Component {
                                                     defaultValue={ this.state.purchaseUnit }
                                                     items= {this.state.custProducts}
                                                     value={ this.state.purchaseUnit }
+                                                    idKey="id"
+                                                    valueKey="name"
                                                 ></CustomSelect>
                                             </div>
                                             </ItemGrid>
@@ -191,6 +193,8 @@ class addCustProductModal extends Component {
                                                     defaultValue={ this.state.retailUnit }
                                                     items= {units}
                                                     value={ this.state.retailUnit }
+                                                    idKey="id"
+                                                    valueKey="name"
                                                 ></CustomSelect>
                                               </div>
                                             </ItemGrid>
@@ -213,6 +217,8 @@ class addCustProductModal extends Component {
                                                     defaultValue={ this.state.wholeUnit }
                                                     items= {units}
                                                     value={ this.state.wholeUnit }
+                                                    idKey="id"
+                                                    valueKey="name"
                                                 ></CustomSelect>
                                                 </div>
                                             </ItemGrid>

@@ -18,7 +18,7 @@ export default {
     },
     add(item) {
         
-        return axios.post(ITEM_URL,{headers: headers}, item)
+        return axios.post(ITEM_URL, item,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },

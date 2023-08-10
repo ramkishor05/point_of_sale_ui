@@ -21,11 +21,11 @@ class Header extends React.Component{
     render(){
         const { classes, color } = this.props;
         return (
-            <AppBar className={classes.appBar + (color !== undefined ? " " + classes[color]:"")}>
+            <AppBar className={classes.appBar + (color !== undefined ? " " + classes[color]:"")} >
                 <Toolbar className={classes.container}>
                     <div className={classes.flex}>
                         {/* Here we create navbar brand, based on route name */}
-                        <Button href="#" className={classes.title}>{this.makeBrand()}</Button>
+                        {/*<Button href="#" className={classes.title}>{this.makeBrand()}</Button>*/}
                     </div>
                     {/* 
                     <Hidden smDown implementation="css">

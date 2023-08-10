@@ -26,7 +26,6 @@ class RegularCard extends React.Component {
                             display: 'flex',
                             flexWrap: 'wrap',
                             alignItems: 'baseline',
-                            margin: '20px 15px 0px',
                             justifyContent: date_picker ? 'space-between' : 'flex-end'
                         }}>                 
                             <div>
@@ -40,8 +39,7 @@ class RegularCard extends React.Component {
                             <div style={{ 
                                 display: 'flex',
                                 alignItems: 'baseline',
-                                justifyContent: total ? 'space-between' : 'flex-end',
-                                padding: '20px 15px 0px'
+                                justifyContent: total ? 'space-between' : 'flex-end'
                             }}>
                                 {
                                     total
