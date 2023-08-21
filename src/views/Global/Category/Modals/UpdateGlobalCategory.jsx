@@ -33,9 +33,9 @@ class UpdateGlobalCategory extends Component {
 
     _updateGlobalCategory = () => {
         const 
-            id = this.props.edit_item.id,
+            id = this.props.globalCategory_to_edit.id,
             quantity_added = Number(this.state.quantity_added),
-            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.edit_item.quantity);
+            quantity_remaining = Number(this.state.quantity_added) + Number(this.props.globalCategory_to_edit.quantity);
 
         if (id && quantity_added && quantity_remaining) {
             this.props.updateGlobalCategory(id, {quantity_added, quantity_remaining}, this.clearAndRefresh, this.props.successNotification, this.props.errorNotification);
@@ -50,7 +50,7 @@ class UpdateGlobalCategory extends Component {
     }
     
     render() {
-        const { classes, open, close, edit_item } = this.props;
+        const { classes, open, close, globalCategory_to_edit } = this.props;
         return (
             <Modal
                 aria-labelledby="Update Item"
@@ -74,7 +74,7 @@ class UpdateGlobalCategory extends Component {
                                                     id="item-name"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    defaultValue={ edit_item.name }
+                                                    defaultValue={ globalCategory_to_edit.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -86,7 +86,7 @@ class UpdateGlobalCategory extends Component {
                                                     id="unit-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ edit_item.mrp }
+                                                    defaultValue={ globalCategory_to_edit.mrp }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -98,7 +98,7 @@ class UpdateGlobalCategory extends Component {
                                                     id="whole-price"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    defaultValue={ edit_item.price }
+                                                    defaultValue={ globalCategory_to_edit.price }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -110,7 +110,7 @@ class UpdateGlobalCategory extends Component {
                                                     id="quantity-remaining"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
-                                                    value={ Number(edit_item.quantity_remaining) + Number(this.state.quantity_added) }
+                                                    value={ Number(globalCategory_to_edit.quantity_remaining) + Number(this.state.quantity_added) }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -157,8 +157,8 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { edit_item } = state.items;
-    return { edit_item };
+    const { globalCategory_to_edit } = state.globalCategoryReducer;
+    return { globalCategory_to_edit };
 };
 
 const UpdateModalWrapped = withStyles(styles)(UpdateGlobalCategory);

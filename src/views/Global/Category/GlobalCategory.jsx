@@ -166,7 +166,7 @@ class GlobalCategory extends Component {
 
 const mapStateToProps = state => {
     const { user } = state.users;
-    const { globalCategoryList, show_global_category_loader } = state.globalCategoryList;
+    const { globalCategoryList, show_global_category_loader } = state.globalCategoryReducer;
 
     return { user, globalCategoryList, show_global_category_loader };
 };

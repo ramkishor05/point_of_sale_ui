@@ -147,7 +147,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { globalCategory_to_edit } = state.globalCategoryList;
+    const { globalCategory_to_edit } = state.globalCategoryReducer;
     return { globalCategory_to_edit };
 };
 

@@ -133,7 +133,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { globalCategoryGroup_to_edit } = state.globalCategoryGroupList;
+    const { globalCategoryGroup_to_edit } = state.globalCategoryGroupReducer;
     return { globalCategoryGroup_to_edit };
 };
 

@@ -160,7 +160,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { username, password, login_error } = state.users;
+    const { username, password, login_error } = state.userReducer;
     return { username, password, login_error };
 }
 

@@ -31,6 +31,8 @@ const appRoutes =
 ]*/
   [
     //{ path: "/cust/dashboard", sidebarName: "Dashboard", navbarName: "Dashboard", icon: Dashboard, component: CustDashboard },
+    { path: "/admin/category/group", sidebarName: "Category Group", navbarName: "Category Goup", icon: LibraryBooks, component: GlobalCategoryGroup },
+    { path: "/admin/category", sidebarName: "Category", navbarName: "Categories", icon: PhoneIphone, component: GlobalCategory },
     { path: "/cust/products", sidebarName: "Products", navbarName: "Products", icon: LocalDrink, component: CustProducts }
     ,{ path: "/cust/sales", sidebarName: "Sales", navbarName: "Sales", icon: LocalDrink, component: SaleProducts }
     ,{ path: "/cust/vendors", sidebarName: "Vendors", navbarName: "Vendors", icon: LocalDrink, component: Vendors }
