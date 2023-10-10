@@ -1,33 +1,41 @@
 import { axios } from '../index';
 
+import { PRODUCTION_BASE_URL} from '../../globals/constants'
+
+const CUST_UNIT_URL=`${PRODUCTION_BASE_URL}/api/cust/unit`;
+
+const headers = {
+    'Content-Type': 'application/json',
+    'custAppId': 1
+  };
 export default {
     getAll() {
-        return axios.get('credit_transfers')
+        return axios.get(CUST_UNIT_URL,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
     getByDate(from, to) {
-        return axios.get('credit_transfers/filter', { params: { from, to } })
+        return axios.get(CUST_UNIT_URL+'/filter', { params: {from, to} })
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
-    add(data) {
-        return axios.post('credit_transfers', data)
+    add(unit) {
+        return axios.post(CUST_UNIT_URL, unit)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
 
-    update(id, data) {
-        return axios.put(`credit_transfers/${id}`, data)
+    update(id, unit) {
+        return axios.put(CUST_UNIT_URL+`/${id}`, unit)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
-    
+
     delete(id) {
-        return axios.delete(`credit_transfers/${id}`)
+        return axios.delete(CUST_UNIT_URL+`/${id}`)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
-    },
+    }
 };

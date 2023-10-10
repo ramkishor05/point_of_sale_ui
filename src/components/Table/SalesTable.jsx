@@ -8,7 +8,7 @@ import { renderSaleToEdit } from '../../actions';
 
 import { tableStyle } from 'variables/styles';
 
-class SaleTable extends React.Component {
+class SalesTable extends React.Component {
     // Check if the user is super admin.
     isSuperAdmin = () => {
         return true; //this.props.user.role.name === 'super_admin';
@@ -97,11 +97,11 @@ class SaleTable extends React.Component {
     }
 }
 
-SaleTable.defaultProps = {
+SalesTable.defaultProps = {
     tableHeaderColor: 'gray'
 }
 
-SaleTable.propTypes = {
+SalesTable.propTypes = {
     classes: PropTypes.object.isRequired,
     tableHeaderColor: PropTypes.oneOf(['warning','primary','danger','success','info','rose','gray']),
     tableHead: PropTypes.arrayOf(PropTypes.string),
@@ -126,6 +126,6 @@ const mapStateToProps = state => {
     return { user, sale_to_edit };
 };
 
-const WrappedTable = withStyles(tableStyle)(SaleTable);
+const WrappedTable = withStyles(tableStyle)(SalesTable);
 
 export default connect(mapStateToProps, { renderSaleToEdit })(WrappedTable);

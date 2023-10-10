@@ -150,7 +150,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     return { user };
 };
 

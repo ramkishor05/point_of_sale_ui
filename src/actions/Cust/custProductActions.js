@@ -3,15 +3,14 @@ import {
     SHOW_CUST_PRODUCT_LOADER, REMOVE_CUST_PRODUCT_LOADER,
     CUST_PRODUCT_TO_EDIT, CUST_PRODUCT_EDIT_SUCCESS, GET_FINISHING_CUST_PRODUCTS
 } from '../types';
-import Item from '../../services/Cust/Item';
-import ItemStock from '../../services/Cust/ItemStock';
+import CustProductService from '../../services/Cust/CustProductService';
 
 // Action creator for getting all items --<
 export const getAllCustProducts = () => async dispatch => {
     dispatch({ type: SHOW_CUST_PRODUCT_LOADER });
 
     try {
-        const items = await Item.getAll();
+        const items = await CustProductService.getAll();
 
         if (items) {
             dispatch({ type: GET_ALL_CUST_PRODUCTS_SUCCESS, payload: items });
@@ -28,7 +27,7 @@ export const addCustProduct = (data, refreshItemsList, clear, successNotificatio
     dispatch({ type: SHOW_CUST_PRODUCT_LOADER });
 
     try {
-        const item = await Item.add(data);
+        const item = await CustProductService.add(data);
 
         if (item) {
             dispatch({ type: CUST_PRODUCT_ADD_SUCCESS });
@@ -61,7 +60,7 @@ export const editCustProduct = (id, data, clearAndRefresh, successNotification, 
     dispatch({ type: SHOW_CUST_PRODUCT_LOADER });
 
     try {
-        const item = await Item.update(id, data);
+        const item = await CustProductService.update(id, data);
 
         if (item) {
             dispatch({ type: CUST_PRODUCT_EDIT_SUCCESS });
@@ -81,7 +80,7 @@ export const updateCustProduct = (id, data, clearAndRefresh, successNotification
     dispatch({ type: SHOW_CUST_PRODUCT_LOADER });
 
     try {
-        const item = await ItemStock.update(id, data);
+        const item = await CustProductService.update(id, data);
 
         if (item) {
             dispatch({ type: CUST_PRODUCT_EDIT_SUCCESS });
@@ -101,7 +100,7 @@ export const getFinishingItems = minimum => async dispatch => {
     dispatch({ type: SHOW_CUST_PRODUCT_LOADER });
 
     try {
-        const item = await Item.find(minimum);
+        const item = await CustProductService.find(minimum);
 
         if (item) {
             dispatch({ type: GET_FINISHING_CUST_PRODUCTS, payload: item });

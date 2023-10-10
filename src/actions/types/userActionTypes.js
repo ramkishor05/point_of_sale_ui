@@ -9,3 +9,6 @@ export const OPEN_ADD_USER_MODAL = 'open_add_user_modal';
 export const OPEN_EDIT_USER_MODAL = 'open_edit_user_modal';
 
 export const OPEN_DELETE_USER_MODAL = 'open_delete_user_modal';
+
+export const USER_TO_EDIT = 'user_to_edit';
+

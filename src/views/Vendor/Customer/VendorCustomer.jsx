@@ -168,7 +168,7 @@ class VendorCustomer extends Component {
 }
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     const { vendorCustomerList, show_customer_loader } = state.vendorCustomerReducer;
 
     return { user, vendorCustomerList, show_customer_loader };

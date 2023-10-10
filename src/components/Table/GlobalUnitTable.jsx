@@ -133,7 +133,7 @@ const styles = {
 const wrappedTable = withStyles(tableStyle)(GlobalUnitTable);
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     return { user };
 };
 

@@ -15,7 +15,7 @@ axios.interceptors.request.use(async config => {
     let apiToken = await localStorage.getItem('api_token');
 
     if (apiToken && !config.headers.common.Authorization) {
-        config.headers.common.Authorization = `Bearer ${apiToken}`;
+        config.headers.common.Authorization = `${apiToken}`;
     }
 
     return config;

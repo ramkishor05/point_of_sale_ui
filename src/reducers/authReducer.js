@@ -14,7 +14,7 @@ const INITIAL_STATE = {
     username: '',
     user: null,
     password: '',
-    isLoggedIn: false,
+    isLoggedIn: true,
     login_error: '',
     show_item_loader: false,
     open_add_user_modal: false,

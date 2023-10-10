@@ -3,12 +3,12 @@ import {
     GET_SALES_TODAY_SUCCESS, GET_SALES_YESTERDAY_SUCCESS, GET_SALES_LONG_SUCCESS,
     SALE_TO_EDIT
 } from '../types';
-import Sale from '../../services/Cust/Sale';
+import CustSaleService from '../../services/Cust/CustSaleService';
 
 // Action creator for getting all sales.
 export const getAllSales = () => async dispatch => {
     try {
-        let sales = await Sale.getAll();
+        let sales = await CustSaleService.getAll();
 
         if (sales) {
             dispatch({ type: GET_ALL_SALES_SUCCESS, payload: sales });
@@ -21,7 +21,7 @@ export const getAllSales = () => async dispatch => {
 // Action creator for getting sales according to date.
 export const getSalesByDate = (from, to, day) => async dispatch => {
     try {
-        let sales = await Sale.getByDate(new Date(from), new Date(to));
+        let sales = await CustSaleService.getByDate(new Date(from), new Date(to));
 
         if (sales) {
             if (day === 'today') {
@@ -42,7 +42,7 @@ export const getSalesByDate = (from, to, day) => async dispatch => {
 // Action creator for adding sales.
 export const addSale = (data, refreshSales, clear, successNotification, errorNotification) => async dispatch => {
     try {
-        let sale = await Sale.add(data);
+        let sale = await CustSaleService.add(data);
 
         if (sale) {
             refreshSales && refreshSales();
@@ -68,7 +68,7 @@ export const renderSaleToEdit = payload => {
 // Action creator for editing sales in the system.
 export const editSale = (id, data, refreshSales, clear, successNotification, errorNotification) => async dispatch => {
     try {
-        const sale = await Sale.update(id, data);
+        const sale = await CustSaleService.update(id, data);
 
         if (sale) {
             refreshSales && refreshSales();

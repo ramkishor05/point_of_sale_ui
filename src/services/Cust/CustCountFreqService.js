@@ -1,40 +1,33 @@
 import { axios } from '../index';
 
-const ITEM_SALE_URL="http://localhost:3333/api/cust/product/sale";
-const headers = {
-    'Content-Type': 'application/json',
-    'custAppId': 1
-  };
+import { PRODUCTION_BASE_URL} from '../../globals/constants'
 
-let config = {
-    'headers': headers
-}
+const CUST_COUNT_FREQ_URL=`${PRODUCTION_BASE_URL}/api/cust/countfreq`
 
 export default {
     getAll() {
-        return axios.get(ITEM_SALE_URL)
+        return axios.get(CUST_COUNT_FREQ_URL)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
-
-    
-    getByDate(from, to) {
-        return axios.get(ITEM_SALE_URL+'/filter', { params: { from, to }, headers: {
-            'Content-Type': 'application/json',
-            'custAppId': 1
-          }})
+    find(minimum){
+        return axios.get(CUST_COUNT_FREQ_URL+'/find', { params: { minimum } })
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
-
-    add(sale) {
-        return axios.post(ITEM_SALE_URL, sale,{headers: headers})
+    add(item) {
+        return axios.post(CUST_COUNT_FREQ_URL, item)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
-
-    update(id, data) {
-        return axios.put(`sales/${id}`, data)
+    update(id, item) {
+        item['id']=id;
+        return axios.put(CUST_COUNT_FREQ_URL, item)
+                    .then(response => Promise.resolve(response.data))
+                    .catch(error => Promise.reject(error.response.data));
+    },
+    delete(id) {
+        return axios.delete(CUST_COUNT_FREQ_URL+`/${id}`)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     }

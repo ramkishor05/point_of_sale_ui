@@ -290,7 +290,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { roles, users, user, open_add_user_modal } = state.users;
+    const { roles, users, user, open_add_user_modal } = state.userReducer;
 
     return { roles, users, user, open_add_user_modal };
 };

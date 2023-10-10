@@ -27,7 +27,7 @@ class Auth extends Component {
 }
 
 const mapStateToProps = state => {
-    const { isLoggedIn } = state.users;
+    const { isLoggedIn } = state.userReducer;
     const { show_loader } = state.loader;
 
     return { isLoggedIn, show_loader };

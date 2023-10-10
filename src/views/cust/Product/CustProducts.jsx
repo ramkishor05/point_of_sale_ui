@@ -168,7 +168,7 @@ class CustProducts extends Component {
 }
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     const { custProducts, show_cust_product_loader } = state.custProducts;
 
     return { user, custProducts, show_cust_product_loader };

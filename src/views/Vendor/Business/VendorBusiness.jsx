@@ -171,7 +171,7 @@ class Business extends Component {
 }
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     const { vendorBusinessList, show_business_loader } = state.vendorBusinessReducer;
     return { user, vendorBusinessList, show_business_loader };
 };

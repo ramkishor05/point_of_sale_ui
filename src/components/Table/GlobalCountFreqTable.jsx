@@ -131,7 +131,7 @@ const styles = {
 const wrappedTable = withStyles(tableStyle)(GlobalCountFreqTable);
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     return { user };
 };
 

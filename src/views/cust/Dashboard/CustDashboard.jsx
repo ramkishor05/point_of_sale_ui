@@ -598,7 +598,7 @@ CustDashboard.propTypes = {
 const dashboardStyleWrapped = withStyles(dashboardStyle)(CustDashboard);
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     const { items, items_finishing } = state.items;
     const { sales, sales_today, sales_yesterday, sales_long } = state.sales;
     const { footballs, footballs_today, footballs_yesterday, footballs_long } = state.footballs;

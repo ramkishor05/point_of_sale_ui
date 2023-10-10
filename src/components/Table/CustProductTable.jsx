@@ -9,7 +9,7 @@ import { pink } from 'material-ui/colors';
 import logo_img from '../../assets/img/apple-icon.png';
 import { tableStyle } from 'variables/styles';
 
-import { renderToEdit } from 'actions';
+import { renderToCustProductEdit } from 'actions';
 import { Edit } from 'material-ui-icons';
 
 class CustProductTable extends Component {
@@ -152,10 +152,10 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     return { user };
 };
 
 const WrappedCustProductTable = withStyles(tableStyle)(CustProductTable);
 
-export default connect(mapStateToProps, { renderToEdit })(WrappedCustProductTable);
+export default connect(mapStateToProps, { renderToCustProductEdit })(WrappedCustProductTable);

@@ -5,7 +5,7 @@ import Moment from 'moment';
 
 import { tableStyle } from 'variables/styles';
 
-class CustomTable extends Component {
+class RecordsTable extends Component {
     _renderDate(value) {
         let date = Moment(value);
 
@@ -90,11 +90,11 @@ class CustomTable extends Component {
     }
 }
 
-CustomTable.defaultProps = {
+RecordsTable.defaultProps = {
     tableHeaderColor: 'gray'
 }
 
-CustomTable.propTypes = {
+RecordsTable.propTypes = {
     classes: PropTypes.object.isRequired,
     tableHeaderColor: PropTypes.oneOf(['warning','primary','danger','success','info','rose','gray']),
     tableHead: PropTypes.arrayOf(PropTypes.string),
@@ -112,4 +112,4 @@ const styles = {
     }
 };
 
-export default withStyles(tableStyle)(CustomTable);
+export default withStyles(tableStyle)(RecordsTable);

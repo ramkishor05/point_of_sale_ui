@@ -69,19 +69,14 @@ import SnackbarContent from './Snackbar/SnackbarContent.jsx';
 // // // Table
 // #############################
 
-import Table from './Table/Table.jsx';
 import CustProductTable from './Table/CustProductTable.jsx';
-import SalesTable from './Table/Sales.jsx';
-import MobileMoneyTable from './Table/MobileMoney.jsx';
-
+import SalesTable from './Table/SalesTable.jsx';
+import RecordsTable from './Table/RecordsTable.jsx'
 import GlobalUnitTable from './Table/GlobalUnitTable.jsx';
 import GlobalCountFreqTable from './Table/GlobalCountFreqTable.jsx';
 import GlobalCategoryGroupTable from './Table/GlobalCategoryGroupTable.jsx';
 import GlobalCategoryTable from './Table/GlobalCategoryTable.jsx';
-import CreditTransferTable from './Table/CreditTransfer.jsx';
 import UserProfileTable from './Table/UserProfileTable.jsx';
-import RecordsTable from './Table/Records';
-import FinishingItemsTable from './Table/FinishingItems';
 import VendorTable from './Table/VendorTable.jsx';
 import VendorBusinessTable from './Table/VendorBusinessTable.jsx';
 import VendorCustomerTable from './Table/VendorCustomerTable.jsx';
@@ -131,8 +126,8 @@ export {
     //Snackbar
     Snackbar, SnackbarContent,
     // Table
-    Table, CustProductTable,SalesTable, MobileMoneyTable, GlobalUnitTable,GlobalCategoryGroupTable, GlobalCategoryTable,GlobalCountFreqTable, CreditTransferTable, UserProfileTable, 
-    RecordsTable, FinishingItemsTable,VendorTable, VendorBusinessTable, VendorCustomerTable,
+    CustProductTable,SalesTable, GlobalUnitTable,GlobalCategoryGroupTable, GlobalCategoryTable,GlobalCountFreqTable, UserProfileTable, 
+    VendorTable, VendorBusinessTable, VendorCustomerTable,RecordsTable,
     // Tasks
     Tasks,
     // Typography

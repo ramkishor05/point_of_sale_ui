@@ -1,30 +1,40 @@
 import { axios } from '../index';
 
-const ITEM_URL="http://localhost:4444/inventory/"
+import { PRODUCTION_BASE_URL} from '../../globals/constants'
+
+const CUST_UNIT_GROUP_URL=`${PRODUCTION_BASE_URL}/api/cust/unitgroup`;
+
+const headers = {
+    'Content-Type': 'application/json',
+    'custAppId': 1
+  };
 export default {
     getAll() {
-        return axios.get(ITEM_URL+'productstock/1')
+        return axios.get(CUST_UNIT_GROUP_URL,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
-    find(minimum){
-        return axios.get(ITEM_URL+'productstock/find', { params: { minimum } })
+
+    getByDate(from, to) {
+        return axios.get(CUST_UNIT_GROUP_URL+'/filter', { params: {from, to} })
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
-    add(item) {
-        return axios.post(ITEM_URL+'productstock/1', item)
+
+    add(unit) {
+        return axios.post(CUST_UNIT_GROUP_URL, unit)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
-    update(id, item) {
-        item['id']=id;
-        return axios.put(ITEM_URL+`productstock/1`, item)
+
+    update(id, unit) {
+        return axios.put(CUST_UNIT_GROUP_URL+`/${id}`, unit)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     },
+
     delete(id) {
-        return axios.delete(ITEM_URL+`productstock/${id}`)
+        return axios.delete(CUST_UNIT_GROUP_URL+`/${id}`)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     }

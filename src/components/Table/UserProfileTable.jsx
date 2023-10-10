@@ -6,7 +6,7 @@ import Moment from 'moment';
 
 import { tableStyle } from 'variables/styles';
 
-import { renderToEdit } from '../../actions';
+import { renderToUserEdit } from '../../actions';
 
 class UserProfileTable extends Component {
     _renderDate(value) {
@@ -125,4 +125,4 @@ const styles = {
 
 const WrappedItemsTable = withStyles(tableStyle)(UserProfileTable);
 
-export default connect(null, { renderToEdit })(WrappedItemsTable);
+export default connect(null, { renderToUserEdit })(WrappedItemsTable);

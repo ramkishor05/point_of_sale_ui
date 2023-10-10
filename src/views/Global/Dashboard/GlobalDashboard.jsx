@@ -9,7 +9,7 @@ import {
 // react plugin for creating charts
 import ChartistGraph from 'react-chartist';
 
-import { CustomDatepicker, StatsCard, ChartCard, ItemGrid, RecordsTable, FinishingItemsTable, RegularCard, Snackbar } from 'components';
+import { CustomDatepicker, StatsCard, ChartCard, ItemGrid, RecordsTable, RegularCard, Snackbar } from 'components';
 
 import { dailySalesChart, completedTasksChart } from 'variables/charts';
 
@@ -368,18 +368,7 @@ class GlobalDashboard extends Component {
                         <div>
                             <Grid container>
                             <ItemGrid xs={12} sm={6} md={6}>
-                                    <RegularCard
-                                        cardTitle="Finishing Items (Quantity 10 or below remaining)"
-                                        cardSubtitle="These are the items that are running out"
-                                        content={
-                                            <FinishingItemsTable
-                                                tableHeaderColor="info"
-                                                tableHead={['No.', 'Item', 'Quantity Added', 'Quantity Remaining', '']}
-                                                tableData={this.props.items_finishing}
-                                                updateItem={() => this.setState({ showUpdateItemModal: true, notificationGroup: 'update' })}
-                                            />
-                                        }
-                                    />
+                                    
                                 </ItemGrid>
 
                                 <ItemGrid xs={12} sm={6} md={6}>
@@ -588,26 +577,24 @@ GlobalDashboard.propTypes = {
 const dashboardStyleWrapped = withStyles(dashboardStyle)(GlobalDashboard);
 
 const mapStateToProps = state => {
-    const { user } = state.users;
+    const { user } = state.userReducer;
     const { items, items_finishing } = state.items;
     const { sales, sales_today, sales_yesterday, sales_long } = state.sales;
-    const { footballs, footballs_today, footballs_yesterday, footballs_long } = state.footballs;
     const { globalUnits, globalUnits_today, globalUnits_yesterday, globalUnits_long } = state.globalUnits;
-    const { mobile_moneys, mobile_moneys_today, mobile_moneys_yesterday, mobile_moneys_long } = state.mobileMoneys;
-    const { credit_transfers, credit_transfers_today, credit_transfers_yesterday, credit_transfers_long } = state.creditTransfers;
+  
 
     return {
         user,
         items, items_finishing,
-        sales, footballs, globalUnits, mobile_moneys, credit_transfers,
-        sales_today, footballs_today, globalUnits_today, credit_transfers_today, mobile_moneys_today,
-        sales_yesterday, footballs_yesterday, globalUnits_yesterday, mobile_moneys_yesterday, credit_transfers_yesterday,
-        sales_long, footballs_long, globalUnits_long, mobile_moneys_long, credit_transfers_long
+        sales, globalUnits, 
+        sales_today, globalUnits_today, 
+        sales_yesterday, globalUnits_yesterday, 
+        sales_long, globalUnits_long
     };
 };
 
 export default connect(mapStateToProps, {
-    getAllCustProducts, getAllSales, getAllFootballs, getAllGlobalUnits, getAllMobileMoneys, getAllCreditTransfers,
-    getSalesByDate, getFootballByDate, getGlobalUnitByDate, getMobileMoneyByDate, getCreditTransferByDate,
+    getAllCustProducts, getAllSales, getAllGlobalUnits,
+    getSalesByDate, getGlobalUnitByDate,
     getFinishingItems
 })(dashboardStyleWrapped);

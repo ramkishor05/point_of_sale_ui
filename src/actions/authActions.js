@@ -41,7 +41,8 @@ export const login = ({ username, password }, _clearCredentials) => async dispat
         }
     } catch (error) {
         localStorage.removeItem(API_TOKEN);
-        dispatch({ type: LOGIN_FAIL, payload: error.error.message });
+        let msg=error.error? error.error.message: "";
+        dispatch({ type: LOGIN_FAIL, payload: msg });
         dispatch({ type: REMOVE_LOADER });
         console.log(error);
     }

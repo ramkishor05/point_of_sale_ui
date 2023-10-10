@@ -4,7 +4,7 @@ import {
     SHOW_LOADER, REMOVE_LOADER, GET_USERS_SUCCESS,
     GET_ROLES_SUCCESS, GET_ROLES_FAIL,
     USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,
-    OPEN_ADD_USER_MODAL, OPEN_EDIT_USER_MODAL, OPEN_DELETE_USER_MODAL,
+    OPEN_ADD_USER_MODAL, OPEN_EDIT_USER_MODAL, OPEN_DELETE_USER_MODAL,USER_TO_EDIT
 } from './types';
 import UserService from '../services/UserService';
 
@@ -104,4 +104,11 @@ export const openDeleteUserModal = payload => ({type: OPEN_DELETE_USER_MODAL, pa
 // Function for parsing error gotten from server.
 const parseError = error => {
     return error;
+};
+
+export const renderToUserEdit = user => {
+    return {
+        type: USER_TO_EDIT,
+        payload: user,
+    };
 };

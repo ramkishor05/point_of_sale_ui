@@ -1,7 +1,7 @@
 import { axios } from './index';
-const hostname = `192.168.29.222`;
+const hostname = `localhost`;
 
-var endpoint = `http://${hostname}:2222/api/auth/`;
+var endpoint = `http://${hostname}:2222/api/authentication/`;
 
 export default {
     
