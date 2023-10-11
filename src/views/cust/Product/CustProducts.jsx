@@ -11,7 +11,7 @@ import { RegularCard, CustProductTable, ItemGrid, Snackbar } from 'components';
 
 import Loader from 'Loader';
 
-import { getAllCustProducts, addCustProduct } from 'actions';
+import { getAllCustProducts, addCustProduct, getAllCustUnits } from 'actions';
 
 class CustProducts extends Component {
     state = {
@@ -25,6 +25,7 @@ class CustProducts extends Component {
 
     componentDidMount() {
         this.props.getAllCustProducts();
+        this.props.getAllCustUnits();
     }
 
     // Check if the user is super admin.
@@ -171,7 +172,9 @@ const mapStateToProps = state => {
     const { user } = state.userReducer;
     const { custProducts, show_cust_product_loader } = state.custProducts;
 
-    return { user, custProducts, show_cust_product_loader };
+    const { custUnits, show_cust_unit_loader } = state.custUnitReducer;
+
+    return { user, custProducts, show_cust_product_loader, custUnits, show_cust_unit_loader };
 };
 
 const styles = {
@@ -181,4 +184,4 @@ const styles = {
     },
 };
 
-export default connect(mapStateToProps, { getAllCustProducts, addCustProduct })(CustProducts);
+export default connect(mapStateToProps, { getAllCustProducts, addCustProduct, getAllCustUnits })(CustProducts);

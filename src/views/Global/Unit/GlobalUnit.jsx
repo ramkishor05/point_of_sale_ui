@@ -233,7 +233,7 @@ const styles = {
 
 const mapStateToProps = state => {
     const { user } = state.userReducer;
-    const { globalUnits } = state.globalUnits;
+    const { globalUnits } = state.globalUnitReducer;
 
     return { user, globalUnits };
 };

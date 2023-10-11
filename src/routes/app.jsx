@@ -18,6 +18,10 @@ import VendorCustomer from "views/Vendor/Customer/VendorCustomer.jsx"
 import {
     Dashboard, Person, LocalDrink, LibraryBooks, BubbleChart, Notifications, PhoneIphone
 } from 'material-ui-icons';
+import CustCategory from "../views/Cust/Category/CustCategory";
+import CustCategoryGroup from "../views/Cust/Category/CustCategoryGroup";
+import CustUnit from "../views/Cust/Unit/CustUnit";
+import CustUnitGroup from "../views/Cust/Unit/CustUnitGroup";
 
 const appRoutes = 
  /*[
@@ -31,8 +35,14 @@ const appRoutes =
 ]*/
   [
     //{ path: "/cust/dashboard", sidebarName: "Dashboard", navbarName: "Dashboard", icon: Dashboard, component: CustDashboard },
-    { path: "/admin/category/group", sidebarName: "Category Group", navbarName: "Category Goup", icon: LibraryBooks, component: GlobalCategoryGroup },
-    { path: "/admin/category", sidebarName: "Category", navbarName: "Categories", icon: PhoneIphone, component: GlobalCategory },
+    { path: "/admin/category/group", sidebarName: "Global Category Group", navbarName: "Global Category Goup", icon: LibraryBooks, component: GlobalCategoryGroup },
+    { path: "/admin/category", sidebarName: "Global Category", navbarName: "Global Category", icon: PhoneIphone, component: GlobalCategory },
+    { path: "/admin/unitGroups", sidebarName: "Global Unit Groups", navbarName: "Global Unit Groups", icon: BubbleChart, component: GlobalUnitGroup },
+    { path: "/admin/unit", sidebarName: "Global Units", navbarName: "Global Units", icon: BubbleChart, component: GlobalUnit },
+    { path: "/cust/category/group", sidebarName: "Cust Category Group", navbarName: "Cust Category Group", icon: LibraryBooks, component: CustCategoryGroup },
+    { path: "/cust/category", sidebarName: "Cust Category", navbarName: "Categories", icon: PhoneIphone, component: CustCategory },
+    { path: "/cust/unitGroups", sidebarName: "Cust Unit Groups", navbarName: "Cust Units", icon: BubbleChart, component: CustUnitGroup },
+    { path: "/cust/unit", sidebarName: "Cust Units", navbarName: "Cust Units", icon: BubbleChart, component: CustUnit },
     { path: "/cust/products", sidebarName: "Products", navbarName: "Products", icon: LocalDrink, component: CustProducts }
     ,{ path: "/cust/sales", sidebarName: "Sales", navbarName: "Sales", icon: LocalDrink, component: SaleProducts }
     ,{ path: "/cust/vendors", sidebarName: "Vendors", navbarName: "Vendors", icon: LocalDrink, component: Vendors }

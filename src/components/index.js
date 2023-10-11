@@ -72,16 +72,23 @@ import SnackbarContent from './Snackbar/SnackbarContent.jsx';
 import CustProductTable from './Table/CustProductTable.jsx';
 import SalesTable from './Table/SalesTable.jsx';
 import RecordsTable from './Table/RecordsTable.jsx'
-import GlobalUnitTable from './Table/GlobalUnitTable.jsx';
-import GlobalCountFreqTable from './Table/GlobalCountFreqTable.jsx';
-import GlobalCategoryGroupTable from './Table/GlobalCategoryGroupTable.jsx';
-import GlobalCategoryTable from './Table/GlobalCategoryTable.jsx';
+
 import UserProfileTable from './Table/UserProfileTable.jsx';
 import VendorTable from './Table/VendorTable.jsx';
 import VendorBusinessTable from './Table/VendorBusinessTable.jsx';
 import VendorCustomerTable from './Table/VendorCustomerTable.jsx';
 
 
+import GlobalUnitTable from './Table/GlobalUnitTable.jsx';
+import GlobalCountFreqTable from './Table/GlobalCountFreqTable.jsx';
+import GlobalCategoryGroupTable from './Table/GlobalCategoryGroupTable.jsx';
+import GlobalCategoryTable from './Table/GlobalCategoryTable.jsx';
+
+
+import CustCategoryTable from './Table/CustCategoryTable.jsx';
+import CustCategoryGroupTable from './Table/CustCategoryGroupTable.jsx';
+import CustUnitTable from './Table/CustUnitTable.jsx';
+import CustUnitGroupTable from './Table/CustUnitGroupTable.jsx';
 
 // ##############################
 // // // Tasks
@@ -128,6 +135,7 @@ export {
     // Table
     CustProductTable,SalesTable, GlobalUnitTable,GlobalCategoryGroupTable, GlobalCategoryTable,GlobalCountFreqTable, UserProfileTable, 
     VendorTable, VendorBusinessTable, VendorCustomerTable,RecordsTable,
+    CustCategoryTable, CustCategoryGroupTable,CustUnitTable, CustUnitGroupTable,
     // Tasks
     Tasks,
     // Typography

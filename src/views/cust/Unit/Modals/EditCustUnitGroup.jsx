@@ -4,7 +4,7 @@ import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-class EditGlobalUnitGroup extends Component {
+class EditCustUnitGroup extends Component {
     state = {
         name: '',
         amount: '',
@@ -24,8 +24,8 @@ class EditGlobalUnitGroup extends Component {
     };
 
     _editUnit = () => {        
-        let id = this.props.global_unit_group_to_edit.id,
-            name = this.state.name || this.props.global_unit_group_to_edit.name
+        let id = this.props.cust_unit_group_to_edit.id,
+            name = this.state.name || this.props.cust_unit_group_to_edit.name
         if (name ) {
             this.props.editUnit(id, this.state, this.props.refresh, this._clear, this.props.successNotification, this.props.errorNotification);
         } else {
@@ -45,7 +45,7 @@ class EditGlobalUnitGroup extends Component {
     }
     
     render() {
-        const { classes, open, close, global_unit_group_to_edit } = this.props;
+        const { classes, open, close, cust_unit_group_to_edit } = this.props;
 
         return (
             <Modal
@@ -71,7 +71,7 @@ class EditGlobalUnitGroup extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ global_unit_group_to_edit.name }
+                                                    defaultValue={ cust_unit_group_to_edit.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -83,7 +83,7 @@ class EditGlobalUnitGroup extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="number"
                                                     onChange={ this._setAmount }
-                                                    defaultValue={ global_unit_group_to_edit.amount }
+                                                    defaultValue={ cust_unit_group_to_edit.amount }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -94,7 +94,7 @@ class EditGlobalUnitGroup extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._editGlobalUnitGroup}>Edit</Button>
+                                        onClick={this._editCustUnitGroup}>Edit</Button>
                                 }
                             />
                         </ItemGrid>
@@ -114,11 +114,11 @@ const styles = theme => ({
     },
 });
 
-const EditModalWrapped = withStyles(styles)(EditGlobalUnitGroup);
+const EditModalWrapped = withStyles(styles)(EditCustUnitGroup);
 
 const mapStateToProps = state => {
-    const { global_unit_group_to_edit } = state.globalUnitGroupReducer;
-    return { global_unit_group_to_edit  };
+    const { cust_unit_group_to_edit } = state.custUnitGroupReducer;
+    return { cust_unit_group_to_edit  };
 }
 
 export default connect(mapStateToProps)(EditModalWrapped);

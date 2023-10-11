@@ -14,8 +14,7 @@ const ids = {
     wholePrice: 0,
     wholeUnit: 1,
     retailPrice: 0,
-    retailUnit: 1,
-    custProducts: []
+    retailUnit: 1
 };
 const units =[{'id' : 1, 'name':'KGS'}];
 
@@ -164,7 +163,7 @@ class addCustProductModal extends Component {
                                                     type="text"
                                                     onChange={ this._setPurchaseUnit }
                                                     defaultValue={ this.state.purchaseUnit }
-                                                    items= {this.state.custProducts}
+                                                    items= {units}
                                                     value={ this.state.purchaseUnit }
                                                     idKey="id"
                                                     valueKey="name"

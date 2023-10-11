@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
 import userReducer from './usersReducer';
-import custProducts from './Cust/custProductReducer';
-import sales from './Cust/saleReducer';
+import custProducts from './Cust/CustProductReducer';
+import sales from './Cust/CustSaleReducer';
 import loader from './loaderReducer';
 import globalUnitReducer from './Global/GlobalUnitReducer';
 import globalUnitGroupReducer from './Global/GlobalUnitGroupReducer';
@@ -10,6 +10,13 @@ import globalUnitGroupReducer from './Global/GlobalUnitGroupReducer';
 import globalCategoryReducer from './Global/GlobalCategoryReducer';
 import globalCategoryGroupReducer from './Global/GlobalCategoryGroupReducer';
 import globalCountFreqReducer from './Global/GlobalCountFreqReducer';
+
+import custUnitReducer from './Cust/CustUnitReducer';
+import custUnitGroupReducer from './Cust/CustUnitGroupReducer';
+
+import custCategoryReducer from './Cust/CustCategoryReducer';
+import custCategoryGroupReducer from './Cust/CustCategoryGroupReducer';
+
 import vendorReducer from './vendorReducer';
 
 import vendorBusinessReducer from './vendorBusinessReducer';
@@ -18,15 +25,19 @@ import vendorCustomerReducer from './vendorCustomerReducer';
 
 export default combineReducers({
     userReducer,
-    custProducts,
     sales,
     loader,
+    vendorReducer,
+    vendorBusinessReducer,
+    vendorCustomerReducer,
     globalUnitReducer,
     globalUnitGroupReducer,
     globalCategoryGroupReducer,
     globalCategoryReducer,
     globalCountFreqReducer,
-    vendorReducer,
-    vendorBusinessReducer,
-    vendorCustomerReducer
+    custUnitReducer,
+    custUnitGroupReducer,
+    custCategoryGroupReducer,
+    custCategoryReducer,
+    custProducts
 });

@@ -234,7 +234,7 @@ const styles = {
 
 const mapStateToProps = state => {
     const { user } = state.userReducer;
-    const { globalUnitGroup_to_edit, globalUnitGroups } = state.globalUnitGroups;
+    const { globalUnitGroup_to_edit, globalUnitGroups } = state.globalUnitGroupReducer;
 
     return { user, globalUnitGroup_to_edit, globalUnitGroups };
 };

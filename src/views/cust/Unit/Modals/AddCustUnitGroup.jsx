@@ -1,36 +1,51 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
 import { RegularCard, ItemGrid, CustomInput } from 'components';
 
-class EditGlobalUnitGroup extends Component {
+class AddCustUnitGroup extends Component {
     state = {
         name: '',
-        amount: '',
+        typeId: '',
+        dispayName: '',
+        shortDesc: '',
+        longDesc: ''
     };
 
     _setName = event => {
         this.setState({ name: event.target.value });
     };
 
-    _setAmount = event => {
-        this.setState({ amount: event.target.value });
+    _setTypeId = event => {
+        this.setState({ typeId: event.target.value });
     };
 
-    _clear = () => {
-        this.setState({ name: '', amount: '' });
-        this.props.close();
+    _setDispayName = event => {
+        this.setState({ dispayName: event.target.value });
+    };
+    
+    _setShortDesc = event => {
+        this.setState({ shortDesc: event.target.value });
     };
 
-    _editUnit = () => {        
-        let id = this.props.global_unit_group_to_edit.id,
-            name = this.state.name || this.props.global_unit_group_to_edit.name
-        if (name ) {
-            this.props.editUnit(id, this.state, this.props.refresh, this._clear, this.props.successNotification, this.props.errorNotification);
+    _setLongDesc = event => {
+        this.setState({ longDesc: event.target.value });
+    };
+
+    _addUnit = () => {
+        const { name, dispayName } = this.state;
+        const { refresh, successNotification, errorNotification } = this.props;
+
+        if (name && dispayName) {
+            this.props.addUnit(this.state, refresh, this.clear, successNotification, errorNotification);
         } else {
-            this.props.errorNotification();
+            errorNotification();
         }
+    };
+
+    clear = () => {
+        this.setState({ name: '', dispayName: '' });
+        this.props.close();
     };
 
     getModalStyle() {
@@ -45,12 +60,12 @@ class EditGlobalUnitGroup extends Component {
     }
     
     render() {
-        const { classes, open, close, global_unit_group_to_edit } = this.props;
+        const { classes, open, close } = this.props;
 
         return (
             <Modal
-                aria-labelledby="Edit Unit"
-                aria-describedby="Modal for editing Unit"
+                aria-labelledby="Add Unit"
+                aria-describedby="Modal for adding Unit"
                 open={open}
                 onClose={close}
             >
@@ -58,8 +73,8 @@ class EditGlobalUnitGroup extends Component {
                     <Grid container>
                         <ItemGrid xs={12} sm={12} md={12}>
                             <RegularCard
-                                cardTitle="Edit Group Unit"
-                                cardSubtitle="Fill the form below to edit Unit in the system"
+                                cardTitle="ADD Unit"
+                                cardSubtitle="Fill the form below to add Unit to the system"
                                 content={
                                     <div>
                                         <Grid container>
@@ -71,19 +86,19 @@ class EditGlobalUnitGroup extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ global_unit_group_to_edit.name }
+                                                    defaultValue={ this.state.name }
                                                 />
                                             </ItemGrid>
                                         </Grid>
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
-                                                    labelText="Amount"
-                                                    id="amount"
+                                                    labelText="DispayName"
+                                                    id="dispayName"
                                                     formControlProps={{ fullWidth: true }}
-                                                    type="number"
-                                                    onChange={ this._setAmount }
-                                                    defaultValue={ global_unit_group_to_edit.amount }
+                                                    type="text"
+                                                    onChange={ this._setDispayName }
+                                                    defaultValue={ this.state.dispayName }
                                                 />
                                             </ItemGrid>
                                         </Grid>
@@ -94,7 +109,7 @@ class EditGlobalUnitGroup extends Component {
                                     <Button 
                                         variant="raised" 
                                         style={{ backgroundColor: 'purple', color: 'white' }} 
-                                        onClick={this._editGlobalUnitGroup}>Edit</Button>
+                                        onClick={this._addUnit}>Add</Button>
                                 }
                             />
                         </ItemGrid>
@@ -114,14 +129,9 @@ const styles = theme => ({
     },
 });
 
-const EditModalWrapped = withStyles(styles)(EditGlobalUnitGroup);
+const AddModalWrapped = withStyles(styles)(AddCustUnitGroup);
 
-const mapStateToProps = state => {
-    const { global_unit_group_to_edit } = state.globalUnitGroupReducer;
-    return { global_unit_group_to_edit  };
-}
-
-export default connect(mapStateToProps)(EditModalWrapped);
+export default AddModalWrapped;
 
 
 
