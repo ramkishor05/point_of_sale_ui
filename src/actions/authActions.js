@@ -24,15 +24,16 @@ export const login = ({ username, password }, _clearCredentials) => async dispat
     try {
         dispatch({ type: SHOW_LOADER });
 
-        const user = await AuthService.generateToken({ username, password });
+        const token = await AuthService.generateToken({ username, password });
 
-        if (user) {
+        console.log("user==",token)
+        if (token) {
             dispatch({ type: REMOVE_LOADER });
 
-            localStorage.setItem(API_TOKEN, user.token);
+            localStorage.setItem(API_TOKEN, token);
 
             if (localStorage.getItem(API_TOKEN)) {
-                dispatch({ type: LOGIN_SUCCESS, payload: user.token });
+                dispatch({ type: LOGIN_SUCCESS, payload: token });
 
                 if (_clearCredentials) {
                     _clearCredentials();

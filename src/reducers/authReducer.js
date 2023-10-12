@@ -3,8 +3,8 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-    token: null,
-    isLoggedIn: true,
+    token: localStorage.getItem('api_token') ,
+    isLoggedIn: localStorage.getItem('api_token') ? true:  false,
     login_error: ''
 };
 

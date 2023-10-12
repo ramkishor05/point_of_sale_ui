@@ -39,10 +39,10 @@ class Authenticate extends Component {
     // Callback function to clear user's credentials after successful login.
     _postCalls = () => {
         this.setState({username: '',password : ''});
-        let token= this.props.token;
+        let token= localStorage.getItem('api_token') ;
         console.log("token=",token)
         if(token){
-            //this.props.getUser(token);
+            this.props.getUser(token);
         }
     };
 

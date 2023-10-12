@@ -60,7 +60,7 @@ class App extends React.Component {
 
     render() {
       
-        const { classes, ...rest } = this.props;
+        const { classes, user, ...rest } = this.props;
 
         return (
             <div className={classes.wrapper}>
@@ -76,7 +76,7 @@ class App extends React.Component {
                 />
                 <div className={classes.mainPanel} ref="mainPanel">
                     <Header
-                        routes={appRoutes}
+                        routes={appRoutes['ADMIN']}
                         handleDrawerToggle={this.handleDrawerToggle}
                         {...rest}
                     />
@@ -103,10 +103,13 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-    const { isLoggedIn,  user } = state.userReducer;
+    const { isLoggedIn, token} = state.authReducer;
+    const { user} = state.userReducer;
     const { show_loader } = state.loader;
 
-    return { isLoggedIn, show_loader , user};
+    console.log("token=",token)
+
+    return { isLoggedIn, show_loader, user };
 };
 
 App.propTypes = {

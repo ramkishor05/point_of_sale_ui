@@ -27,12 +27,11 @@ class Auth extends Component {
 }
 
 const mapStateToProps = state => {
-    const { isLoggedIn,  user } = state.userReducer;
+    const { isLoggedIn, token } = state.authReducer;
+    const { user } = state.userReducer;
     const { show_loader } = state.loader;
-
-    console.log("user===",user)
-
-    return { isLoggedIn, show_loader , user};
+    console.log("user=",user)
+    return { isLoggedIn, show_loader , user, token};
 };
 
 export default connect(mapStateToProps)(Auth);
