@@ -22,6 +22,10 @@ export default {
         return axios.post(endpoint+'token/expired', token)
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
+    },
+    getUser(token) {
+        return axios.post(endpoint+'token/user', token)
+                    .then(response => Promise.resolve(response.data))
+                    .catch(error => Promise.reject(error.response.data));
     }
-
 };

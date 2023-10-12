@@ -5,7 +5,7 @@ import { PRODUCTION_BASE_URL} from '../../globals/constants'
 const CUST_COUNT_FREQ_URL=`${PRODUCTION_BASE_URL}/api/cust/countfreq`
 const headers = {
     'Content-Type': 'application/json',
-    'custAppId': 1
+    'custAppId': 13
 };
 
 export default {

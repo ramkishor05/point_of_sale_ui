@@ -1,12 +1,12 @@
 import { axios } from '../index';
 
-import { PRODUCTION_BASE_URL} from '../../globals/constants'
+import { PRODUCTION_BASE_URL, PRODUCTION_APP_ID} from '../../globals/constants'
 
 const CUST_PRODUCT_URL=`${PRODUCTION_BASE_URL}/api/cust/product`;
 
 const headers = {
     'Content-Type': 'application/json',
-    'custAppId': 1
+    'custAppId': PRODUCTION_APP_ID
 };
 
 export default {

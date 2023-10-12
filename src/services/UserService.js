@@ -1,8 +1,13 @@
 import { axios } from './index';
-const hostname = `192.168.29.222`;
+const hostname = `localhost`;
 
 var endpoint = `http://${hostname}:2222/api/user/`;
 
+const headers = {
+    'Content-Type': 'application/json',
+    'custAppId': 1,
+    'vendorId' : 31
+};
 export default {
    
     getAll() {
@@ -31,6 +36,13 @@ export default {
 
     get(id) {
         return axios.delete(endpoint+`/${id}`)
+                    .then(response => Promise.resolve(response.data))
+                    .catch(error => Promise.reject(error.response.data));
+    }
+    ,
+    getUser(token) {
+        headers['api_token']=token;
+        return axios.get(endpoint, {headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
     }

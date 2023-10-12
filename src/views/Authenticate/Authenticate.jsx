@@ -5,25 +5,27 @@ import { AddAlert } from 'material-ui-icons';
 
 import { RegularCard, Button, CustomInput, ItemGrid, Snackbar } from 'components';
 
-import { usernameChanged, passwordChanged, login } from '../../actions';
+import { login, getUser } from '../../actions';
 
 class Authenticate extends Component {
     state = {
         tr: false,
         tc: false,
+        username: "",
+        password: ""
     };
 
     _onChangeUsername = event => {
         console.log(event.target.value)
-        this.props.usernameChanged(event.target.value);
+        this.setState({username: event.target.value});
     };
 
     _onChangePassword = event => {
-        this.props.passwordChanged(event.target.value);
+        this.setState({password: event.target.value});
     };
 
     _onClick = () => {
-        const { username, password } = this.props;
+        const { username, password } = this.state;
 
         console.log("onlick ", username, password)
         if (!username || !password) {
@@ -31,13 +33,17 @@ class Authenticate extends Component {
             return;
         }
 
-        this.props.login({ username, password }, this._clearCredentials);
+        this.props.login({ username, password }, this._postCalls);
     };
 
     // Callback function to clear user's credentials after successful login.
-    _clearCredentials = () => {
-        this.props.usernameChanged('');
-        this.props.passwordChanged('');
+    _postCalls = () => {
+        this.setState({username: '',password : ''});
+        let token= localStorage.getItem('api_token') ;
+        console.log("token=",token)
+        if(token){
+            this.props.getUser(token);
+        }
     };
 
     showNotification(place) {
@@ -85,7 +91,7 @@ class Authenticate extends Component {
                                                 formControlProps={{ fullWidth: true }}
                                                 type="text"
                                                 onChange={this._onChangeUsername}
-                                                defaultValue={this.props.username}
+                                                defaultValue={this.state.username}
                                             />
                                         </ItemGrid>
                                     </Grid>
@@ -97,7 +103,7 @@ class Authenticate extends Component {
                                                 formControlProps={{ fullWidth: true }}
                                                 type="password"
                                                 onChange={this._onChangePassword}
-                                                defaultValue={this.props.password}
+                                                defaultValue={this.state.password}
                                             />
                                         </ItemGrid>
                                     </Grid>
@@ -160,8 +166,8 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { username, password, login_error } = state.userReducer;
-    return { username, password, login_error };
+    const { token, login_error } = state.authReducer;
+    return { token, login_error };
 }
 
-export default connect(mapStateToProps, { usernameChanged, passwordChanged, login })(Authenticate);
+export default connect(mapStateToProps, { login, getUser })(Authenticate);
