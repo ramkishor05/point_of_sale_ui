@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 
-import userReducer from './usersReducer';
+import authReducer from './authReducer';
+
+import userReducer from './userReducer';
 import custProducts from './Cust/CustProductReducer';
 import sales from './Cust/CustSaleReducer';
 import loader from './loaderReducer';
@@ -24,6 +26,7 @@ import vendorCustomerReducer from './vendorCustomerReducer';
 
 
 export default combineReducers({
+    authReducer,
     userReducer,
     sales,
     loader,

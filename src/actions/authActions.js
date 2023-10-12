@@ -4,7 +4,7 @@ import {
     SHOW_LOADER, REMOVE_LOADER, GET_USERS_SUCCESS,
     GET_ROLES_SUCCESS, GET_ROLES_FAIL,
     USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,
-    OPEN_ADD_USER_MODAL, OPEN_EDIT_USER_MODAL, OPEN_DELETE_USER_MODAL,
+    OPEN_ADD_USER_MODAL, OPEN_EDIT_USER_MODAL, OPEN_DELETE_USER_MODAL, GET_USER_SUCCESS,
 } from './types';
 import AuthService from '../services/AuthService';
 
@@ -32,7 +32,7 @@ export const login = ({ username, password }, _clearCredentials) => async dispat
             localStorage.setItem(API_TOKEN, user.token);
 
             if (localStorage.getItem(API_TOKEN)) {
-                dispatch({ type: LOGIN_SUCCESS, payload: user });
+                dispatch({ type: LOGIN_SUCCESS, payload: user.token });
 
                 if (_clearCredentials) {
                     _clearCredentials();
@@ -48,14 +48,7 @@ export const login = ({ username, password }, _clearCredentials) => async dispat
     }
 };
 
-// Action creator for opening the Add User modal.
-export const openAddUserModal = payload => ({type: OPEN_ADD_USER_MODAL, payload });
 
-// Action creator for opening the Edit User modal.
-export const openEditUserModal = payload => ({type: OPEN_EDIT_USER_MODAL, payload});
-
-// Action creator for opening the Delete User modal.
-export const openDeleteUserModal = payload => ({type: OPEN_DELETE_USER_MODAL, payload});
 
 // Action creator for logging out the user.
 export const logout = () => {

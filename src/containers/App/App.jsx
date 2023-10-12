@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, } from 'material-ui';
+import { compose } from 'redux';
+
 import { Switch, Route, Redirect } from 'react-router-dom';
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -14,17 +16,17 @@ import { appStyle } from 'variables/styles';
 
 import image from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/reactlogo.png';
+import { connect } from 'react-redux';
 
-const switchRoutes = (
+const switchRoutes = (appRouteList) => (
     <Switch>
         {
-            appRoutes.map((prop, key) => {
+            appRouteList.map((prop, key) => {
                 if (prop.redirect) {
                     return (
                         <Redirect from={prop.path} to={prop.to} key={key}/>
                     );
                 }
-
                 return (
                     <Route path={prop.path} component={prop.component} key={key}/>
                 );
@@ -57,12 +59,13 @@ class App extends React.Component {
     }
 
     render() {
+      
         const { classes, ...rest } = this.props;
 
         return (
             <div className={classes.wrapper}>
                 <Sidebar
-                    routes={appRoutes}
+                    routes={appRoutes['ADMIN']}
                     logoText={"P O S"}
                     logo={logo}
                     image={image}
@@ -83,13 +86,13 @@ class App extends React.Component {
                             ? (
                                 <div className={classes.content}>
                                     <div className={classes.container}>
-                                        {switchRoutes}
+                                        {switchRoutes(appRoutes['ADMIN'])}
                                     </div>
                                 </div>
                             )
                             : (
                                 <div className={classes.map}>
-                                    {switchRoutes}
+                                    {switchRoutes(appRoutes['ADMIN'])}
                                 </div>
                             )
                     }
@@ -99,9 +102,19 @@ class App extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    const { isLoggedIn,  user } = state.userReducer;
+    const { show_loader } = state.loader;
+
+    return { isLoggedIn, show_loader , user};
+};
+
 App.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired
 };
 
-export default withStyles(appStyle, { withTheme: true })(App);
+export default compose(
+  connect(mapStateToProps, { }) ,
+  withStyles(appStyle, { withTheme: true }),
+)(App);
