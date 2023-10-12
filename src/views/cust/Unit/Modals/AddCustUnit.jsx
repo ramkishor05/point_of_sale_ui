@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
-import { RegularCard, ItemGrid, CustomInput } from 'components';
+import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
 class AddCustUnit extends Component {
     state = {
-        name: '',
         typeId: '',
-        dispayName: '',
+        friendlyName: '',
         shortDesc: '',
-        longDesc: ''
+        longDesc: '',
+        custUnitGroupId: 0
+    };
+    _setCustUnitGroupId = event => {
+        this.setState({ custUnitGroupId: event.target.value});
     };
 
     _setName = event => {
-        this.setState({ name: event.target.value });
+        this.setState({ typeId: event.target.value, dispayName: event.target.value });
     };
 
     _setTypeId = event => {
@@ -33,10 +36,10 @@ class AddCustUnit extends Component {
     };
 
     _addUnit = () => {
-        const { name, dispayName } = this.state;
+        const { dispayName } = this.state;
         const { refresh, successNotification, errorNotification } = this.props;
 
-        if (name && dispayName) {
+        if (dispayName!=='') {
             this.props.addUnit(this.state, refresh, this.clear, successNotification, errorNotification);
         } else {
             errorNotification();
@@ -60,8 +63,8 @@ class AddCustUnit extends Component {
     }
     
     render() {
-        const { classes, open, close } = this.props;
-
+        const { classes, open, close, custUnitGroups } = this.props;
+        console.log("custUnitGroups prp=",custUnitGroups)
         return (
             <Modal
                 aria-labelledby="Add Unit"
@@ -77,6 +80,22 @@ class AddCustUnit extends Component {
                                 cardSubtitle="Fill the form below to add Unit to the system"
                                 content={
                                     <div>
+                                        <Grid container>
+                                            <ItemGrid xs={12} sm={12} md={12}>
+                                            <CustomSelect
+                                                   labelText="Retail Unit"
+                                                    id="cust-product-retail-unit"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setCustUnitGroupId }
+                                                    defaultValue={ this.state.custUnitGroupId }
+                                                    items= {this.props.custUnitGroups}
+                                                    value={ this.state.custUnitGroupId }
+                                                    idKey="id"
+                                                    valueKey="shortDesc"
+                                                ></CustomSelect>
+                                            </ItemGrid>
+                                        </Grid>
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput

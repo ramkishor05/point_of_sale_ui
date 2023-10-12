@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Button } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import { getAllCustUnits, addCustUnit, editCustUnit } from 'actions';
+import { getAllCustUnits, addCustUnit, editCustUnit, getAllCustUnitGroups } from 'actions';
 
 import { CustomDatepicker, RegularCard, CustUnitTable, ItemGrid, CustomInput, Snackbar } from 'components';
 
@@ -19,6 +19,7 @@ class CustUnit extends Component {
         showEditUnitModal: false,
         tr: false,
         tc: false,
+        custUnitGroups:[]
     };
 
     componentDidMount() {
@@ -45,6 +46,7 @@ class CustUnit extends Component {
 
     _getCustUnits = () => {
         this.props.getAllCustUnits();
+        this.props.getAllCustUnitGroups();
     };
 
     dateNow = () => {
@@ -165,6 +167,7 @@ class CustUnit extends Component {
                     close={() => this.setState({ showAddUnitModal: false })}
                     addUnit={this.props.addCustUnit}
                     refresh={this._getCustUnits}
+                    custUnitGroups={this.props.custUnitGroups}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -174,6 +177,7 @@ class CustUnit extends Component {
                     close={() => this.setState({ showEditUnitModal: false })}
                     editUnit={this.props.editCustUnit}
                     refresh={this._getCustUnits}
+                    custUnitGroups={this.props.custUnitGroups}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -235,7 +239,8 @@ const mapStateToProps = state => {
     const { user } = state.userReducer;
     const { custUnits } = state.custUnitReducer;
 
-    return { user, custUnits };
+    const { custUnitGroups } = state.custUnitGroupReducer;
+    return { user, custUnits, custUnitGroups };
 };
 
-export default connect(mapStateToProps, { getAllCustUnits, addCustUnit, editCustUnit })(CustUnit);
+export default connect(mapStateToProps, { getAllCustUnits, addCustUnit, editCustUnit, getAllCustUnitGroups })(CustUnit);

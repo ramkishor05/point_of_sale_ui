@@ -164,7 +164,7 @@ class CustUnitGroup extends Component {
                 <AddCustUnitGroupModal
                     open={this.state.showAddUnitModal}
                     close={() => this.setState({ showAddUnitModal: false })}
-                    addUnit={this.props.addCustUnitGroup}
+                    addCustUnitGroup={this.props.addCustUnitGroup}
                     refresh={this._getCustUnitGroups}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
@@ -173,7 +173,7 @@ class CustUnitGroup extends Component {
                 <EditCustUnitGroupModal
                     open={this.state.showEditUnitModal}
                     close={() => this.setState({ showEditUnitModal: false })}
-                    editUnit={this.props.editCustUnitGroup}
+                    editCustUnitGroup={this.props.editCustUnitGroup}
                     refresh={this._getCustUnitGroups}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}

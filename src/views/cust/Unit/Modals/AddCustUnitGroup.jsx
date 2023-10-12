@@ -5,23 +5,22 @@ import { RegularCard, ItemGrid, CustomInput } from 'components';
 
 class AddCustUnitGroup extends Component {
     state = {
-        name: '',
         typeId: '',
-        dispayName: '',
+        displayName: '',
         shortDesc: '',
         longDesc: ''
     };
 
     _setName = event => {
-        this.setState({ name: event.target.value });
+        this.setState({ shortDesc: event.target.value,longDesc: event.target.value });
     };
 
     _setTypeId = event => {
         this.setState({ typeId: event.target.value });
     };
 
-    _setDispayName = event => {
-        this.setState({ dispayName: event.target.value });
+    _setDisplayName = event => {
+        this.setState({ displayName: event.target.value, typeId: event.target.value });
     };
     
     _setShortDesc = event => {
@@ -33,18 +32,18 @@ class AddCustUnitGroup extends Component {
     };
 
     _addUnit = () => {
-        const { name, dispayName } = this.state;
+        const { typeId } = this.state;
         const { refresh, successNotification, errorNotification } = this.props;
-
-        if (name && dispayName) {
-            this.props.addUnit(this.state, refresh, this.clear, successNotification, errorNotification);
+        console.log("this.state=",this.state)
+        if (typeId!=='') {
+            this.props.addCustUnitGroup(this.state, refresh, this.clear, successNotification, errorNotification);
         } else {
             errorNotification();
         }
     };
 
     clear = () => {
-        this.setState({ name: '', dispayName: '' });
+        this.setState({ shortDesc: '', dispayName: '' });
         this.props.close();
     };
 
@@ -86,19 +85,19 @@ class AddCustUnitGroup extends Component {
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
                                                     onChange={ this._setName }
-                                                    defaultValue={ this.state.name }
+                                                    defaultValue={ this.state.shortDesc }
                                                 />
                                             </ItemGrid>
                                         </Grid>
                                         <Grid container>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
-                                                    labelText="DispayName"
-                                                    id="dispayName"
+                                                    labelText="friendlyName"
+                                                    id="friendlyName"
                                                     formControlProps={{ fullWidth: true }}
                                                     type="text"
-                                                    onChange={ this._setDispayName }
-                                                    defaultValue={ this.state.dispayName }
+                                                    onChange={ this._setDisplayName }
+                                                    defaultValue={ this.state.displayName }
                                                 />
                                             </ItemGrid>
                                         </Grid>
