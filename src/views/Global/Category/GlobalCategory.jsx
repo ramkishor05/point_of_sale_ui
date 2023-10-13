@@ -137,6 +137,7 @@ class GlobalCategory extends Component {
                     open={this.state.showAddGlobalCategoryModal}
                     close={() => this.setState({ showAddGlobalCategoryModal: false })}
                     addGlobalCategory={this.props.addGlobalCategory}
+                    glbCategoryGroups= {this.props.globalCategoryGroupList}
                     refresh={this.props.getGlobalCategoryList}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
@@ -167,8 +168,10 @@ class GlobalCategory extends Component {
 const mapStateToProps = state => {
     const { user } = state.userReducer;
     const { globalCategoryList, show_global_category_loader } = state.globalCategoryReducer;
+    const { globalCategoryGroupList} = state.globalCategoryGroupReducer;
 
-    return { user, globalCategoryList, show_global_category_loader };
+    
+    return { user, globalCategoryList, show_global_category_loader, globalCategoryGroupList };
 };
 
 const styles = {

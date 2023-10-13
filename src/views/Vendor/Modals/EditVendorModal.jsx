@@ -72,7 +72,6 @@ class EditVendorModal extends Component {
     
     render() {
         const { classes, open, close, vendor } = this.props;
-        console.log("vendor=",vendor)
         return (
             <Modal
                 aria-labelledby="Edit Vendor"

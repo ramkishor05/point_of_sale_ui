@@ -80,6 +80,8 @@ import VendorCustomerTable from './Table/VendorCustomerTable.jsx';
 
 
 import GlobalUnitTable from './Table/GlobalUnitTable.jsx';
+import GlobalUnitGroupTable from './Table/GlobalUnitGroupTable.jsx';
+
 import GlobalCountFreqTable from './Table/GlobalCountFreqTable.jsx';
 import GlobalCategoryGroupTable from './Table/GlobalCategoryGroupTable.jsx';
 import GlobalCategoryTable from './Table/GlobalCategoryTable.jsx';
@@ -136,6 +138,7 @@ export {
     CustProductTable,SalesTable, GlobalUnitTable,GlobalCategoryGroupTable, GlobalCategoryTable,GlobalCountFreqTable, UserProfileTable, 
     VendorTable, VendorBusinessTable, VendorCustomerTable,RecordsTable,
     CustCategoryTable, CustCategoryGroupTable,CustUnitTable, CustUnitGroupTable,
+    GlobalUnitGroupTable,
     // Tasks
     Tasks,
     // Typography

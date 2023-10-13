@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles, Grid, Button, Modal } from 'material-ui';
 
-import { RegularCard, ItemGrid, CustomInput } from 'components';
+import { RegularCard, ItemGrid, CustomInput, CustomSelect } from 'components';
 
 class AddGlobalUnit extends Component {
     state = {
@@ -9,7 +9,8 @@ class AddGlobalUnit extends Component {
         typeId: '',
         dispayName: '',
         shortDesc: '',
-        longDesc: ''
+        longDesc: '',
+        glbUnitGroupId: 0
     };
 
     _setName = event => {
@@ -30,6 +31,10 @@ class AddGlobalUnit extends Component {
 
     _setLongDesc = event => {
         this.setState({ longDesc: event.target.value });
+    };
+
+    _setUnitGroupId= event => {
+        this.setState({ glbUnitGroupId: event.target.value });
     };
 
     _addUnit = () => {
@@ -78,6 +83,20 @@ class AddGlobalUnit extends Component {
                                 content={
                                     <div>
                                         <Grid container>
+                                            <ItemGrid xs={12} sm={12} md={12}>
+                                            <CustomSelect
+                                                   labelText="Group Unit"
+                                                    id="cust-product-retail-unit"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
+                                                    type="text"
+                                                    onChange={ this._setUnitGroupId }
+                                                    defaultValue={ this.state.glbUnitGroupId }
+                                                    items= {this.props.globalUnitGroups}
+                                                    value={ this.state.glbUnitGroupId }
+                                                    idKey="id"
+                                                    valueKey="name"
+                                                ></CustomSelect>
+                                            </ItemGrid>
                                             <ItemGrid xs={12} sm={12} md={12}>
                                                 <CustomInput
                                                     autoFocus

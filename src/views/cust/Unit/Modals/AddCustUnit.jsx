@@ -64,7 +64,6 @@ class AddCustUnit extends Component {
     
     render() {
         const { classes, open, close, custUnitGroups } = this.props;
-        console.log("custUnitGroups prp=",custUnitGroups)
         return (
             <Modal
                 aria-labelledby="Add Unit"

@@ -45,7 +45,6 @@ class AddSale extends Component {
         }
 
         let item = this.findById(this.props.custProducts,this.state.productId);
-        console.log("item=",item)
 
         if(!item){
             return () => 0.00; 
@@ -127,10 +126,10 @@ class AddSale extends Component {
                 name: item.name,
                 desc: item.desc,
                 purchasePrice: item.purchasePrice,
-                purchaseUnitId: 1,
+                purchaseUnitId: item.purchaseUnit.id,
                 retailQnt: retailQnt,
                 retailPrice: item.retailPrice,
-                retailUnitId: 1,
+                retailUnitId: item.retailUnit.id,
                 custProductId: item_id
             }
             custProductSale.custProductRetailSaleList.push(custProductRetailSale);
@@ -140,10 +139,10 @@ class AddSale extends Component {
                 name: item.name,
                 desc: item.desc,
                 purchasePrice: item.purchasePrice,
-                purchaseUnitId: 1,
+                purchaseUnitId: item.purchaseUnit.id,
                 wholeQnt: wholeQnt,
                 wholePrice: item.wholePrice,
-                wholeUnitId: 1,
+                wholeUnitId: item.wholeUnit.id,
                 custProductId: item_id
             }
             custProductSale.custProductWholeSaleList.push(custProductWholeSale);

@@ -42,7 +42,6 @@ class EditSale extends Component {
         }
 
         let item = custProductRetailSale;
-        console.log("item=",item)
 
         if(!item){
             return () => 0.00; 

@@ -17,6 +17,7 @@ import { appStyle } from 'variables/styles';
 import image from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/reactlogo.png';
 import { connect } from 'react-redux';
+import { getUser } from '../../actions';
 
 const switchRoutes = (appRouteList) => (
     <Switch>
@@ -48,6 +49,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        
         if (window.innerWidth > 991) {
             // eslint-disable-next-line
             const ps = new PerfectScrollbar(this.refs.mainPanel);
@@ -59,13 +61,13 @@ class App extends React.Component {
     }
 
     render() {
-      
-        const { classes, user, ...rest } = this.props;
-
+        
+        const { classes,token, user, ...rest } = this.props;
+       
         return (
             <div className={classes.wrapper}>
                 <Sidebar
-                    routes={appRoutes['ADMIN']}
+                    routes={appRoutes['MANAGER']}
                     logoText={"P O S"}
                     logo={logo}
                     image={image}
@@ -76,7 +78,7 @@ class App extends React.Component {
                 />
                 <div className={classes.mainPanel} ref="mainPanel">
                     <Header
-                        routes={appRoutes['ADMIN']}
+                        routes={appRoutes['MANAGER']}
                         handleDrawerToggle={this.handleDrawerToggle}
                         {...rest}
                     />
@@ -86,13 +88,13 @@ class App extends React.Component {
                             ? (
                                 <div className={classes.content}>
                                     <div className={classes.container}>
-                                        {switchRoutes(appRoutes['ADMIN'])}
+                                        {switchRoutes(appRoutes['MANAGER'])}
                                     </div>
                                 </div>
                             )
                             : (
                                 <div className={classes.map}>
-                                    {switchRoutes(appRoutes['ADMIN'])}
+                                    {switchRoutes(appRoutes['MANAGER'])}
                                 </div>
                             )
                     }
@@ -104,12 +106,9 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
     const { isLoggedIn, token} = state.authReducer;
-    const { user} = state.userReducer;
     const { show_loader } = state.loader;
-
-    console.log("token=",token)
-
-    return { isLoggedIn, show_loader, user };
+    const { user} = state.userReducer;
+    return { isLoggedIn, show_loader, user , token};
 };
 
 App.propTypes = {
@@ -118,6 +117,6 @@ App.propTypes = {
 };
 
 export default compose(
-  connect(mapStateToProps, { }) ,
+  connect(mapStateToProps, { getUser }) ,
   withStyles(appStyle, { withTheme: true }),
 )(App);

@@ -11,7 +11,7 @@ import { RegularCard, VendorCustomerTable, ItemGrid, Snackbar } from 'components
 
 import Loader from 'Loader';
 
-import { getAllVendorCustomerList, addVendorCustomer } from 'actions';
+import { getAllVendorCustomerList, addVendorCustomer, getAllVendorList } from 'actions';
 
 class VendorCustomer extends Component {
     state = {
@@ -24,6 +24,7 @@ class VendorCustomer extends Component {
     };
 
     componentDidMount() {
+        this.props.getAllVendorList();
         this.props.getAllVendorCustomerList();
     }
 
@@ -181,4 +182,4 @@ const styles = {
     },
 };
 
-export default connect(mapStateToProps, { getAllVendorCustomerList, addVendorCustomer })(VendorCustomer);
+export default connect(mapStateToProps, { getAllVendorCustomerList, addVendorCustomer, getAllVendorList })(VendorCustomer);

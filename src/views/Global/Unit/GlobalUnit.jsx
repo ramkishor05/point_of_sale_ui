@@ -164,6 +164,7 @@ class GlobalUnit extends Component {
                     open={this.state.showAddUnitModal}
                     close={() => this.setState({ showAddUnitModal: false })}
                     addUnit={this.props.addGlobalUnit}
+                    globalUnitGroups={this.props.globalUnitGroups}
                     refresh={this._getGlobalUnits}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
@@ -174,6 +175,7 @@ class GlobalUnit extends Component {
                     close={() => this.setState({ showEditUnitModal: false })}
                     editUnit={this.props.editGlobalUnit}
                     refresh={this._getGlobalUnits}
+                    globalUnitGroups={this.props.globalUnitGroups}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
                 />
@@ -234,8 +236,8 @@ const styles = {
 const mapStateToProps = state => {
     const { user } = state.userReducer;
     const { globalUnits } = state.globalUnitReducer;
-
-    return { user, globalUnits };
+    const { globalUnitGroups } = state.globalUnitGroupReducer;
+    return { user, globalUnits, globalUnitGroups };
 };
 
 export default connect(mapStateToProps, { getAllGlobalUnits, addGlobalUnit, editGlobalUnit })(GlobalUnit);

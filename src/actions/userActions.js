@@ -91,9 +91,7 @@ export const deleteUser = (id, refresh) => async dispatch => {
     try {
         const result = await UserService.delete(id);
 
-        console.log("This is working")
         if (result) {
-            console.log("Yes there's results")
             if (refresh) {
                 refresh();
             }

@@ -141,6 +141,7 @@ class CustProducts extends Component {
                     open={this.state.showAddCustProductModal}
                     close={() => this.setState({ showAddCustProductModal: false })}
                     addCustProduct={this.props.addCustProduct}
+                    custUnits= {this.props.custUnits}
                     refresh={this.props.getAllCustProducts}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}
@@ -149,6 +150,7 @@ class CustProducts extends Component {
                 <EditCustProductModal
                     open={this.state.showEditCustProductModal}
                     close={() => this.setState({ showEditCustProductModal: false })}
+                    custUnits= {this.props.custUnits}
                     refresh={this.props.getAllCustProducts}
                     successNotification={() => this.showNotification('tr')}
                     errorNotification={() => this.showNotification('tc')}

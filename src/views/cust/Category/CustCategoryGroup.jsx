@@ -29,7 +29,6 @@ class CustCategoryGroup extends Component {
 
     // Check if the user is super admin.
     isSuperAdmin = () => {
-        console.log("env=", process.env.PRODUCTION_APP_URL)
         return true; //this.props.user.role.name === 'super_admin';
     };
 

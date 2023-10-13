@@ -16,7 +16,6 @@ class Authenticate extends Component {
     };
 
     _onChangeUsername = event => {
-        console.log(event.target.value)
         this.setState({username: event.target.value});
     };
 
@@ -27,7 +26,6 @@ class Authenticate extends Component {
     _onClick = () => {
         const { username, password } = this.state;
 
-        console.log("onlick ", username, password)
         if (!username || !password) {
             this.showNotification('tc')
             return;
@@ -40,7 +38,6 @@ class Authenticate extends Component {
     _postCalls = () => {
         this.setState({username: '',password : ''});
         let token= localStorage.getItem('api_token') ;
-        console.log("token=",token)
         if(token){
             this.props.getUser(token);
         }

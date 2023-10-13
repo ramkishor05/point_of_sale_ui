@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Button } from 'material-ui';
 import { AddAlert } from 'material-ui-icons';
 
-import { getSalesByDate, addSale, getAllCustProducts, getAllVendorCustomerList } from 'actions';
+import { getSalesByDate, addSale, getAllCustProducts, getAllVendorCustomerList, getAllSales } from 'actions';
 
 import { CustomDatepicker, CustomInput, RegularCard, SalesTable, ItemGrid, Snackbar } from 'components';
 
@@ -29,7 +29,7 @@ class SaleProducts extends Component {
     componentDidMount() {
         // Set the dates (from and to) and pull corresponding sales from server.
         this.setState({ from: this.dateNow(), to: this.dateNow() }, this._getSales);
-
+        this.props.getAllSales();
         this.props.getAllCustProducts(); // Get all items (Useful in adding sales).
         this.props.getAllVendorCustomerList();
     }
@@ -170,7 +170,7 @@ class SaleProducts extends Component {
                 <Grid container>
                     <ItemGrid xs={12} sm={12} md={12}>
                         {
-                            this._showAddView()
+                            this._showTableView()
                         }
                     </ItemGrid>
                     
@@ -257,4 +257,4 @@ const mapStateToProps = state => {
     return { sales, custProducts };
 }
 
-export default connect(mapStateToProps, { getSalesByDate, addSale, getAllCustProducts, getAllVendorCustomerList})(SaleProducts);
+export default connect(mapStateToProps, { getSalesByDate,getAllSales, addSale, getAllCustProducts, getAllVendorCustomerList})(SaleProducts);

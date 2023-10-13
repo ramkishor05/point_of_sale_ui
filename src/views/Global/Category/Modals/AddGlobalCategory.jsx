@@ -77,17 +77,19 @@ class AddGlobalCategory extends Component {
                                 content={
                                     <div>
                                         <Grid container>
-                                            <ItemGrid xs={4} sm={4} md={4}>
-                                                <CustomInput
-                                                    autoFocus
-                                                    labelText="Category Group"
-                                                    id="category-goup"
-                                                    formControlProps={{ fullWidth: true }}
+                                        <ItemGrid xs={12} sm={12} md={12}>
+                                            <CustomSelect
+                                                   labelText="Retail Unit"
+                                                    id="cust-product-retail-unit"
+                                                    formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setCategoryGroupId }
-                                                    value={ this.state.glbCategoryGroupId }
                                                     defaultValue={ this.state.glbCategoryGroupId }
-                                                />
+                                                    items= {this.props.glbCategoryGroups}
+                                                    value={ this.state.glbCategoryGroupId }
+                                                    idKey="id"
+                                                    valueKey="name"
+                                                ></CustomSelect>
                                             </ItemGrid>
                                             <ItemGrid xs={4} sm={4} md={4}>
                                                 <CustomInput

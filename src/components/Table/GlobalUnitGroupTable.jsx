@@ -4,14 +4,14 @@ import { withStyles, Table, TableHead, TableRow, TableBody, TableCell, Button } 
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 
-import { renderSaleToEdit } from '../../actions';
-
 import { tableStyle } from 'variables/styles';
 
-class SalesTable extends React.Component {
+import { renderGlobalUnitGroupToEdit, deleteGlobalUnitGroup } from '../../actions';
+
+class GlobalUnitTable extends React.Component {
     // Check if the user is super admin.
     isSuperAdmin = () => {
-        return true; //this.props.user.role.name === 'super_admin';
+        return true;//this.props.user.role.name === 'super_admin';
     };
 
     _renderDate(value) {
@@ -20,9 +20,15 @@ class SalesTable extends React.Component {
         return date.isValid() ? date.format('ddd Do MMMM, YYYY hh:mm:ss:A') : value;
     }
 
-    _editSale = prop => {
-        this.props.renderSaleToEdit(prop);
-        this.props.editSale();
+    _renderToGlobalEdit = prop => {
+        this.props.renderGlobalUnitGroupToEdit(prop);
+        this.props.editGlobalUnitGroup();
+    }
+
+    deleteGlobalUnitGroup = id => {
+        if (window.confirm("Are you sure you want to delete this Unit transaction?")) {
+            this.props.deleteGlobalUnitGroup(id, this.props.getGlobalUnits);
+        }
     };
 
     _renderTableData = () => {
@@ -33,27 +39,28 @@ class SalesTable extends React.Component {
             return (
                 <TableRow key={key}>
                     <TableCell className={classes.tableCell}>
-                            { ++number }
+                        { prop.id }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.saleDate}
+                        { prop.name }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.customer.name  }
-                    </TableCell>
-                    
-                    <TableCell className={classes.tableCell}>
-                        { prop.retailSaleQnt + prop.wholeSaleQnt}
+                        { prop.displayName }
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                        { prop.retailSaleTotals + prop.wholeSaletotals}
+                        { prop.shortDesc }
                     </TableCell>
-                    
+                    <TableCell className={classes.tableCell}>
+                        { prop.longDesc }
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                        { prop.group? prop.group.name : ''}
+                    </TableCell>
                     {
                         this.isSuperAdmin() && (
                             <TableCell className={classes.tableCell}>
-                                <Button style={ styles.updateButton } onClick={() => this._editSale(prop)}>Edit</Button>
-                                <Button style={ styles.deleteButton }>Delete</Button>
+                                <Button style={ styles.updateButton } onClick={() => this._renderToGlobalEdit(prop)}>Edit</Button>
+                                <Button style={ styles.deleteButton } onClick={() => this.deleteGlobalUnitGroup(prop.id)} >Delete</Button>
                             </TableCell>
                         )
                     }
@@ -63,13 +70,13 @@ class SalesTable extends React.Component {
     };
 
     render() {
-        const { classes, tableHead, tableHeaderColor } = this.props;
+        const { classes, tableHead, tableData, tableHeaderColor } = this.props;
+        
         return (
             <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
                     {
-                        tableHead !== undefined 
-                        ? (
+                        tableHead !== undefined && (
                             <TableHead className={classes[tableHeaderColor+"TableHeader"]}>
                                 <TableRow>
                                     {
@@ -86,26 +93,30 @@ class SalesTable extends React.Component {
                                 </TableRow>
                             </TableHead>
                         )
-                        : null
                     }
-                    <TableBody>
-                        { this._renderTableData() }
-                    </TableBody>
+
+                    {
+                        tableData && (
+                            <TableBody>
+                                { this._renderTableData() }
+                            </TableBody>
+                        )
+                    }
                 </Table>
             </div>
         );
     }
 }
 
-SalesTable.defaultProps = {
+GlobalUnitTable.defaultProps = {
     tableHeaderColor: 'gray'
 }
 
-SalesTable.propTypes = {
+GlobalUnitTable.propTypes = {
     classes: PropTypes.object.isRequired,
     tableHeaderColor: PropTypes.oneOf(['warning','primary','danger','success','info','rose','gray']),
     tableHead: PropTypes.arrayOf(PropTypes.string),
-    /* tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)) */
+    tableData: PropTypes.arrayOf(PropTypes.object)
 };
 
 const styles = {
@@ -119,13 +130,11 @@ const styles = {
     }
 };
 
+const wrappedTable = withStyles(tableStyle)(GlobalUnitTable);
+
 const mapStateToProps = state => {
     const { user } = state.userReducer;
-    const { sale_to_edit } = state.sales;
-
-    return { user, sale_to_edit };
+    return { user };
 };
 
-const WrappedTable = withStyles(tableStyle)(SalesTable);
-
-export default connect(mapStateToProps, { renderSaleToEdit })(WrappedTable);
+export default connect(mapStateToProps, { renderGlobalUnitGroupToEdit, deleteGlobalUnitGroup })(wrappedTable);

@@ -95,7 +95,6 @@ class EditBusinessModal extends Component {
     
     render() {
         const { classes, open, close, business } = this.props;
-        console.log("Business=",business)
         return (
             <Modal
                 aria-labelledby="Edit Product"

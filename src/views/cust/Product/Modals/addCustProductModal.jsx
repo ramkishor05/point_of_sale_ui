@@ -10,11 +10,11 @@ const ids = {
     desc: '',
     stockQnt: 0,
     purchasePrice: 0,
-    purchaseUnit: 1,
+    purchaseUnitId: 0,
     wholePrice: 0,
-    wholeUnit: 1,
+    wholeUnitId: 0,
     retailPrice: 0,
-    retailUnit: 1
+    retailUnitId: 0
 };
 const units =[{'id' : 1, 'name':'KGS'}];
 
@@ -43,7 +43,7 @@ class addCustProductModal extends Component {
     };
 
     _setPurchaseUnit = event => {
-        this.setState({ purchaseUnit: event.target.value });
+        this.setState({ purchaseUnitId: event.target.value });
     };
 
     _setWholePrice = event => {
@@ -51,7 +51,7 @@ class addCustProductModal extends Component {
     };
 
     _setWholeUnit = event => {
-        this.setState({ wholeUnit: event.target.value });
+        this.setState({ wholeUnitId: event.target.value });
     };
 
     _setRetailPrice = event => {
@@ -59,7 +59,7 @@ class addCustProductModal extends Component {
     };
 
     _setRetailUnit = event => {
-        this.setState({ retailUnit: event.target.value });
+        this.setState({ retailUnitId: event.target.value });
     };
 
     _setStockQnt = event => {
@@ -162,11 +162,11 @@ class addCustProductModal extends Component {
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setPurchaseUnit }
-                                                    defaultValue={ this.state.purchaseUnit }
-                                                    items= {units}
-                                                    value={ this.state.purchaseUnit }
+                                                    defaultValue={ this.state.purchaseUnitId }
+                                                    items= {this.props.custUnits}
+                                                    value={ this.state.purchaseUnitId }
                                                     idKey="id"
-                                                    valueKey="name"
+                                                    valueKey="shortDesc"
                                                 ></CustomSelect>
                                             </div>
                                             </ItemGrid>
@@ -189,11 +189,11 @@ class addCustProductModal extends Component {
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setRetailUnit }
-                                                    defaultValue={ this.state.retailUnit }
-                                                    items= {units}
-                                                    value={ this.state.retailUnit }
+                                                    defaultValue={ this.state.retailUnitId }
+                                                    items= {this.props.custUnits}
+                                                    value={ this.state.retailUnitId }
                                                     idKey="id"
-                                                    valueKey="name"
+                                                    valueKey="shortDesc"
                                                 ></CustomSelect>
                                               </div>
                                             </ItemGrid>
@@ -213,11 +213,11 @@ class addCustProductModal extends Component {
                                                     formControlProps={{ fullWidth:true, marginLeft: 10 }}
                                                     type="text"
                                                     onChange={ this._setWholeUnit }
-                                                    defaultValue={ this.state.wholeUnit }
-                                                    items= {units}
-                                                    value={ this.state.wholeUnit }
+                                                    defaultValue={ this.state.wholeUnitId }
+                                                    items= {this.props.custUnits}
+                                                    value={ this.state.wholeUnitId }
                                                     idKey="id"
-                                                    valueKey="name"
+                                                    valueKey="shortDesc"
                                                 ></CustomSelect>
                                                 </div>
                                             </ItemGrid>

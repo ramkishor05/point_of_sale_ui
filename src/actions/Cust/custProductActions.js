@@ -107,6 +107,5 @@ export const getFinishingItems = minimum => async dispatch => {
         }
     } catch(error) {
         dispatch({ type: REMOVE_CUST_PRODUCT_LOADER });
-        console.log('finishing items ', error)
     }
 }; 

@@ -5,7 +5,7 @@ import { AddAlert } from 'material-ui-icons';
 
 import { getAllGlobalUnitGroups, addGlobalUnitGroup, editGlobalUnitGroup } from 'actions';
 
-import { CustomDatepicker, RegularCard, GlobalUnitTable, ItemGrid, CustomInput, Snackbar } from 'components';
+import { CustomDatepicker, RegularCard, GlobalUnitGroupTable, ItemGrid, CustomInput, Snackbar } from 'components';
 
 import AddGlobalUnitGroupModal from './Modals/AddGlobalUnitGroup';
 import EditGlobalUnitGroupModal from './Modals/EditGlobalUnitGroup';
@@ -148,7 +148,7 @@ class GlobalUnitGroup extends Component {
                                 </div>
                             }
                             content={
-                                <GlobalUnitTable
+                                <GlobalUnitGroupTable
                                     tableHeaderColor="primary"
                                     tableHead={this.tableHead()}
                                     tableData={this.props.globalUnitGroups}

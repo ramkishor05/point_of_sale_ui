@@ -107,6 +107,5 @@ export const getFinishingVendorBusinessList = minimum => async dispatch => {
         }
     } catch(error) {
         dispatch({ type: REMOVE_VENDOR_BUSINESS_LOADER });
-        console.log('finishing vendorBusiness ', error)
     }
 }; 

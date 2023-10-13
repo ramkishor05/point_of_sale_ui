@@ -166,7 +166,7 @@ class GlobalCountFreq extends Component {
 
 const mapStateToProps = state => {
     const { user } = state.userReducer;
-    const { globalCountFreqList, show_global_CountFreq_loader } = state.globalCountFreqList;
+    const { globalCountFreqList, show_global_CountFreq_loader } = state.globalCountFreqReducer;
 
     return { user, globalCountFreqList, show_global_CountFreq_loader };
 };

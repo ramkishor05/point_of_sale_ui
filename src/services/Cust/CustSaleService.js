@@ -34,5 +34,10 @@ export default {
         return axios.delete(CUST_SALE_URL+`/${id}`,{headers: headers})
                     .then(response => Promise.resolve(response.data))
                     .catch(error => Promise.reject(error.response.data));
+    }, 
+    getByDate(from, to){
+        return axios.get(CUST_SALE_URL+`/filter?from=${from}&to=${to}`,{headers: headers})
+                    .then(response => Promise.resolve(response.data))
+                    .catch(error => Promise.reject(error.response.data));
     }
 };

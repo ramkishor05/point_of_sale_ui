@@ -34,7 +34,6 @@ class AddCustUnitGroup extends Component {
     _addUnit = () => {
         const { typeId } = this.state;
         const { refresh, successNotification, errorNotification } = this.props;
-        console.log("this.state=",this.state)
         if (typeId!=='') {
             this.props.addCustUnitGroup(this.state, refresh, this.clear, successNotification, errorNotification);
         } else {

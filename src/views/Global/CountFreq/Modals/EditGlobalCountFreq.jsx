@@ -137,7 +137,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    const { globalCountFreq_to_edit } = state.globalCountFreqList;
+    const { globalCountFreq_to_edit } = state.globalCountFreqReducer;
     return { globalCountFreq_to_edit };
 };
 

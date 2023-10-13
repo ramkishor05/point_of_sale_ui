@@ -28,7 +28,7 @@ export const addRole = (data, refresh, resetInput) => async dispatch => {
             }
         }
     } catch (error) {
-        console.log(error);
+        
     }
 };
 
@@ -63,7 +63,6 @@ export const deleteRole = (id, refresh) => async dispatch => {
         const result = await RoleService.delete(id);
 
         if (result) {
-            console.log("Yes there's results")
             if (refresh) {
                 refresh();
             }

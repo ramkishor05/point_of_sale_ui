@@ -48,7 +48,6 @@ class AddSaleView extends Component {
         }
 
         let item = this.findById(this.props.custProducts,this.state.productId);
-        console.log("item=",item)
 
         if(!item){
             return () => 0.00; 
@@ -116,7 +115,6 @@ class AddSaleView extends Component {
             }
             custProductRetailSaleMap[productId]=custProductRetailSale;
         }
-        console.log("this.state.custProductRetailSaleMap=",this.state.custProductRetailSaleMap)
         this.setState({ custProductRetailSaleMap: custProductRetailSaleMap });
         if(wholeQnt){
             let custProductWholeSale={
@@ -133,7 +131,6 @@ class AddSaleView extends Component {
         }
         this.setState({ custProductWholeSaleMap: custProductWholeSaleMap });
 
-        console.log("this.state.custProductWholeSaleMap=",this.state.custProductWholeSaleMap)
     }
 
     _setStateValue=(custProductWholeSaleMap, superkey, childKey, value)=>{

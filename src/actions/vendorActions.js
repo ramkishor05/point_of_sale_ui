@@ -108,6 +108,5 @@ export const getFinishingVendorList = minimum => async dispatch => {
         }
     } catch(error) {
         dispatch({ type: REMOVE_VENDOR_LOADER });
-        console.log('finishing vendors ', error)
     }
 }; 

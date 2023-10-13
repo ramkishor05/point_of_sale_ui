@@ -25,8 +25,6 @@ export const login = ({ username, password }, _clearCredentials) => async dispat
         dispatch({ type: SHOW_LOADER });
 
         const token = await AuthService.generateToken({ username, password });
-
-        console.log("user==",token)
         if (token) {
             dispatch({ type: REMOVE_LOADER });
 
@@ -45,7 +43,6 @@ export const login = ({ username, password }, _clearCredentials) => async dispat
         let msg=error.error? error.error.message: "";
         dispatch({ type: LOGIN_FAIL, payload: msg });
         dispatch({ type: REMOVE_LOADER });
-        console.log(error);
     }
 };
 
