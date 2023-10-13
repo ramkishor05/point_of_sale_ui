@@ -18,7 +18,7 @@ import custUnitGroupReducer from './Cust/CustUnitGroupReducer';
 import custCategoryReducer from './Cust/CustCategoryReducer';
 import custCategoryGroupReducer from './Cust/CustCategoryGroupReducer';
 
-import custProducts from './Cust/custProductReducer';
+import custProducts from './Cust/CustProductReducer';
 
 
 import vendorReducer from './vendorReducer';
